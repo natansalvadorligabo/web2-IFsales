@@ -3,4 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+    <display-name>IFSales</display-name>
+    <welcome-file-list>
+        <welcome-file>/pages/register.jsp</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>createUser</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.CreateUserHelper</param-value>
+    </context-param>
 </web-app>
