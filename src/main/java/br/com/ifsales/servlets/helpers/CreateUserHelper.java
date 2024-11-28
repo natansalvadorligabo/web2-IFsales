@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class CreateUserHelper implements Helper {
     @Override
-    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    public Object execute(HttpServletRequest req, HttpServletResponse resp)  {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
