@@ -11,4 +11,8 @@
         <param-name>createUser</param-name>
         <param-value>br.com.ifsales.servlets.helpers.CreateUserHelper</param-value>
     </context-param>
+    <context-param>
+        <param-name>login</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.LoginUserHelper</param-value>
+    </context-param>
 </web-app>
