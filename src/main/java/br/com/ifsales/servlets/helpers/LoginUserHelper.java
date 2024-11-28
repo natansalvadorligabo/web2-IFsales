@@ -7,24 +7,23 @@ import br.com.ifsales.utils.PasswordEncoder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class CreateUserHelper implements Helper {
+import java.util.Optional;
+
+public class LoginUserHelper implements Helper {
     @Override
     public Object execute(HttpServletRequest req, HttpServletResponse resp)  {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(PasswordEncoder.encode(password));
-
         UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
+        Optional<User> user = userDao.getUserByEmail(email);
 
-        if (userDao.save(user)) {
-            req.setAttribute("result", "registered");
-            return "/pages/login.jsp";
+        if (user.isPresent() && user.get().getPassword().equals(PasswordEncoder.encode(password))) {
+            req.setAttribute("result", "logged");
+            return "/pages/home.jsp";
         } else {
-            req.setAttribute("result", "notRegistered");
-            return "/pages/register.jsp";
+            req.setAttribute("result", "notLogged");
+            return "/pages/login.jsp";
         }
     }
 }
