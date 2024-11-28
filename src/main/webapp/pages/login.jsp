@@ -11,7 +11,7 @@
 <body class="min-h-screen bg-base-200">
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 class="mt-16 mb-4 text-2xl font-bold text-center text-secondary">Crie sua conta</h2>
+        <h2 class="mt-16 mb-4 text-2xl font-bold text-center text-secondary">Entrar</h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -28,15 +28,10 @@
             </div>
             <span id="error-password" class="text-error hidden"></span>
 
-            <div>
-                <label for="confirmPassword" class="font-semibold">Confime sua senha<span class="text-error">*</span></label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required class="input input-bordered w-full mt-2">
-            </div>
-            <span id="error-confirmPassword" class="text-error hidden"></span>
 
             <div class="space-y-2">
-                <button type="submit" name="action" value="createUser" class="btn btn-primary btn-block">
-                    Cadastrar
+                <button type="submit" name="action" value="login" class="btn btn-primary btn-block">
+                    Entrar
                 </button>
 
                 <a href="register" class="btn btn-outline btn-block">
