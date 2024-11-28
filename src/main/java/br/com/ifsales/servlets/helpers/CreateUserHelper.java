@@ -21,10 +21,10 @@ public class CreateUserHelper implements Helper {
 
         if (userDao.save(user)) {
             req.setAttribute("result", "registered");
-            return "/login.jsp";
+            return "/pages/login.jsp";
         } else {
             req.setAttribute("result", "notRegistered");
-            return "register.jsp";
+            return "/pages/register.jsp";
         }
     }
 }
