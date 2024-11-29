@@ -11,7 +11,7 @@ import java.util.List;
 public class ListSalesPersonsHelper implements Helper {
 
     @Override
-    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) {
 
         SalesPersonDao salesPersonDao = new SalesPersonDao(DataSourceSearcher.getInstance().getDataSource());
         List<SalesPerson> salesPersons = salesPersonDao.getAllSalesPersons();

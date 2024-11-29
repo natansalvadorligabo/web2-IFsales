@@ -35,6 +35,5 @@
             <li><a href="#" class="font-semibold">Configurações <span class="badge">Em breve</span></a></li>
         </ul>
     </div>
-</div>
 
 <script defer src="./script/themeController.js"></script>

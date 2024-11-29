@@ -1,7 +1,6 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.SalesPerson;
-import br.com.ifsales.utils.PasswordEncoder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -14,7 +13,7 @@ import java.util.Optional;
 
 public class SalesPersonDao {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public SalesPersonDao(DataSource dataSource) {
         super();
