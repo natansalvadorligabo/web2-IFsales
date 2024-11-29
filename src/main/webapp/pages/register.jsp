@@ -40,7 +40,7 @@
                         Cadastrar
                     </button>
 
-                    <a href="login" class="btn btn-outline btn-block">
+                    <a href="login.jsp" class="btn btn-outline btn-block">
                         Voltar
                     </a>
                 </div>
@@ -48,6 +48,6 @@
         </div>
     </div>
 
-    <script defer src="./scripts/validateRegister.js"></script>
+    <script defer src="./scripts/validateUserRegister.js"></script>
 </body>
 </html>

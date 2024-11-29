@@ -34,7 +34,7 @@
                     Entrar
                 </button>
 
-                <a href="register" class="btn btn-outline btn-block">
+                <a href="register.jsp" class="btn btn-outline btn-block">
                     Cadastre-se
                 </a>
             </div>
@@ -42,6 +42,6 @@
     </div>
 </div>
 
-<script defer src="./scripts/validateRegister.js"></script>
+<script defer src="./scripts/validateUserRegister.js"></script>
 </body>
 </html>

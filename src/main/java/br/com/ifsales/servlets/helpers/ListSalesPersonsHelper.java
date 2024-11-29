@@ -12,11 +12,11 @@ public class ListSalesPersonsHelper implements Helper {
 
     @Override
     public Object execute(HttpServletRequest req, HttpServletResponse resp) {
-
         SalesPersonDao salesPersonDao = new SalesPersonDao(DataSourceSearcher.getInstance().getDataSource());
         List<SalesPerson> salesPersons = salesPersonDao.getAllSalesPersons();
 
         req.setAttribute("salesPersons", salesPersons);
-        return "/pages/listSalesPersons.jsp";
+
+        return "/pages/salesPersonTable.jsp";
     }
 }

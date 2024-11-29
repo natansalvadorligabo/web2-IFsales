@@ -10,6 +10,7 @@ import java.util.Optional;
 public class SaveSalesPersonHelper  implements Helper {
     @Override
     public Object execute(HttpServletRequest req, HttpServletResponse resp)  {
+        Long id = Long.parseLong(req.getParameter("id"));
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
@@ -22,21 +23,30 @@ public class SaveSalesPersonHelper  implements Helper {
         salesPerson.setActive(active);
 
         SalesPersonDao salesPersonDao = new SalesPersonDao(DataSourceSearcher.getInstance().getDataSource());
-        Optional<SalesPerson> registered = salesPersonDao.getSalesPersonByEmail(email);
 
-        if (registered.isPresent())
-        {
-            req.setAttribute("result", "already exists");
-            return "/pages/salesPersonRegister.jsp";
-        }
-        else
-        {
-            if (salesPersonDao.save(salesPerson))
-                req.setAttribute("result", "saved");
+        if (id == 0) {
+            Optional<SalesPerson> registered = salesPersonDao.getSalesPersonByEmail(email);
+
+            if (registered.isPresent())
+            {
+                req.setAttribute("result", "already exists");
+                return "/pages/salesPersonRegister.jsp";
+            }
             else
-                req.setAttribute("result", "not saved");
-
-            return "/pages/home.jsp";
+            {
+                if (salesPersonDao.save(salesPerson))
+                    req.setAttribute("result", "registered successfully");
+                else
+                    req.setAttribute("result", "not registered");
+            }
         }
+        else {
+            salesPerson.setId(id);
+
+            if (salesPersonDao.update(salesPerson))
+                req.setAttribute("result", "saved");
+        }
+
+        return "/pages/home.jsp";
     }
 }
