@@ -6,6 +6,7 @@ import br.com.ifsales.utils.DataSourceSearcher;
 import br.com.ifsales.utils.PasswordEncoder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ public class LoginUserHelper implements Helper {
 
         if (user.isPresent() && user.get().getPassword().equals(PasswordEncoder.encode(password))) {
             req.setAttribute("result", "logged");
+            HttpSession session = req.getSession();
+            session.setAttribute("user", user.get());
             return "/pages/home.jsp";
         } else {
             req.setAttribute("result", "notLogged");
