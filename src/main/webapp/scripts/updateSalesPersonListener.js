@@ -1,6 +1,7 @@
 const contextPath = document.getElementById("contextPath").getAttribute("data-contextPath");
 
-document.getElementById("email").addEventListener("keypress", function(event) {
+document.getElementById("email").addEventListener("keypress", function(event)
+{
     if (event.key === "Enter")
     {
         event.preventDefault();

@@ -35,7 +35,7 @@
                         Entrar
                     </button>
 
-                    <a href="${pageContext.request.contextPath}/pages/register.jsp" class="btn btn-outline btn-block">
+                    <a href="${pageContext.request.contextPath}/pages/userRegister.jsp" class="btn btn-outline btn-block">
                         Cadastre-se
                     </a>
                 </div>
@@ -43,6 +43,6 @@
         </div>
     </div>
 
-    <script type="module" src="${pageContext.request.contextPath}/scripts/validateLogin.js"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/validateLogin.js"></script>
 </body>
 </html>

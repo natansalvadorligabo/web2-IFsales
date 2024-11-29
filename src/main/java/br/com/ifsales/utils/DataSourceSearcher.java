@@ -7,9 +7,9 @@ import javax.sql.DataSource;
 
 public class DataSourceSearcher {
 
-    private static DataSourceSearcher instance = new DataSourceSearcher();
+    private static final DataSourceSearcher instance = new DataSourceSearcher();
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     private DataSourceSearcher() {
         try {

@@ -28,7 +28,8 @@ function processValidity(form)
     return valid;
 }
 
-function applyValidity(form){
+function applyValidity(form)
+{
     let valid = true;
     let count = 0;
     let elements = form.elements;
@@ -46,8 +47,8 @@ function applyValidity(form){
         else
             span.innerHTML = "";
     }
-    if(count > 0){
+    if(count > 0)
         valid = false;
-    }
+
     return valid;
 }

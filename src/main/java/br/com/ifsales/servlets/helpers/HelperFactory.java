@@ -17,5 +17,4 @@ public class HelperFactory {
             throw new RuntimeException(erro);
         }
     }
-
 }
