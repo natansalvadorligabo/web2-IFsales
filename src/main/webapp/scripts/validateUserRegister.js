@@ -18,7 +18,7 @@ function processValidity(form) {
     return applyValidity(form);
 }
 
-export function applyValidity(form) {
+function applyValidity(form) {
     let valid = true;
     let count = 0;
     let elements = form.elements;

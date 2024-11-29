@@ -8,8 +8,7 @@ public class Store {
     private String address;
     private String phone;
 
-    public Store() {
-    }
+    public Store() { }
 
     public Long getId() {
         return id;

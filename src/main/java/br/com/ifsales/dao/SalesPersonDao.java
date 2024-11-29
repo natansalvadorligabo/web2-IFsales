@@ -20,7 +20,7 @@ public class SalesPersonDao {
         this.dataSource = dataSource;
     }
 
-    public Boolean save(SalesPerson salesPerson){
+    public Boolean save(SalesPerson salesPerson) {
         Optional<SalesPerson> optional = getSalesPersonByEmail(salesPerson.getEmail());
 
         if(optional.isPresent())
@@ -47,8 +47,7 @@ public class SalesPersonDao {
         return true;
     }
 
-    public Optional<SalesPerson> getSalesPersonById(Long id)
-    {
+    public Optional<SalesPerson> getSalesPersonById(Long id) {
         String sql = """
                 select *
                 from salesPersons
@@ -71,7 +70,7 @@ public class SalesPersonDao {
         return optional;
     }
 
-    public Optional<SalesPerson> getSalesPersonByEmail(String email){
+    public Optional<SalesPerson> getSalesPersonByEmail(String email) {
         String sql = """
                 select *
                 from salesPersons
@@ -149,8 +148,7 @@ public class SalesPersonDao {
         }
     }
 
-    public Boolean delete(SalesPerson salesPerson)
-    {
+    public Boolean delete(SalesPerson salesPerson) {
         String sql = """
                 delete from salesPersons
                 where salesPerson_id = ?""";
