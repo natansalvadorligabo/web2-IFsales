@@ -48,6 +48,6 @@
         </div>
     </div>
 
-    <script src="${pageContext.request.contextPath}/scripts/validateRegister.js"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/validateRegister.js"></script>
 </body>
 </html>

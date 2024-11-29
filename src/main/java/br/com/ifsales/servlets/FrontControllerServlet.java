@@ -26,12 +26,16 @@ public class FrontControllerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
         Helper helper = new HelperFactory().getHelper(req);
-        try {
+        try
+        {
             Object response = helper.execute(req, resp);
-            if(response instanceof JsonObject) {
+            if(response instanceof JsonObject)
+            {
                 resp.setContentType("application/json");
                 resp.getWriter().write(response.toString());
-            }else {
+            }
+            else
+            {
                 RequestDispatcher dispatcher = req.getRequestDispatcher(response.toString());
                 dispatcher.forward(req, resp);
             }
@@ -39,12 +43,10 @@ public class FrontControllerServlet extends HttpServlet {
         catch(Exception error) {
             throw new ServletException(error);
         }
-
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }
-
 }
