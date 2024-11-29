@@ -55,12 +55,12 @@
                         </div>
                         <ul tabindex="0" class="menu menu-compact dropdown-content mt-4 p-2 shadow bg-base-200 rounded-box w-52">
                             <li class="justify-between">
-                                <a href="/profile">Perfil<span class="badge">Em breve</span></a>
+                                <a>Perfil<span class="badge">Em breve</span></a>
                             </li>
 
                             <div class="divider m-0 p-0"></div>
 
-                            <li><a href="${pageContext.request.contextPath}/ControllerServlet?action=logout">Logout</a></li>
+                            <li><a href="${pageContext.request.contextPath}/redirect?action=logout">Logout</a></li>
                         </ul>
                     </div>
                 </div>

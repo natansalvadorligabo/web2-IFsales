@@ -16,7 +16,7 @@
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="${pageContext.request.contextPath}/ControllerServlet" method="post" class="space-y-6">
+            <form action="${pageContext.request.contextPath}/redirect" method="post" class="space-y-6">
                 <div>
                     <label for="email" class="font-semibold">E-mail<span class="text-error">*</span></label>
                     <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2">
@@ -35,7 +35,7 @@
                         Entrar
                     </button>
 
-                    <a href="${pageContext.request.contextPath}/pages/register.jsp" class="btn btn-outline btn-block">
+                    <a href="${pageContext.request.contextPath}/redirect?action=createUser" class="btn btn-outline btn-block">
                         Cadastre-se
                     </a>
                 </div>
