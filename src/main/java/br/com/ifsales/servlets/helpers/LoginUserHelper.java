@@ -16,17 +16,18 @@ public class LoginUserHelper implements Helper {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
-        Optional<User> user = userDao.getUserByEmail(email);
+        if(email != null && password != null) {
+            UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
+            Optional<User> user = userDao.getUserByEmail(email);
 
-        if (user.isPresent() && user.get().getPassword().equals(PasswordEncoder.encode(password))) {
-            req.setAttribute("result", "logged");
-            HttpSession session = req.getSession();
-            session.setAttribute("user", user.get());
-            return "/pages/home.jsp";
-        } else {
-            req.setAttribute("result", "notLogged");
-            return "/pages/login.jsp";
+            if (user.isPresent() && user.get().getPassword().equals(PasswordEncoder.encode(password))) {
+                req.setAttribute("result", "logged");
+                HttpSession session = req.getSession();
+                session.setAttribute("user", user.get());
+                return "redirect?action=home";
+            }
         }
+        req.setAttribute("result", "notLogged");
+        return "/pages/login.jsp";
     }
 }
