@@ -17,7 +17,7 @@
                 <details>
                     <summary class="font-semibold">Adicionar</summary>
                     <ul>
-                        <li><a href="/createSalesperson">Vendedor</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pages/salesPersonRegister.jsp">Vendedor</a></li>
                         <li><a>... <span class="badge">Em breve</span></a></li>
                     </ul>
                 </details>
