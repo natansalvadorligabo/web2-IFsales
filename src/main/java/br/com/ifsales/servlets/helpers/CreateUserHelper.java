@@ -24,7 +24,7 @@ public class CreateUserHelper implements Helper {
             return "/pages/login.jsp";
         } else {
             req.setAttribute("result", "notRegistered");
-            return "/pages/register.jsp";
+            return "/pages/user-register.jsp";
         }
     }
 }

@@ -5,7 +5,7 @@
          version="6.0">
     <display-name>IFSales</display-name>
     <welcome-file-list>
-        <welcome-file>/pages/register.jsp</welcome-file>
+        <welcome-file>/pages/login.jsp</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>createUser</param-name>
@@ -14,5 +14,21 @@
     <context-param>
         <param-name>login</param-name>
         <param-value>br.com.ifsales.servlets.helpers.LoginUserHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>listSales</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.ListSalesHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>saveSale</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.SaveSaleHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>updateSale</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.UpdateSaleHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>deleteSale</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.DeleteSaleHelper</param-value>
     </context-param>
 </web-app>
