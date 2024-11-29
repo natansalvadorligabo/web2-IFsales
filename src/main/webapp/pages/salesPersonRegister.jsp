@@ -16,7 +16,7 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form action="${pageContext.request.contextPath}/ControllerServlet" method="post" class="space-y-6">
+      <form action="${pageContext.request.contextPath}/redirect" method="post" class="space-y-6">
 
         <c:choose>
           <c:when test="${salesPerson == null}">

@@ -20,7 +20,7 @@ CREATE TABLE salesPersons (
 
 insert into salesPersons values (1, 'Caua Rufino', 'caua@gmail.com', '(16) 99633-7792', 1);
 insert into salesPersons values (2, 'Nathan Ligabo', 'nathzinho@gmail.com', '(16) 99522-7194', 0);
-insert into salesPersons values (3, 'Giovana Trevisan', 'trevisan.gio@gmail.com', '(16) 92334-7142', 0);
+insert into salesPersons values (3, 'Giovana Trevizan', 'trevizan.gio@gmail.com', '(16) 92334-7142', 0);
 insert into salesPersons values (4, 'Igor filipi', 'f.igor@gmail.com', '(16) 99331-4564', 0);
 insert into salesPersons values (5, 'Tonhao recordista', 'recordista@gmail.com', '(16) 99999-9999', 1);
 
