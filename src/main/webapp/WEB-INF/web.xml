@@ -16,6 +16,10 @@
         <param-value>br.com.ifsales.servlets.helpers.LoginUserHelper</param-value>
     </context-param>
     <context-param>
+        <param-name>logout</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.LogoutUserHelper</param-value>
+    </context-param>
+    <context-param>
         <param-name>listSalesPersons</param-name>
         <param-value>br.com.ifsales.servlets.helpers.ListSalesPersonsHelper</param-value>
     </context-param>

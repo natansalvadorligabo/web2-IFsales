@@ -16,7 +16,7 @@
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="ControllerServlet" method="post" class="space-y-6">
+            <form action="${pageContext.request.contextPath}/ControllerServlet" method="post" class="space-y-6">
                 <div>
                     <label for="email" class="font-semibold">E-mail<span class="text-error">*</span></label>
                     <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2">
@@ -40,7 +40,7 @@
                         Cadastrar
                     </button>
 
-                    <a href="login.jsp" class="btn btn-outline btn-block">
+                    <a href="${pageContext.request.contextPath}/pages/login.jsp" class="btn btn-outline btn-block">
                         Voltar
                     </a>
                 </div>
@@ -48,6 +48,6 @@
         </div>
     </div>
 
-    <script defer src="./scripts/validateUserRegister.js"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/validateRegister.js"></script>
 </body>
 </html>
