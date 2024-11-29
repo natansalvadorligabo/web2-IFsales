@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
 <head>
     <meta charset="UTF-8">
@@ -59,7 +60,7 @@
 
                             <div class="divider m-0 p-0"></div>
 
-                            <li><a>Logout</a></li>
+                            <li><a href="${pageContext.request.contextPath}/ControllerServlet?action=logout">Logout</a></li>
                         </ul>
                     </div>
                 </div>
