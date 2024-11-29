@@ -5,7 +5,7 @@
          version="6.0">
     <display-name>IFSales</display-name>
     <welcome-file-list>
-        <welcome-file>/pages/home.jsp</welcome-file>
+        <welcome-file>/pages/login.jsp</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>createUser</param-name>

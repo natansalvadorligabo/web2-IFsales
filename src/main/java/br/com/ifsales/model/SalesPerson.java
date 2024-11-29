@@ -17,9 +17,13 @@ public class SalesPerson {
         this.id = id;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;
@@ -29,13 +33,21 @@ public class SalesPerson {
         this.email = email;
     }
 
-    public String getPhone() { return phone; }
+    public String getPhone() {
+        return phone;
+    }
 
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    public Boolean getActive() { return active; }
+    public Boolean getActive() {
+        return active;
+    }
 
-    public void setActive(Boolean active) { this.active = active; }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     @Override
     public boolean equals(Object o) {

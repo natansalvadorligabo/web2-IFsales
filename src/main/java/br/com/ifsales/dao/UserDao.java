@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class UserDao {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public UserDao(DataSource dataSource) {
         super();

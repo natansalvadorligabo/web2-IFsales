@@ -4,9 +4,8 @@
     <div class="drawer-side z-30">
         <label for="my-drawer-2" id="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 text-base-content">
-            <!-- Sidebar content here -->
             <li class="mb-4 font-semibold text-xl">
-                <a class="font-semibold" href="/home">IFSales</a>
+                <a class="font-semibold" href="${pageContext.request.contextPath}/pages/home.jsp">IFSales</a>
             </li>
 
             <li>
@@ -52,7 +51,6 @@
 
         </ul>
     </div>
-    <div id="contextPath" data-contextPath="${pageContext.request.contextPath}"></div>
+<div id="contextPath" data-contextPath="${pageContext.request.contextPath}"></div>
 
 <script defer src="${pageContext.request.contextPath}/scripts/themeController.js"></script>
-<script defer src="${pageContext.request.contextPath}/scripts/updateUserSaleListener.js"></script>
