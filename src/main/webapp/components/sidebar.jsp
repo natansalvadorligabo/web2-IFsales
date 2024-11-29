@@ -5,7 +5,7 @@
         <label for="my-drawer-2" id="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 text-base-content">
             <li class="mb-4 font-semibold text-xl">
-                <a class="font-semibold" href="${pageContext.request.contextPath}/pages/home.jsp">IFSales</a>
+                <a class="font-semibold" href="${pageContext.request.contextPath}/redirect?action=home">IFSales</a>
             </li>
 
             <li>
@@ -41,7 +41,7 @@
                 <details>
                     <summary class="font-semibold">Tabelas</summary>
                     <ul>
-                        <li><a href="${pageContext.request.contextPath}/ControllerServlet?action=listSalesPersons">Vendedor</a></li>
+                        <li><a href="${pageContext.request.contextPath}/redirect?action=listSalesPersons">Vendedor</a></li>
 
                         <li><a>... <span class="badge">Em breve</span></a></li>
                     </ul>

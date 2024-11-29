@@ -24,6 +24,6 @@ public class DeleteSalesPersonHelper implements Helper {
         if (!salesPersonDao.delete(salesPerson.get()))
             return "/";
 
-        return "/ControllerServlet?action=listSalesPersons";
+        return "/redirect?action=listSalesPersons";
     }
 }

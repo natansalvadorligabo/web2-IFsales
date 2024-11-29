@@ -11,7 +11,7 @@ document.getElementById("email").addEventListener("keypress", function(event)
         if (emailValue)
         {
             const encodedEmail = encodeURIComponent(emailValue);
-            window.location.href = `${contextPath}/ControllerServlet?action=updateSalesPerson&email=${encodedEmail}`;
+            window.location.href = `${contextPath}/redirect?action=updateSalesPerson&email=${encodedEmail}`;
         }
     }
 });

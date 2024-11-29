@@ -57,7 +57,7 @@
 
                             <div class="divider m-0 p-0"></div>
 
-                            <li><a href="${pageContext.request.contextPath}/ControllerServlet?action=logout">Logout</a></li>
+                            <li><a href="${pageContext.request.contextPath}/redirect?action=logout">Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,5 +75,6 @@
         </div>
 
     <jsp:include page="/components/sidebar.jsp" />
+    <script src="${pageContext.request.contextPath}/scripts/updateSalesPersonListener.js"></script>
 </body>
 </html>

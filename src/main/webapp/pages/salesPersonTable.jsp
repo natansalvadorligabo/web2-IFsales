@@ -104,7 +104,7 @@
                                             <p class="py-4">Tem certeza que deseja deletar ${salesPerson.name}?</p>
 
                                             <div class="modal-body flex flex-row justify-center gap-3">
-                                                <a class="btn btn-error" href="${pageContext.request.contextPath}/ControllerServlet?action=deleteSalesPerson&id=${salesPerson.id}">
+                                                <a class="btn btn-error" href="${pageContext.request.contextPath}/redirect?action=deleteSalesPerson&id=${salesPerson.id}">
                                                     Deletar
                                                 </a>
 
