@@ -37,4 +37,4 @@
     </div>
 </div>
 
-<script defer src="./script/themeController.js"></script>
+<script defer src="${pageContext.request.contextPath}/scripts/themeController.js"></script>
