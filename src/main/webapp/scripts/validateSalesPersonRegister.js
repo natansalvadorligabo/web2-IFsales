@@ -1,8 +1,6 @@
 "use strict"
 
-window.onload = initPage;
-
-function initPage()
+window.onload = () =>
 {
     let form;
 
@@ -17,6 +15,8 @@ function initPage()
         if(!valid)
             e.preventDefault();
     });
+
+    document.getElementsByName('phone')[0].addEventListener('input', maskPhone);
 }
 
 function processValidity(form)
@@ -51,4 +51,23 @@ function applyValidity(form)
         valid = false;
 
     return valid;
+}
+
+function maskPhone() {
+    let phone = document.getElementsByName('phone')[0];
+    let value = phone.value.replace(/\D/g, '');
+
+    if (value.length > 0)
+        value = '(' + value;
+
+    if (value.length > 3)
+        value = value.slice(0, 3) + ') ' + value.slice(3);
+
+    if (value.length > 13)
+        value = value.slice(0, 10) + '-' + value.slice(10);
+
+    else if (value.length > 9)
+        value = value.slice(0, 9) + '-' + value.slice(9);
+
+    phone.value = value.slice(0, 15);
 }

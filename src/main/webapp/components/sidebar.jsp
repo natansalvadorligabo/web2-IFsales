@@ -27,7 +27,7 @@
                 <details>
                     <summary class="font-semibold">Atualizar Cadastro</summary>
                     <ul>
-                        <li><a href="#">Vendedor</a></li>
+                        <li class="p-3">Vendedor</li>
                         <li>
                             <input type="email" id="email" name="email" required class="input input-sm w-full max-w-xs cursor-default" placeholder="E-mail do vendedor">
                         </li>
