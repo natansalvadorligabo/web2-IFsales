@@ -14,7 +14,9 @@
   <div class="drawer lg:drawer-open">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col items-center">
-      <jsp:include page="/components/navbar.jsp"/>
+      <jsp:include page="/components/navbar.jsp">
+        <jsp:param name="title" value="Cadastro de Vendedor"/>
+      </jsp:include>
 
       <main class="flex-1 overflow-y-auto md:pt-4 pt-4 px-6">
         <div class="hero h-4/5">

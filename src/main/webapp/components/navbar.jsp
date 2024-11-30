@@ -8,7 +8,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
       </svg>
     </label>
-    <h1 class="text-2xl font-semibold ml-2">Home</h1>
+    <h1 class="text-2xl font-semibold ml-2">${param.title}</h1>
   </div>
   <div class="flex-none">
     <label class="swap swap-rotate">

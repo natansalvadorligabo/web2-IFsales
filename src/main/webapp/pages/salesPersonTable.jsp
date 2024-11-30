@@ -15,7 +15,9 @@
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
 
     <div class="drawer-content flex flex-col items-center">
-        <jsp:include page="/components/navbar.jsp"/>
+        <jsp:include page="/components/navbar.jsp">
+            <jsp:param name="title" value="Tabelas de Vendedores"/>
+        </jsp:include>
 
             <div class="container mx-auto p-4 mt-16">
                 <h1 class="text-2xl font-bold mb-6 mt-8 ml-8">Vendedores</h1>
