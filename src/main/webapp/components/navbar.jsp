@@ -1,10 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <div class="navbar sticky top-0 bg-base-200 z-10 shadow-md">
   <div class="flex-1">
     <label for="my-drawer-2" class="btn btn-outline btn-primary drawer-button lg:hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 inline-block w-5">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+           aria-hidden="true" class="h-5 inline-block w-5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
       </svg>
     </label>
@@ -12,7 +13,7 @@
   </div>
   <div class="flex-none">
     <label class="swap swap-rotate">
-      <input type="checkbox" class="theme-controller" value="dark" />
+      <input type="checkbox" class="theme-controller" value="dark"/>
 
       <svg
               class="swap-off h-10 w-10 fill-current"
