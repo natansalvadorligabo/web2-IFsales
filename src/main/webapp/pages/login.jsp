@@ -2,47 +2,47 @@
 <!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login - IFSales</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Login - IFSales</title>
 </head>
 <body class="min-h-screen bg-base-200">
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 class="mt-16 mb-4 text-2xl font-bold text-center text-secondary">Entrar</h2>
-        </div>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2 class="mt-16 mb-4 text-2xl font-bold text-center text-secondary">Entrar</h2>
+  </div>
 
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="${pageContext.request.contextPath}/redirect" method="post" class="space-y-6">
-                <div>
-                    <label for="email" class="font-semibold">E-mail<span class="text-error">*</span></label>
-                    <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2">
-                </div>
-                <span id="error-email" class="text-error hidden"></span>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form action="${pageContext.request.contextPath}/redirect" method="post" class="space-y-6">
+      <div>
+        <label for="email" class="font-semibold">E-mail<span class="text-error">*</span></label>
+        <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2">
+      </div>
+      <span id="error-email" class="text-error hidden"></span>
 
-                <div>
-                    <label for="password" class="font-semibold">Senha<span class="text-error">*</span></label>
-                    <input type="password" id="password" name="password" required class="input input-bordered w-full mt-2">
-                </div>
-                <span id="error-password" class="text-error hidden"></span>
+      <div>
+        <label for="password" class="font-semibold">Senha<span class="text-error">*</span></label>
+        <input type="password" id="password" name="password" required class="input input-bordered w-full mt-2">
+      </div>
+      <span id="error-password" class="text-error hidden"></span>
 
 
-                <div class="space-y-2">
-                    <button type="submit" name="action" value="login" class="btn btn-primary btn-block">
-                        Entrar
-                    </button>
+      <div class="space-y-2">
+        <button type="submit" name="action" value="login" class="btn btn-primary btn-block">
+          Entrar
+        </button>
 
-                    <a href="${pageContext.request.contextPath}/redirect?action=createUser" class="btn btn-outline btn-block">
-                        Cadastre-se
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
+        <a href="${pageContext.request.contextPath}/redirect?action=createUser" class="btn btn-outline btn-block">
+          Cadastre-se
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
 
-    <script type="module" src="${pageContext.request.contextPath}/scripts/validateLogin.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/scripts/validateLogin.js"></script>
 </body>
 </html>
