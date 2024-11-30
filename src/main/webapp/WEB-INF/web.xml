@@ -3,4 +3,40 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+    <display-name>IFSales</display-name>
+    <welcome-file-list>
+        <welcome-file>/pages/login.jsp</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>createUser</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.CreateUserHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>login</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.LoginUserHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>home</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.HomeHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>logout</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.LogoutUserHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>listSalesPersons</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.ListSalesPersonsHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>saveSalesPerson</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.SaveSalesPersonHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>updateSalesPerson</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.UpdateSalesPersonHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>deleteSalesPerson</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.DeleteSalesPersonHelper</param-value>
+    </context-param>
 </web-app>
