@@ -124,5 +124,6 @@
     </div>
 
     <jsp:include page="/components/sidebar.jsp" />
+    <script src="${pageContext.request.contextPath}/scripts/updateSalesPersonListener.js"></script>
 </body>
 </html>

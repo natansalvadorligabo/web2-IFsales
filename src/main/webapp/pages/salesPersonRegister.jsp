@@ -16,7 +16,7 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form action="${pageContext.request.contextPath}/redirect" method="post" class="space-y-6">
+      <form id="form1" action="${pageContext.request.contextPath}/redirect" method="post" class="space-y-6">
 
         <c:choose>
           <c:when test="${salesPerson == null}">
@@ -60,11 +60,11 @@
 
           <c:choose>
             <c:when test="${salesPerson == null}">
-              <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2" pattern="^\(\d{1,2}\) \d{4,5}-\d{4}$"
+              <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2"
                      placeholder="(12) 34567-8910">
             </c:when>
             <c:when test="${salesPerson != null}">
-              <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2" pattern="^\(\d{1,2}\) \d{4,5}-\d{4}$"
+              <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2"
                      placeholder="(12) 34567-8910" value="${salesPerson.phone}">
             </c:when>
           </c:choose>
