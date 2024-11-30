@@ -23,6 +23,6 @@ public class UpdateSalesPersonHelper implements Helper {
             return "/pages/salesPersonRegister.jsp";
         }
 
-        return "/";
+        return "redirect?action=home";
     }
 }

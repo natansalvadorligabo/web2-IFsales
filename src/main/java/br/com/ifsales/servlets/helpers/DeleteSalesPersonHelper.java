@@ -18,12 +18,7 @@ public class DeleteSalesPersonHelper implements Helper {
         SalesPersonDao salesPersonDao = new SalesPersonDao(DataSourceSearcher.getInstance().getDataSource());
         Optional<SalesPerson> salesPerson = salesPersonDao.getSalesPersonById(salesPersonId);
 
-        if(salesPerson.isEmpty())
-            return "/";
-
-        if (!salesPersonDao.delete(salesPerson.get()))
-            return "/";
-
-        return "/redirect?action=listSalesPersons";
+        salesPerson.ifPresent(salesPersonDao::delete);
+        return "redirect?action=listSalesPersons";
     }
 }
