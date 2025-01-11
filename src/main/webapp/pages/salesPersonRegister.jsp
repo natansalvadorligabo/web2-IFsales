@@ -1,22 +1,23 @@
-<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
+<!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Cadastro de Vendedor - IFSales</title>
 </head>
 <body>
-  <div class="drawer lg:drawer-open">
-    <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content flex flex-col items-center">
-      <jsp:include page="/components/navbar.jsp">
-        <jsp:param name="title" value="Cadastro de Vendedor"/>
-      </jsp:include>
-
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
+  <div class="drawer-content flex flex-col items-center">
+    <jsp:include page="/components/navbar.jsp">
+      <jsp:param name="title" value="Cadastro de Vendedor"/>
+    </jsp:include>
       <main class="flex-1 w-full overflow-y-auto md:pt-4 pt-4 px-6">
           <div class="mx-auto w-full max-w-md">
             <h2 class="mt-16 mb-4 text-2xl font-bold text-center text-primary">Informações cadastrais</h2>
@@ -114,6 +115,10 @@
     <jsp:include page="/components/sidebar.jsp" />
   </div>
 
+  <jsp:include page="/components/sidebar.jsp"/>
+</div>
+
   <script defer src="${pageContext.request.contextPath}/scripts/validateSalesPersonRegister.js"></script>
+  <script defer src="${pageContext.request.contextPath}/scripts/updateSalesPersonListener.js"></script>
 </body>
 </html>

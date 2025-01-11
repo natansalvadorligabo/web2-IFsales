@@ -29,7 +29,7 @@
                     <ul>
                         <li class="p-3">Vendedor</li>
                         <li>
-                            <input type="email" id="email" name="email" required class="input input-sm w-full max-w-xs cursor-default" placeholder="E-mail do vendedor">
+                            <input type="email" id="search-salesperson-email" name="search-salesperson-email" class="input input-sm w-full max-w-xs cursor-default" placeholder="E-mail do vendedor">
                         </li>
 
                         <li><a>... <span class="badge">Em breve</span></a></li>
@@ -54,4 +54,5 @@
 
 <div id="contextPath" data-contextPath="${pageContext.request.contextPath}"></div>
 
+<script defer src="${pageContext.request.contextPath}/scripts/updateSalesPersonListener.js"></script>
 <script defer src="${pageContext.request.contextPath}/scripts/themeController.js"></script>
