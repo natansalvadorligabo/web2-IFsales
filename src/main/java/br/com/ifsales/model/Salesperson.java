@@ -2,7 +2,7 @@ package br.com.ifsales.model;
 
 import java.util.Objects;
 
-public class SalesPerson {
+public class Salesperson {
     private Long id;
     private String name;
     private String email;
@@ -53,7 +53,7 @@ public class SalesPerson {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SalesPerson sp = (SalesPerson) o;
+        Salesperson sp = (Salesperson) o;
         return Objects.equals(id, sp.id);
     }
 
