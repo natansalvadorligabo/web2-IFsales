@@ -16,7 +16,7 @@
                 <details>
                     <summary class="font-semibold">Adicionar</summary>
                     <ul>
-                        <li><a href="${pageContext.request.contextPath}/pages/salesPersonRegister.jsp">Vendedor</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pages/salespersonRegister.jsp">Vendedor</a></li>
 
                         <li><a>... <span class="badge">Em breve</span></a></li>
                     </ul>
@@ -41,7 +41,7 @@
                 <details>
                     <summary class="font-semibold">Tabelas</summary>
                     <ul>
-                        <li><a href="${pageContext.request.contextPath}/redirect?action=listSalesPersons">Vendedor</a></li>
+                        <li><a href="${pageContext.request.contextPath}/redirect?action=listSalespersons">Vendedor</a></li>
 
                         <li><a>... <span class="badge">Em breve</span></a></li>
                     </ul>
@@ -54,5 +54,5 @@
 
 <div id="contextPath" data-contextPath="${pageContext.request.contextPath}"></div>
 
-<script defer src="${pageContext.request.contextPath}/scripts/updateSalesPersonListener.js"></script>
+<script defer src="${pageContext.request.contextPath}/scripts/updateSalespersonListener.js"></script>
 <script defer src="${pageContext.request.contextPath}/scripts/themeController.js"></script>

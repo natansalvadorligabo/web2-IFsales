@@ -25,6 +25,7 @@ public class CreateUserHelper implements Helper {
                 return "redirect?action=login";
             }
         }
+
         req.setAttribute("result", "notRegistered");
         return "/pages/userRegister.jsp";
     }
