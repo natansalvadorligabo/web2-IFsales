@@ -1,4 +1,4 @@
-package br.com.ifsales.dao;
+package br.com.ifsales.dao.mock;
 
 import br.com.ifsales.model.Customer;
 
