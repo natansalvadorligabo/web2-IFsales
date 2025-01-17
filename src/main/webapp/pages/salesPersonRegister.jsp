@@ -18,12 +18,12 @@
     <jsp:include page="/components/navbar.jsp">
       <jsp:param name="title" value="Cadastro de Vendedor"/>
     </jsp:include>
-      <main class="flex-1 w-full overflow-y-auto md:pt-4 pt-4 px-6">
+      <main class="flex flex-col justify-center flex-1 w-full overflow-y-auto px-6 mt-8 lg:mt-0">
           <div class="mx-auto w-full max-w-md">
-            <h2 class="mt-16 mb-4 text-2xl font-bold text-center text-primary">Informações cadastrais</h2>
+            <h2 class="mb-4 text-2xl font-bold text-center text-primary">Informações cadastrais</h2>
           </div>
 
-          <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <form id="form1" action="${pageContext.request.contextPath}/redirect" method="post" class="space-y-6">
 
               <c:choose>
