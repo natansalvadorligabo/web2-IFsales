@@ -35,21 +35,21 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="salesPerson" items="${salesPersons}">
+            <c:forEach var="salesperson" items="${salespersons}">
               <tr class="hover">
-                <td>${salesPerson.id}</td>
-                <td>${salesPerson.name}</td>
-                <td>${salesPerson.email}</td>
-                <td>${salesPerson.phone}</td>
+                <td>${salesperson.id}</td>
+                <td>${salesperson.name}</td>
+                <td>${salesperson.email}</td>
+                <td>${salesperson.phone}</td>
                 <td>
                   <c:choose>
-                    <c:when test="${salesPerson.active}"><input type="checkbox" class="checkbox checkbox-success"
+                    <c:when test="${salesperson.active}"><input type="checkbox" class="checkbox checkbox-success"
                                                                 disabled checked="checked"/></c:when>
                     <c:otherwise><input type="checkbox" class="checkbox" disabled/></c:otherwise>
                   </c:choose>
                 </td>
                 <td class="p-1">
-                  <button onclick="document.getElementById('${salesPerson.id}').showModal()"
+                  <button onclick="document.getElementById('${salesperson.id}').showModal()"
                           class="btn btn-outline btn-error w-28">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -59,14 +59,14 @@
                   </button>
                 </td>
 
-                <dialog id="${salesPerson.id}" class="modal">
+                <dialog id="${salesperson.id}" class="modal">
                   <div class="modal-box">
                     <h3 class="text-lg font-bold">Deletar</h3>
-                    <p class="py-4">Tem certeza que deseja deletar ${salesPerson.name}?</p>
+                    <p class="py-4">Tem certeza que deseja deletar ${salesperson.name}?</p>
 
                     <div class="modal-body flex flex-row justify-center gap-3">
                       <a class="btn btn-error"
-                         href="${pageContext.request.contextPath}/redirect?action=deleteSalesPerson&id=${salesPerson.id}">
+                         href="${pageContext.request.contextPath}/redirect?action=deleteSalesperson&id=${salesperson.id}">
                         Deletar
                       </a>
 

@@ -3,16 +3,14 @@ window.onload = () => {
 
     document.getElementById("search-salesperson-email").addEventListener("keypress", function(event)
     {
-        if (event.key === "Enter")
-        {
+        if (event.key === "Enter") {
             event.preventDefault();
-
             const emailValue = this.value;
 
             if (emailValue)
             {
                 const encodedEmail = encodeURIComponent(emailValue);
-                window.location.href = `${contextPath}/redirect?action=updateSalesPerson&email=${encodedEmail}`;
+                window.location.href = `${contextPath}/redirect?action=updateSalesperson&email=${encodedEmail}`;
             }
         }
     });

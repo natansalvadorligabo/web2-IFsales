@@ -1,6 +1,6 @@
 package br.com.ifsales.dao;
 
-import br.com.ifsales.model.SalesPerson;
+import br.com.ifsales.model.Salesperson;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -11,32 +11,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SalesPersonDao {
+public class SalespersonDao {
 
     private final DataSource dataSource;
 
-    public SalesPersonDao(DataSource dataSource) {
+    public SalespersonDao(DataSource dataSource) {
         super();
         this.dataSource = dataSource;
     }
 
-    public Boolean save(SalesPerson salesPerson) {
-        Optional<SalesPerson> optional = getSalesPersonByEmail(salesPerson.getEmail());
+    public Boolean save(Salesperson salesperson) {
+        Optional<Salesperson> optional = getSalespersonByEmail(salesperson.getEmail());
 
         if(optional.isPresent())
             return false;
 
         String sql = """
-                insert into salesPersons (name, email, phone, active)
+                insert into salespersons (name, email, phone, active)
                 values (?, ?, ?, ?)""";
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql))
         {
-            ps.setString(1, salesPerson.getName());
-            ps.setString(2, salesPerson.getEmail());
-            ps.setString(3, salesPerson.getPhone());
-            ps.setBoolean(4, salesPerson.getActive());
+            ps.setString(1, salesperson.getName());
+            ps.setString(2, salesperson.getEmail());
+            ps.setString(3, salesperson.getPhone());
+            ps.setBoolean(4, salesperson.getActive());
 
             ps.executeUpdate();
         }
@@ -47,13 +47,13 @@ public class SalesPersonDao {
         return true;
     }
 
-    public Optional<SalesPerson> getSalesPersonById(Long id) {
+    public Optional<Salesperson> getSalespersonById(Long id) {
         String sql = """
                 select *
-                from salesPersons
-                where salesPerson_id=?""";
+                from salespersons
+                where salesperson_id=?""";
 
-        Optional<SalesPerson> optional = Optional.empty();
+        Optional<Salesperson> optional = Optional.empty();
 
 
         try (Connection con = dataSource.getConnection();
@@ -61,7 +61,7 @@ public class SalesPersonDao {
         {
             ps.setLong(1, id);
 
-            optional = extractSalesPersonFromQuery(optional, ps);
+            optional = extractSalespersonFromQuery(optional, ps);
         }
         catch (SQLException e)
         {
@@ -70,20 +70,20 @@ public class SalesPersonDao {
         return optional;
     }
 
-    public Optional<SalesPerson> getSalesPersonByEmail(String email) {
+    public Optional<Salesperson> getSalespersonByEmail(String email) {
         String sql = """
                 select *
-                from salesPersons
+                from salespersons
                 where email = ?""";
 
-        Optional<SalesPerson> optional = Optional.empty();
+        Optional<Salesperson> optional = Optional.empty();
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
         {
             ps.setString(1, email);
 
-            optional = extractSalesPersonFromQuery(optional, ps);
+            optional = extractSalespersonFromQuery(optional, ps);
         }
         catch (SQLException e)
         {
@@ -92,12 +92,12 @@ public class SalesPersonDao {
         return optional;
     }
 
-    public List<SalesPerson> getAllSalesPersons() {
-        List<SalesPerson> salesPersons = new ArrayList<>();
+    public List<Salesperson> getAllSalespersons() {
+        List<Salesperson> salesperson = new ArrayList<>();
 
         String sql = """
                 select *
-                from salesPersons""";
+                from salespersons""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -105,39 +105,39 @@ public class SalesPersonDao {
         {
             while (rs.next())
             {
-                SalesPerson salesPerson = new SalesPerson();
-                salesPerson.setId(rs.getLong("salesPerson_id"));
-                salesPerson.setName(rs.getString("name"));
-                salesPerson.setEmail(rs.getString("email"));
-                salesPerson.setPhone(rs.getString("phone"));
-                salesPerson.setActive(rs.getBoolean("active"));
+                Salesperson salespersonFinded = new Salesperson();
+                salespersonFinded.setId(rs.getLong("salesperson_id"));
+                salespersonFinded.setName(rs.getString("name"));
+                salespersonFinded.setEmail(rs.getString("email"));
+                salespersonFinded.setPhone(rs.getString("phone"));
+                salespersonFinded.setActive(rs.getBoolean("active"));
 
-                salesPersons.add(salesPerson);
+                salesperson.add(salespersonFinded);
             }
         }
         catch (SQLException e)
         {
             throw new RuntimeException("Error occurred during database query", e);
         }
-        return salesPersons;
+        return salesperson;
     }
 
-    public Boolean update(SalesPerson salesPerson) {
+    public Boolean update(Salesperson salesperson) {
         String sql = """
-                update salesPersons set
+                update salespersons set
                     name = ?,
                     email = ?,
                     phone = ?,
                     active = ?
-                where salesPerson_id = ?""";
+                where salesperson_id = ?""";
 
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
         {
-            ps.setString(1, salesPerson.getName());
-            ps.setString(2, salesPerson.getEmail());
-            ps.setString(3, salesPerson.getPhone());
-            ps.setBoolean(4, salesPerson.getActive());
-            ps.setLong(5, salesPerson.getId());
+            ps.setString(1, salesperson.getName());
+            ps.setString(2, salesperson.getEmail());
+            ps.setString(3, salesperson.getPhone());
+            ps.setBoolean(4, salesperson.getActive());
+            ps.setLong(5, salesperson.getId());
             ps.executeUpdate();
 
             return true;
@@ -148,15 +148,15 @@ public class SalesPersonDao {
         }
     }
 
-    public Boolean delete(SalesPerson salesPerson) {
+    public Boolean delete(Salesperson salesperson) {
         String sql = """
-                delete from salesPersons
+                delete from salespersons
                 where salesPerson_id = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
         {
-            ps.setLong(1, salesPerson.getId());
+            ps.setLong(1, salesperson.getId());
             ps.executeUpdate();
 
             return true;
@@ -166,19 +166,19 @@ public class SalesPersonDao {
         }
     }
 
-    private Optional<SalesPerson> extractSalesPersonFromQuery(Optional<SalesPerson> optional, PreparedStatement ps) throws SQLException {
+    private Optional<Salesperson> extractSalespersonFromQuery(Optional<Salesperson> optional, PreparedStatement ps) throws SQLException {
         try (ResultSet rs = ps.executeQuery())
         {
             if (rs.next())
             {
-                SalesPerson salesPerson = new SalesPerson();
-                salesPerson.setId(Long.parseLong(rs.getString("salesPerson_id")));
-                salesPerson.setName(rs.getString("name"));
-                salesPerson.setEmail(rs.getString("email"));
-                salesPerson.setPhone(rs.getString("phone"));
-                salesPerson.setActive(rs.getBoolean("active"));
+                Salesperson salesperson = new Salesperson();
+                salesperson.setId(Long.parseLong(rs.getString("salesPerson_id")));
+                salesperson.setName(rs.getString("name"));
+                salesperson.setEmail(rs.getString("email"));
+                salesperson.setPhone(rs.getString("phone"));
+                salesperson.setActive(rs.getBoolean("active"));
 
-                optional = Optional.of(salesPerson);
+                optional = Optional.of(salesperson);
             }
         }
         return optional;
