@@ -12,15 +12,14 @@ public class UpdateSalespersonHelper implements Helper {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        String email = req.getParameter("email");
+        String id = req.getParameter("id");
 
         SalespersonDao salespersonDao = new SalespersonDao(DataSourceSearcher.getInstance().getDataSource());
-        Optional<Salesperson> salesperson = salespersonDao.getSalespersonByEmail(email);
+        Optional<Salesperson> salesperson = salespersonDao.getSalespersonById(Long.parseLong(id));
 
-        if(salesperson.isPresent())
-        {
+        if (salesperson.isPresent()) {
             req.setAttribute("salesperson", salesperson.get());
-            return "/pages/salespersonRegister.jsp";
+            return "/pages/salespersonForm.jsp";
         }
 
         return "redirect?action=home";
