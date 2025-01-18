@@ -17,6 +17,6 @@ public class ListSalespersonsHelper implements Helper {
 
         req.setAttribute("salespersons", salesperson);
 
-        return "/pages/salespersonTable.jsp";
+        return "/pages/home/salespersonTable.jsp";
     }
 }

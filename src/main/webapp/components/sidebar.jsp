@@ -9,14 +9,14 @@
             </li>
 
             <li>
-                <a class="font-semibold" href="#">Dashboard <span class="badge">Em breve</span></a>
+                <a class="font-semibold" href="${pageContext.request.contextPath}/redirect?action=dashboard">Dashboard</a>
             </li>
 
             <li>
                 <details>
                     <summary class="font-semibold">Adicionar</summary>
                     <ul>
-                        <li><a href="${pageContext.request.contextPath}/pages/salespersonRegister.jsp">Vendedor</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pages/home/salespersonRegister.jsp">Vendedor</a></li>
 
                         <li><a>... <span class="badge">Em breve</span></a></li>
                     </ul>

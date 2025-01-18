@@ -1,26 +1,21 @@
 "use strict"
 
-window.onload = () =>
-{
-    let form;
+let form;
 
-    form = document.getElementById('form1');
+form = document.getElementById('form1');
 
-    form.noValidate = true;
+form.noValidate = true;
 
-    form.addEventListener('submit', function(e)
-    {
-        let valid = processValidity(this);
+form.addEventListener('submit', function (e) {
+    let valid = processValidity(this);
 
-        if(!valid)
-            e.preventDefault();
-    });
+    if (!valid)
+        e.preventDefault();
+});
 
-    document.getElementsByName('phone')[0].addEventListener('input', maskPhone);
-}
+document.getElementsByName('phone')[0].addEventListener('input', maskPhone);
 
-function processValidity(form)
-{
+function processValidity(form) {
     let valid;
 
     valid = applyValidity(form);
@@ -28,26 +23,22 @@ function processValidity(form)
     return valid;
 }
 
-function applyValidity(form)
-{
+function applyValidity(form) {
     let valid = true;
     let count = 0;
     let elements = form.elements;
 
-    for(let i = 0; i < elements.length - 1; i++)
-    {
+    for (let i = 0; i < elements.length - 1; i++) {
         let element = elements[i];
         let span = document.getElementById(i);
 
-        if(!element.validity.valid)
-        {
+        if (!element.validity.valid) {
             span.innerHTML = element.validationMessage;
             count++;
-        }
-        else
+        } else
             span.innerHTML = "";
     }
-    if(count > 0)
+    if (count > 0)
         valid = false;
 
     return valid;

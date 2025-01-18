@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 
-@WebFilter(urlPatterns = {"/redirect"})
+@WebFilter(urlPatterns = {"/redirect", "/pages/home/*"})
 public class ValidationFilter implements Filter {
     private static final String[] actions = {"home", "saveSalesperson", "updateSalesperson"
             , "deleteSalesperson", "listSalespersons", "logout"};
@@ -27,6 +27,13 @@ public class ValidationFilter implements Filter {
             } else {
                 chain.doFilter(request, response);
             }
+        } else if (session == null || session.getAttribute("user") == null) {
+            HttpServletResponse httpResponse = (HttpServletResponse)response;
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/redirect?action=login");
+        } else {
+            chain.doFilter(request, response);
         }
+
+
     }
 }

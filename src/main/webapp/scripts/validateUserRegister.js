@@ -1,4 +1,4 @@
-window.onload = initPage;
+initPage();
 
 function initPage() {
     let form = document.querySelector('form');
