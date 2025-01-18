@@ -57,13 +57,13 @@ create sequence ifsales.customers_seq start with 1 increment by 1 nocycle nocach
 create sequence ifsales.funnel_seq start with 1 increment by 1 nocycle nocache;
 
 create table ifsales.users (
-                               id int primary key
+     id int primary key
     ,email varchar2(100) not null
     ,password varchar(255) not null
 );
 
 create table ifsales.salespersons (
-                                      id int primary key
+     id int primary key
     ,name varchar2(100) not null
     ,email varchar2(100) not null
     ,phone varchar2(16) not null
@@ -71,26 +71,26 @@ create table ifsales.salespersons (
 );
 
 create table ifsales.regions (
-                                 id int primary key
+     id int primary key
     ,region_name varchar2(50) not null
     ,city varchar2(50) not null
     ,state varchar2(50) not null
 );
 
 create table ifsales.stores (
-                                id int primary key
+     id int primary key
     ,store_name varchar2(100) not null
     ,store_cnpj varchar2(100) not null
 );
 
 create table ifsales.categories (
-                                    id int primary key
+     id int primary key
     ,category_name varchar2(100) not null
     ,description varchar2(255) not null
 );
 
 create table ifsales.products (
-                                  id int primary key
+     id int primary key
     ,brand varchar2(100) not null
     ,model varchar2(100) not null
     ,model_year int not null
@@ -100,7 +100,7 @@ create table ifsales.products (
 );
 
 create table ifsales.customers (
-                                   id int primary key
+     id int primary key
     ,cpf varchar2(15) not null
     ,region_id int not null
     ,first_name varchar2(50) not null
@@ -113,7 +113,7 @@ create table ifsales.customers (
 );
 
 create table ifsales.funnel (
-                                id int primary key
+     id int primary key
     ,customer_id int not null
     ,salesperson_id int not null
     ,store_id int not null

@@ -3,7 +3,7 @@
 	<Resource name="jdbc/ifsales" auth="Container"
     	type="javax.sql.DataSource"
     	maxTotal = "100" minIdle="10" maxIdle="30" maxWaitMillis="10000"
-    	username="root" password="root"
+    	username="root" password="40028922"
     	driverClassName="com.mysql.cj.jdbc.Driver"
-    	url="jdbc:mysql://localhost:3306/ifsales" />
+    	url="jdbc:mysql://mysql.localto.net:6958/ifsales" />
 </Context>

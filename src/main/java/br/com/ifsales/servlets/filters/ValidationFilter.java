@@ -10,8 +10,8 @@ import java.util.Arrays;
 
 @WebFilter(urlPatterns = {"/redirect"})
 public class ValidationFilter implements Filter {
-    private static final String[] actions = {"home", "saveSalesPerson", "updateSalesPerson"
-            , "deleteSalesPerson", "listSalesPersons", "logout"};
+    private static final String[] actions = {"home", "saveSalesperson", "updateSalesperson"
+            , "deleteSalesperson", "listSalespersons", "logout"};
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
