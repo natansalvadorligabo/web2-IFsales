@@ -81,6 +81,9 @@ create table ifsales.stores (
      id int primary key
     ,store_name varchar2(100) not null
     ,store_cnpj varchar2(100) not null
+    ,region_id  int not null
+    ,address    varchar2(100) not null
+    ,phone      varchar2(16) not null
 );
 
 create table ifsales.categories (
