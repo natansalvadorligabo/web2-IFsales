@@ -9,41 +9,41 @@ grant insert any table to ifsales;
 
 -- drop all tables and sequences if exist
 begin
-for table_name in (
+    for table_name in (
         select table_name
         from user_tables
         where table_name in (
-            'USERS'
-           ,'SALESPERSONS'
-           ,'REGIONS'
-           ,'STORES'
-           ,'CATEGORIES'
-           ,'CUSTOMERS'
-           ,'PRODUCTS'
-           ,'FUNNEL'
+                             'USERS'
+            ,'SALESPERSONS'
+            ,'REGIONS'
+            ,'STORES'
+            ,'CATEGORIES'
+            ,'CUSTOMERS'
+            ,'PRODUCTS'
+            ,'FUNNEL'
+            )
         )
-    )
-    loop
-        execute immediate 'DROP TABLE ifsales.' || table_name.table_name || ' CASCADE CONSTRAINTS';
-end loop;
+        loop
+            execute immediate 'DROP TABLE ifsales.' || table_name.table_name || ' CASCADE CONSTRAINTS';
+        end loop;
 
-for sequence_name in (
+    for sequence_name in (
         select sequence_name
         from user_sequences
         where sequence_name in (
-            'USERS_SEQ'
-           ,'SALESPERSONS_SEQ'
-           ,'REGIONS_SEQ'
-           ,'STORES_SEQ'
-           ,'CATEGORIES_SEQ'
-           ,'PRODUCTS_SEQ'
-           ,'CUSTOMERS_SEQ'
-           ,'FUNNEL_SEQ'
+                                'USERS_SEQ'
+            ,'SALESPERSONS_SEQ'
+            ,'REGIONS_SEQ'
+            ,'STORES_SEQ'
+            ,'CATEGORIES_SEQ'
+            ,'PRODUCTS_SEQ'
+            ,'CUSTOMERS_SEQ'
+            ,'FUNNEL_SEQ'
+            )
         )
-    )
-    loop
-        execute immediate 'DROP SEQUENCE ifsales.' || sequence_name.sequence_name;
-end loop;
+        loop
+            execute immediate 'DROP SEQUENCE ifsales.' || sequence_name.sequence_name;
+        end loop;
 end;
 /
 
@@ -96,6 +96,7 @@ create table ifsales.products (
     ,model_year int not null
     ,price number(19, 2) not null
     ,category_id int not null
+    ,total_sales number(10) default 0
     ,foreign key (category_id) references ifsales.categories(id)
 );
 
@@ -120,11 +121,35 @@ create table ifsales.funnel (
     ,product_id int not null
     ,paid_date date not null
     ,discount number(5,2)
+    ,product_quantity number(10) default 1 not null
     ,foreign key (customer_id) references ifsales.customers(id)
     ,foreign key (salesperson_id) references ifsales.salespersons(id)
     ,foreign key (store_id) references ifsales.stores(id)
     ,foreign key (product_id) references ifsales.products(id)
 );
+
+create or replace trigger ifsales.trg_update_product_sales
+    after insert or update or delete on ifsales.funnel
+    for each row
+begin
+    if deleting then
+        update ifsales.products
+        set total_sales = total_sales - :old.product_quantity
+        where id = :old.product_id;
+    end if;
+
+    if inserting then
+        update ifsales.products
+        set total_sales = total_sales + :new.product_quantity
+        where id = :new.product_id;
+    end if;
+
+    if updating then
+        update ifsales.products
+        set total_sales = total_sales - :old.product_quantity + :new.product_quantity
+        where id = :new.product_id;
+    end if;
+end;
 
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Caua Rufino', 'caua@gmail.com', '(16) 99633-7792', 1);
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Nathan Ligabo', 'nathzinho@gmail.com', '(16) 99522-7194', 0);
