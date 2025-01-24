@@ -1,13 +1,13 @@
 import {applyValidity} from './validateUserRegister.js';
 
-window.onload = initPage;
+initPage()
 
 function initPage() {
     let form = document.querySelector('form');
 
     form.noValidate = true;
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         let valid = processValidity(this);
         if (!valid) {
             e.preventDefault();

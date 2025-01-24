@@ -1,12 +1,12 @@
 package br.com.ifsales.servlets.helpers;
 
+import java.util.Optional;
+
 import br.com.ifsales.dao.SalespersonDao;
 import br.com.ifsales.model.Salesperson;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.util.Optional;
 
 public class UpdateSalespersonHelper implements Helper {
 
@@ -19,7 +19,7 @@ public class UpdateSalespersonHelper implements Helper {
 
         if (salesperson.isPresent()) {
             req.setAttribute("salesperson", salesperson.get());
-            return "/pages/salespersonForm.jsp";
+            return "/pages/home/salespersonForm.jsp";
         }
 
         return "redirect?action=home";
