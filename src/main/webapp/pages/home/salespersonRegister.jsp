@@ -103,7 +103,7 @@
                   </c:choose>
                 </button>
 
-                <a href="${pageContext.request.contextPath}/pages/home.jsp" class="btn btn-outline btn-block">
+                <a href="${pageContext.request.contextPath}/pages/home/home.jsp" class="btn btn-outline btn-block">
                   Voltar
                 </a>
               </div>

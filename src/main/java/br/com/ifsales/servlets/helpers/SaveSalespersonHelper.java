@@ -30,7 +30,7 @@ public class SaveSalespersonHelper implements Helper {
             if (registered.isPresent())
             {
                 req.setAttribute("result", "already exists");
-                return "/pages/salespersonRegister.jsp";
+                return "/pages/home/salespersonRegister.jsp";
             }
             else
             {

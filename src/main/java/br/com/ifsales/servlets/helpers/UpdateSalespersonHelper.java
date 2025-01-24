@@ -20,7 +20,7 @@ public class UpdateSalespersonHelper implements Helper {
         if(salesperson.isPresent())
         {
             req.setAttribute("salesperson", salesperson.get());
-            return "/pages/salespersonRegister.jsp";
+            return "/pages/home/salespersonRegister.jsp";
         }
 
         return "redirect?action=home";
