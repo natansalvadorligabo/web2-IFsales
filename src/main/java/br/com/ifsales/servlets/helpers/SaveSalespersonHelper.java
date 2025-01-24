@@ -1,15 +1,16 @@
 package br.com.ifsales.servlets.helpers;
+
+import java.util.Optional;
+
 import br.com.ifsales.dao.SalespersonDao;
 import br.com.ifsales.model.Salesperson;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.Optional;
-
 public class SaveSalespersonHelper implements Helper {
     @Override
-    public Object execute(HttpServletRequest req, HttpServletResponse resp)  {
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) {
         long id = Long.parseLong(req.getParameter("id"));
         String name = req.getParameter("name");
         String email = req.getParameter("email");
@@ -27,20 +28,16 @@ public class SaveSalespersonHelper implements Helper {
         if (id == 0) {
             Optional<Salesperson> registered = salespersonDao.getSalespersonByEmail(email);
 
-            if (registered.isPresent())
-            {
+            if (registered.isPresent()) {
                 req.setAttribute("result", "already exists");
-                return "/pages/home/salespersonRegister.jsp";
-            }
-            else
-            {
+                return "/pages/home/salespersonForm.jsp";
+            } else {
                 if (salespersonDao.save(salesperson))
                     req.setAttribute("result", "registered successfully");
                 else
                     req.setAttribute("result", "not registered");
             }
-        }
-        else {
+        } else {
             salesperson.setId(id);
 
             if (salespersonDao.update(salesperson))
