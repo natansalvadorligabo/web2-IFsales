@@ -42,7 +42,7 @@
 
         <div class="divider m-0 p-0"></div>
 
-        <li><a href="${pageContext.request.contextPath}/redirect?action=logout">Logout</a></li>
+        <li><a href="${pageContext.request.contextPath}/redirect?action=logout">Sair</a></li>
       </ul>
     </div>
   </div>
