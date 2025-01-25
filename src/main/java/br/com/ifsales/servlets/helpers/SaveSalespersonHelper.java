@@ -44,6 +44,6 @@ public class SaveSalespersonHelper implements Helper {
                 req.setAttribute("result", "saved");
         }
 
-        return "/pages/home.jsp";
+        return "redirect?action=listSalespersons";
     }
 }
