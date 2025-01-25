@@ -51,7 +51,7 @@ public class SalespersonDao {
         String sql = """
                 select *
                 from salespersons
-                where salesperson_id=?""";
+                where id=?""";
 
         Optional<Salesperson> optional = Optional.empty();
 
@@ -106,7 +106,7 @@ public class SalespersonDao {
             while (rs.next())
             {
                 Salesperson salespersonFinded = new Salesperson();
-                salespersonFinded.setId(rs.getLong("salesperson_id"));
+                salespersonFinded.setId(rs.getLong("id"));
                 salespersonFinded.setName(rs.getString("name"));
                 salespersonFinded.setEmail(rs.getString("email"));
                 salespersonFinded.setPhone(rs.getString("phone"));
@@ -129,7 +129,7 @@ public class SalespersonDao {
                     email = ?,
                     phone = ?,
                     active = ?
-                where salesperson_id = ?""";
+                where id = ?""";
 
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
         {
@@ -151,7 +151,7 @@ public class SalespersonDao {
     public Boolean delete(Salesperson salesperson) {
         String sql = """
                 delete from salespersons
-                where salesPerson_id = ?""";
+                where id = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -172,7 +172,7 @@ public class SalespersonDao {
             if (rs.next())
             {
                 Salesperson salesperson = new Salesperson();
-                salesperson.setId(Long.parseLong(rs.getString("salesPerson_id")));
+                salesperson.setId(Long.parseLong(rs.getString("id")));
                 salesperson.setName(rs.getString("name"));
                 salesperson.setEmail(rs.getString("email"));
                 salesperson.setPhone(rs.getString("phone"));
