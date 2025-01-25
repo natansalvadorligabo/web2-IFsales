@@ -7,6 +7,7 @@ public class Product {
     private int modelYear;
     private Double price;
     private Long categoryId;
+    private int totalSales;
 
     public Long getId() {
         return id;
@@ -54,5 +55,13 @@ public class Product {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public int getTotalSales() {
+        return totalSales;
+    }
+
+    public void setTotalSales(int totalSales) {
+        this.totalSales = totalSales;
     }
 }

@@ -20,38 +20,38 @@ public class SalespersonDao {
         this.dataSource = dataSource;
     }
 
-    public Boolean save(Salesperson salesperson) {
-        Optional<Salesperson> optional = getSalespersonByEmail(salesperson.getEmail());
-
-        if(optional.isPresent())
-            return false;
-
-        String sql = """
-                insert into salespersons (name, email, phone, active)
-                values (?, ?, ?, ?)""";
-
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql))
-        {
-            ps.setString(1, salesperson.getName());
-            ps.setString(2, salesperson.getEmail());
-            ps.setString(3, salesperson.getPhone());
-            ps.setBoolean(4, salesperson.getActive());
-
-            ps.executeUpdate();
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException("Error occurred during database query", e);
-        }
-        return true;
-    }
+//    public Boolean save(Salesperson salesperson) {
+//        Optional<Salesperson> optional = getSalespersonByEmail(salesperson.getEmail());
+//
+//        if(optional.isPresent())
+//            return false;
+//
+//        String sql = """
+//                insert into salespersons (name, email, phone, active)
+//                values (?, ?, ?, ?, ?)""";
+//
+//        try(Connection conn = dataSource.getConnection();
+//            PreparedStatement ps = conn.prepareStatement(sql))
+//        {
+//            ps.setString(1, salesperson.getName());
+//            ps.setString(2, salesperson.getEmail());
+//            ps.setString(3, salesperson.getPhone());
+//            ps.setBoolean(4, salesperson.getActive());
+//
+//            ps.executeUpdate();
+//        }
+//        catch (SQLException e)
+//        {
+//            throw new RuntimeException("Error occurred during database query", e);
+//        }
+//        return true;
+//    }
 
     public Optional<Salesperson> getSalespersonById(Long id) {
         String sql = """
                 select *
                 from salespersons
-                where salesperson_id=?""";
+                where id=?""";
 
         Optional<Salesperson> optional = Optional.empty();
 
@@ -129,7 +129,7 @@ public class SalespersonDao {
                     email = ?,
                     phone = ?,
                     active = ?
-                where salesperson_id = ?""";
+                where id = ?""";
 
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
         {
@@ -151,7 +151,7 @@ public class SalespersonDao {
     public Boolean delete(Salesperson salesperson) {
         String sql = """
                 delete from salespersons
-                where salesPerson_id = ?""";
+                where id = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
