@@ -20,7 +20,14 @@
         </jsp:include>
 
         <div class="container mx-auto p-4">
-            <h1 class="text-2xl font-bold mb-6 mt-8 ml-8">Vendedores</h1>
+            <div class="flex items-center justify-between mb-6 mt-8">
+                <h1 class="text-2xl font-bold">Vendedores</h1>
+                <a class="btn btn-success btn-circle" href="${pageContext.request.contextPath}/pages/home/salespersonForm.jsp">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                    </svg>
+                </a>
+            </div>
 
             <div class="stats stats-vertical shadow-md w-full">
                 <div class="overflow-x-auto">

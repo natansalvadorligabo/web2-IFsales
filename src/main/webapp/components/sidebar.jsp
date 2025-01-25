@@ -27,45 +27,6 @@ uri="jakarta.tags.functions" %>
 
     <li>
       <details>
-        <summary class="font-semibold">Adicionar</summary>
-        <ul>
-          <li>
-            <a
-              href="${pageContext.request.contextPath}/pages/home/salespersonForm.jsp"
-              >Vendedor</a
-            >
-          </li>
-
-          <li>
-            <a>... <span class="badge">Em breve</span></a>
-          </li>
-        </ul>
-      </details>
-    </li>
-
-    <li>
-      <details>
-        <summary class="font-semibold">Atualizar Cadastro</summary>
-        <ul>
-          <li class="p-3">Vendedor</li>
-          <li>
-            <input
-              type="email"
-              id="search-salesperson-email"
-              name="search-salesperson-email"
-              class="input input-sm w-full max-w-xs cursor-default"
-              placeholder="E-mail do vendedor" />
-          </li>
-
-          <li>
-            <a>... <span class="badge">Em breve</span></a>
-          </li>
-        </ul>
-      </details>
-    </li>
-
-    <li>
-      <details>
         <summary class="font-semibold">Tabelas</summary>
         <ul>
           <li>

@@ -22,6 +22,6 @@ public class UpdateSalespersonHelper implements Helper {
             return "/pages/home/salespersonForm.jsp";
         }
 
-        return "redirect?action=home";
+        return "redirect?action=listSalespersons";
     }
 }
