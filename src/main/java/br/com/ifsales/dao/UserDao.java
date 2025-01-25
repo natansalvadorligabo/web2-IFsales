@@ -19,9 +19,12 @@ public class UserDao {
         this.dataSource = dataSource;
     }
 
-    public Boolean save(User user) throws SQLException {
-        String sql = "call IFSALES_PKG.INSERT_USER(?, ?);";
-
+    public Boolean save(User user){
+        Optional<User> optional = getUserByEmail(user.getEmail());
+        if(optional.isPresent()) {
+            return false;
+        }
+        String sql = "call IFSALES_PKG.INSERT_USER(?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, user.getEmail());
@@ -29,12 +32,12 @@ public class UserDao {
 
             ps.executeUpdate();
         }catch (SQLException e) {
-            throw new SQLException("Error during user database save", e);
+            throw new RuntimeException("Error occurred during database query", e);
         }
         return true;
     }
 
-    public Optional<User> getUserByEmail(String email) throws SQLException {
+    public Optional<User> getUserByEmail(String email){
         String sql = "select * from users where email = ?";
         Optional<User> optional = Optional.empty();
 
@@ -46,7 +49,7 @@ public class UserDao {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     User user = new User();
-                    user.setId(Long.parseLong(rs.getString("user_id")));
+                    user.setId(Long.parseLong(rs.getString("id")));
                     user.setEmail(rs.getString("email"));
                     user.setPassword(rs.getString("password"));
 
@@ -54,7 +57,34 @@ public class UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new SQLException("Error during user database query", e);
+            throw new RuntimeException("Error occurred during database query", e);
+        }
+        return optional;
+    }
+
+    public Optional<User> getUserByEmailAndPassword(String email, String password){
+        String passwordEncrypted = PasswordEncoder.encode(password);
+
+        String sql = "select * from users where email = ? and password = ?";
+        Optional<User> optional = Optional.empty();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ps.setString(2, passwordEncrypted);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getLong("id"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+
+                    optional = Optional.of(user);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred during database query", e);
         }
         return optional;
     }
