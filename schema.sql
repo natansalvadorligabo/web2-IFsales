@@ -84,6 +84,7 @@ create table ifsales.stores (
     ,region_id  int not null
     ,address    varchar2(100) not null
     ,phone      varchar2(16) not null
+    ,foreign key (region_id) references ifsales.regions(id)
 );
 
 create table ifsales.categories (
