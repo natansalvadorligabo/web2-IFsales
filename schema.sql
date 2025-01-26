@@ -4,8 +4,10 @@ create user ifsales identified by admin
 default tablespace users temporary tablespace temp
 quota unlimited on users;
 
-grant create session, create table, create view, create procedure, create trigger, create public synonym to ifsales;
-grant insert any table to ifsales;
+grant create session, create table, create view
+    , create procedure, create trigger, create sequence
+    , select any table, insert any table, drop any table
+    , create public synonym to ifsales;
 
 -- drop all tables and sequences if exist
 begin
@@ -21,6 +23,7 @@ begin
             ,'CUSTOMERS'
             ,'PRODUCTS'
             ,'FUNNEL'
+            ,'ACTION_LOGS'
             )
         )
         loop
@@ -39,6 +42,7 @@ begin
             ,'PRODUCTS_SEQ'
             ,'CUSTOMERS_SEQ'
             ,'FUNNEL_SEQ'
+            ,'ACTION_LOGS_SEQ'
             )
         )
         loop
@@ -55,11 +59,13 @@ create sequence ifsales.categories_seq start with 1 increment by 1 nocycle nocac
 create sequence ifsales.products_seq start with 1 increment by 1 nocycle nocache;
 create sequence ifsales.customers_seq start with 1 increment by 1 nocycle nocache;
 create sequence ifsales.funnel_seq start with 1 increment by 1 nocycle nocache;
+create sequence ifsales.action_logs_seq start with 1 increment by 1 nocycle nocache;
 
 create table ifsales.users (
      id int primary key
     ,email varchar2(100) not null
     ,password varchar(255) not null
+    ,constraint uq_user_email unique (email)
 );
 
 create table ifsales.salespersons (
@@ -68,6 +74,7 @@ create table ifsales.salespersons (
     ,email varchar2(100) not null
     ,phone varchar2(16) not null
     ,active number(1) default 1 not null
+    ,constraint uq_salesperson_email unique (email)
 );
 
 create table ifsales.regions (
@@ -75,6 +82,7 @@ create table ifsales.regions (
     ,region_name varchar2(50) not null
     ,city varchar2(50) not null
     ,state varchar2(50) not null
+    ,constraint uq_region_name unique (region_name)
 );
 
 create table ifsales.stores (
@@ -91,6 +99,7 @@ create table ifsales.categories (
      id int primary key
     ,category_name varchar2(100) not null
     ,description varchar2(255) not null
+    ,constraint uq_category_name unique (category_name)
 );
 
 create table ifsales.products (
@@ -115,6 +124,7 @@ create table ifsales.customers (
     ,mobile varchar2(16) not null
     ,professional_status varchar2(50) not null
     ,foreign key (region_id) references ifsales.regions(id)
+    ,constraint uq_customer_cpf unique (cpf)
 );
 
 create table ifsales.funnel (
@@ -130,7 +140,37 @@ create table ifsales.funnel (
     ,foreign key (salesperson_id) references ifsales.salespersons(id)
     ,foreign key (store_id) references ifsales.stores(id)
     ,foreign key (product_id) references ifsales.products(id)
+    ,constraint uq_funnel unique (customer_id, salesperson_id, store_id, product_id, paid_date)
 );
+
+create table ifsales.action_logs (
+    id int primary key,
+    table_name varchar2(100) not null,
+    action varchar2(50) not null,
+    changed_by varchar2(100) default user,
+    action_date timestamp default current_timestamp,
+    details varchar2(4000)
+);
+
+create or replace trigger ifsales.trg_log_funnel
+    after insert or update or delete on ifsales.funnel
+    for each row
+begin
+    if inserting then
+        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'FUNNEL', 'INSERTED into FUNNEL'
+                ,user, current_timestamp, :new.customer_id);
+    elsif updating then
+        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'FUNNEL', 'UPDATED FUNNEL'
+               ,user, current_timestamp, :new.customer_id);
+    elsif deleting then
+        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'FUNNEL', 'DELETED from FUNNEL'
+               ,user, current_timestamp, :old.customer_id);
+    end if;
+end;
+/
 
 create or replace trigger ifsales.trg_update_product_sales
     after insert or update or delete on ifsales.funnel
@@ -154,12 +194,14 @@ begin
         where id = :new.product_id;
     end if;
 end;
+/
 
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Caua Rufino', 'caua@gmail.com', '(16) 99633-7792', 1);
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Nathan Ligabo', 'nathzinho@gmail.com', '(16) 99522-7194', 0);
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Giovana Trevizan', 'trevizan.gio@gmail.com', '(16) 92334-7142', 0);
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Igor filipi', 'f.igor@gmail.com', '(16) 99331-4564', 0);
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Tonhao recordista', 'recordista@gmail.com', '(16) 99999-9999', 1);
+/
 
 select * from ifsales.users;
 select * from ifsales.salespersons;
