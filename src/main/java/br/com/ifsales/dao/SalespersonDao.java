@@ -1,6 +1,7 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.Salesperson;
+import br.com.ifsales.model.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -21,14 +22,7 @@ public class SalespersonDao {
     }
 
     public Boolean save(Salesperson salesperson) {
-        Optional<Salesperson> optional = getSalespersonByEmail(salesperson.getEmail());
-
-        if(optional.isPresent())
-            return false;
-
-        String sql = """
-                insert into salespersons (name, email, phone, active)
-                values (?, ?, ?, ?)""";
+        String sql = "call IFSALES_PKG.INSERT_SALESPERSON(?, ?, ?, ?)";
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql))
@@ -42,7 +36,7 @@ public class SalespersonDao {
         }
         catch (SQLException e)
         {
-            throw new RuntimeException("Error occurred during database query", e);
+            throw new RuntimeException("Error during salesperson database save", e);
         }
         return true;
     }
@@ -51,7 +45,7 @@ public class SalespersonDao {
         String sql = """
                 select *
                 from salespersons
-                where salesperson_id=?""";
+                where id=?""";
 
         Optional<Salesperson> optional = Optional.empty();
 
@@ -129,7 +123,7 @@ public class SalespersonDao {
                     email = ?,
                     phone = ?,
                     active = ?
-                where salesperson_id = ?""";
+                where id = ?""";
 
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
         {
@@ -151,7 +145,7 @@ public class SalespersonDao {
     public Boolean delete(Salesperson salesperson) {
         String sql = """
                 delete from salespersons
-                where salesPerson_id = ?""";
+                where id = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))

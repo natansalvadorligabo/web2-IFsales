@@ -8,11 +8,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class LoginUserHelper implements Helper {
     @Override
-    public Object execute(HttpServletRequest req, HttpServletResponse resp)  {
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
