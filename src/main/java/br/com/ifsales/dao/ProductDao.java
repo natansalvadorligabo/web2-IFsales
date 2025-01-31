@@ -30,6 +30,7 @@ public class ProductDao {
             ps.setString(2, product.getModel());
             ps.setInt(3, product.getModelYear());
             ps.setDouble(4, product.getPrice());
+            ps.setLong(5, product.getCategoryId());
 
             ps.executeUpdate();
         }
