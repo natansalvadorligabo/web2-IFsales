@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
   <head>
@@ -26,9 +27,9 @@
           method="post"
           class="space-y-6">
           <div>
-            <label for="email" class="font-semibold"
-              >E-mail<span class="text-error">*</span></label
-            >
+            <label for="email" class="font-semibold">
+              E-mail<span class="text-error">*</span>
+            </label>
             <input
               type="email"
               id="email"
@@ -39,9 +40,9 @@
           <span id="error-email" class="text-error hidden"></span>
 
           <div>
-            <label for="password" class="font-semibold"
-              >Senha<span class="text-error">*</span></label
-            >
+            <label for="password" class="font-semibold">
+                Senha<span class="text-error">*</span>
+            </label>
             <input
               type="password"
               id="password"
@@ -61,7 +62,7 @@
             </button>
 
             <a
-              href="${pageContext.request.contextPath}/redirect?action=createUser"
+              href="${pageContext.request.contextPath}/pages/userRegister.jsp"
               class="btn btn-outline btn-block">
               Cadastre-se
             </a>
@@ -70,8 +71,41 @@
       </div>
     </div>
 
+    <div class="fixed bottom-2 left-2">
+        <c:choose>
+            <c:when test="${result == 'loginError'}">
+                <div class="alert alert-error">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Email ou senha incorretos.</span>
+                </div>
+            </c:when>
+        </c:choose>
+        <c:choose>
+            <c:when test="${result == 'registerSuccess'}">
+                <div class="alert alert-success">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 shrink-0 stroke-current"
+                            fill="none"
+                            viewBox="0 0 24 24">
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Conta criada com sucesso! Faça login.</span>
+                </div>
+            </c:when>
+        </c:choose>
+    </div>
+
+
     <script
-      type="module"
+      type="module" defer
       src="${pageContext.request.contextPath}/scripts/validateLogin.js"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
   </body>
 </html>

@@ -15,20 +15,19 @@ public class CreateUserHelper implements Helper {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        if(email != null && password != null) {
-            User user = new User();
-            user.setEmail(email);
-            user.setPassword(PasswordEncoder.encode(password));
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(PasswordEncoder.encode(password));
 
-            UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
+        UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
 
-            if (userDao.save(user)) {
-                req.setAttribute("result", "registered");
-                return "redirect?action=login";
-            }
+        if (userDao.save(user)) {
+            req.setAttribute("result", "registerSuccess");
+            return "redirect?action=login";
+        } else {
+            req.setAttribute("result", "registerError");
         }
 
-        req.setAttribute("result", "notRegistered");
         return "/pages/userRegister.jsp";
     }
 }
