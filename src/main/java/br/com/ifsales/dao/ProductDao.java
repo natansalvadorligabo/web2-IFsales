@@ -1,7 +1,6 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.Product;
-import br.com.ifsales.model.Salesperson;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -21,32 +20,25 @@ public class ProductDao {
         this.dataSource = dataSource;
     }
 
-//    public Boolean save(Product product) {
-//        Optional<Product> optional = getProductByEmail(product.getEmail());
-//
-//        if(optional.isPresent())
-//            return false;
-//
-//        String sql = """
-//                insert into products (name, email, phone, active)
-//                values (?, ?, ?, ?, ?)""";
-//
-//        try(Connection conn = dataSource.getConnection();
-//            PreparedStatement ps = conn.prepareStatement(sql))
-//        {
-//            ps.setString(1, product.getName());
-//            ps.setString(2, product.getEmail());
-//            ps.setString(3, product.getPhone());
-//            ps.setBoolean(4, product.getActive());
-//
-//            ps.executeUpdate();
-//        }
-//        catch (SQLException e)
-//        {
-//            throw new RuntimeException("Error occurred during database query", e);
-//        }
-//        return true;
-//    }
+    public Boolean save(Product product) {
+        String sql = "call IFSALES_PKG.INSERT_PRODUCT(?, ?, ?, ?, ?)";
+
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql))
+        {
+            ps.setString(1, product.getBrand());
+            ps.setString(2, product.getModel());
+            ps.setInt(3, product.getModelYear());
+            ps.setDouble(4, product.getPrice());
+
+            ps.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException("Error during product database save", e);
+        }
+        return true;
+    }
 
     public Optional<Product> getProductById(Long id) throws SQLException {
         Product product;

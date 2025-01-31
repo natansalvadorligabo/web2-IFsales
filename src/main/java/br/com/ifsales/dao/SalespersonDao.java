@@ -1,6 +1,7 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.Salesperson;
+import br.com.ifsales.model.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -20,32 +21,25 @@ public class SalespersonDao {
         this.dataSource = dataSource;
     }
 
-//    public Boolean save(Salesperson salesperson) {
-//        Optional<Salesperson> optional = getSalespersonByEmail(salesperson.getEmail());
-//
-//        if(optional.isPresent())
-//            return false;
-//
-//        String sql = """
-//                insert into salespersons (name, email, phone, active)
-//                values (?, ?, ?, ?, ?)""";
-//
-//        try(Connection conn = dataSource.getConnection();
-//            PreparedStatement ps = conn.prepareStatement(sql))
-//        {
-//            ps.setString(1, salesperson.getName());
-//            ps.setString(2, salesperson.getEmail());
-//            ps.setString(3, salesperson.getPhone());
-//            ps.setBoolean(4, salesperson.getActive());
-//
-//            ps.executeUpdate();
-//        }
-//        catch (SQLException e)
-//        {
-//            throw new RuntimeException("Error occurred during database query", e);
-//        }
-//        return true;
-//    }
+    public Boolean save(Salesperson salesperson) {
+        String sql = "call IFSALES_PKG.INSERT_SALESPERSON(?, ?, ?, ?)";
+
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql))
+        {
+            ps.setString(1, salesperson.getName());
+            ps.setString(2, salesperson.getEmail());
+            ps.setString(3, salesperson.getPhone());
+            ps.setBoolean(4, salesperson.getActive());
+
+            ps.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException("Error during salesperson database save", e);
+        }
+        return true;
+    }
 
     public Optional<Salesperson> getSalespersonById(Long id) {
         String sql = """
