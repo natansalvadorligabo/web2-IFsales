@@ -1,6 +1,7 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.Salesperson;
+import br.com.ifsales.model.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -21,14 +22,7 @@ public class SalespersonDao {
     }
 
     public Boolean save(Salesperson salesperson) {
-        Optional<Salesperson> optional = getSalespersonByEmail(salesperson.getEmail());
-
-        if(optional.isPresent())
-            return false;
-
-        String sql = """
-                insert into salespersons (name, email, phone, active)
-                values (?, ?, ?, ?)""";
+        String sql = "call IFSALES_PKG.INSERT_SALESPERSON(?, ?, ?, ?)";
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql))
@@ -42,7 +36,7 @@ public class SalespersonDao {
         }
         catch (SQLException e)
         {
-            throw new RuntimeException("Error occurred during database query", e);
+            throw new RuntimeException("Error during salesperson database save", e);
         }
         return true;
     }
