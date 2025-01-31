@@ -321,5 +321,7 @@ insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Igor
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Tonhao recordista', 'recordista@gmail.com', '(16) 99999-9999', 1);
 /
 
+commit;
+
 select * from ifsales.users;
 select * from ifsales.salespersons;

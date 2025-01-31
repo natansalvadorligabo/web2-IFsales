@@ -100,7 +100,7 @@ public class SalespersonDao {
             while (rs.next())
             {
                 Salesperson salespersonFinded = new Salesperson();
-                salespersonFinded.setId(rs.getLong("salesperson_id"));
+                salespersonFinded.setId(rs.getLong("id"));
                 salespersonFinded.setName(rs.getString("name"));
                 salespersonFinded.setEmail(rs.getString("email"));
                 salespersonFinded.setPhone(rs.getString("phone"));
@@ -166,7 +166,7 @@ public class SalespersonDao {
             if (rs.next())
             {
                 Salesperson salesperson = new Salesperson();
-                salesperson.setId(Long.parseLong(rs.getString("salesPerson_id")));
+                salesperson.setId(Long.parseLong(rs.getString("id")));
                 salesperson.setName(rs.getString("name"));
                 salesperson.setEmail(rs.getString("email"));
                 salesperson.setPhone(rs.getString("phone"));

@@ -21,7 +21,6 @@ public class UserDao {
 
     public Boolean save(User user) throws SQLException {
         String sql = "call IFSALES_PKG.INSERT_USER(?, ?);";
-
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, user.getEmail());
@@ -46,7 +45,7 @@ public class UserDao {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     User user = new User();
-                    user.setId(Long.parseLong(rs.getString("user_id")));
+                    user.setId(Long.parseLong(rs.getString("id")));
                     user.setEmail(rs.getString("email"));
                     user.setPassword(rs.getString("password"));
 

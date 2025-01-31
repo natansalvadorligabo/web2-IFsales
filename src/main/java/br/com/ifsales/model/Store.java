@@ -4,7 +4,7 @@ public class Store {
     private Long id;
     private String name;
     private String cnjp;
-    private String region;
+    private Region region;
     private String address;
     private String phone;
 
@@ -34,11 +34,11 @@ public class Store {
         this.cnjp = cnjp;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Region region) {
         this.region = region;
     }
 
