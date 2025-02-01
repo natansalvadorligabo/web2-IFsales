@@ -24,7 +24,7 @@
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form
-          action="${pageContext.request.contextPath}/redirect"
+          action="${pageContext.request.contextPath}/redirect?action=createUser"
           method="post"
           class="space-y-6">
           <div>
@@ -69,8 +69,6 @@
           <div class="space-y-2">
             <button
               type="submit"
-              name="action"
-              value="createUser"
               class="btn btn-primary btn-block">
               Cadastrar
             </button>
@@ -107,7 +105,7 @@
     </div>
 
     <script
-      type="module" defer src="${pageContext.request.contextPath}/scripts/validateUserRegister.js"></script>
+      defer src="${pageContext.request.contextPath}/scripts/validateUserRegister.js"></script>
     <script defer src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
   </body>
 </html>

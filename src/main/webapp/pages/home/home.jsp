@@ -29,7 +29,6 @@
             <div class="hero-content">
               <div class="max-w-md">
                 <h1 class="text-2xl mt-8 font-bold">Sales Dashboard</h1>
-                <jsp:include page="/components/dashboardComponent.jsp" />
               </div>
             </div>
           </div>
