@@ -20,7 +20,7 @@ public class UserDao {
     }
 
     public Boolean save(User user) throws SQLException {
-        String sql = "call IFSALES_PKG.INSERT_USER(?, ?);";
+        String sql = "call IFSALES_PKG.INSERT_USER(?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, user.getEmail());
