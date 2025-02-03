@@ -1,5 +1,6 @@
 package br.com.ifsales.dao;
 
+import br.com.ifsales.model.Region;
 import br.com.ifsales.model.Store;
 import br.com.ifsales.model.User;
 
@@ -8,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 public class StoreDao {
@@ -41,6 +44,24 @@ public class StoreDao {
         return true;
     }
 
+    public List<Optional<Store>> getAll(){
+        String sql = "SELECT * FROM STORES";
+        List<Optional<Store>> stores = new LinkedList<>();
+
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    stores.add(Optional.of(createStoreFromResultSet(rs)));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred during database query", e);
+        }
+
+        return stores;
+    }
+
     public Optional<Store> getStoreById(Long id) {
         String sql = "SELECT * FROM STORES WHERE id = ?";
         Optional<Store> optional = Optional.empty();
@@ -51,12 +72,7 @@ public class StoreDao {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Store store = new Store();
-                    store.setId(rs.getLong("id"));
-                    store.setName(rs.getString("name"));
-
-
-                    optional = Optional.of(store);
+                    optional = Optional.of(createStoreFromResultSet(rs));
                 }
             }
         } catch (SQLException e) {
@@ -95,5 +111,21 @@ public class StoreDao {
         } catch (SQLException e) {
             throw new RuntimeException("Error occurred during database query", e);
         }
+    }
+
+    private Store createStoreFromResultSet(ResultSet rs) throws SQLException {
+        Store store = new Store();
+        store.setId(rs.getLong("id"));
+        store.setName(rs.getString("name"));
+        store.setCnjp(rs.getString("cnjp"));
+        store.setAddress(rs.getString("address"));
+        store.setPhone(rs.getString("phone"));
+
+        // Need to create a view to get the region complete
+        Region region = new Region();
+        region.setId(rs.getLong("region"));
+        store.setRegion(region);
+
+        return store;
     }
 }
