@@ -23,7 +23,7 @@
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form
-          action="${pageContext.request.contextPath}/redirect"
+          action="${pageContext.request.contextPath}/redirect?action=login"
           method="post"
           class="space-y-6">
           <div>
@@ -55,8 +55,6 @@
           <div class="space-y-2">
             <button
               type="submit"
-              name="action"
-              value="login"
               class="btn btn-primary btn-block">
               Entrar
             </button>
@@ -104,7 +102,7 @@
 
 
     <script
-      type="module" defer
+      defer
       src="${pageContext.request.contextPath}/scripts/validateLogin.js"></script>
     <script defer src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
   </body>
