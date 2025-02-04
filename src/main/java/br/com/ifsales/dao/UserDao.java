@@ -1,7 +1,6 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.User;
-import br.com.ifsales.utils.PasswordEncoder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -21,14 +20,17 @@ public class UserDao {
 
     public Boolean save(User user) throws SQLException {
         String sql = "call IFSALES_PKG.INSERT_USER(?, ?)";
+
         try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+            PreparedStatement ps = conn.prepareStatement(sql))
+        {
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPassword());
 
             ps.executeUpdate();
-        }catch (SQLException e) {
-            throw new SQLException("Error during user database save", e);
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while saving user to oracle sql");
         }
         return true;
     }
@@ -38,8 +40,8 @@ public class UserDao {
         Optional<User> optional = Optional.empty();
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
             ps.setString(1, email);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -52,8 +54,9 @@ public class UserDao {
                     optional = Optional.of(user);
                 }
             }
-        } catch (SQLException e) {
-            throw new SQLException("Error during user database query", e);
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving user from oracle sql");
         }
         return optional;
     }

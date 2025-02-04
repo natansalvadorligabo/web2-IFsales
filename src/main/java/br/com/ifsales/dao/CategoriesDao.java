@@ -17,27 +17,30 @@ public class CategoriesDao {
         this.dataSource = dataSource;
     }
 
-    public Boolean save(Category category) {
+    public Boolean save(Category category) throws SQLException {
         String sql = "call IFSALES_PKG.INSERT_CATEGORY(?,?)";
 
         try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+            PreparedStatement ps = conn.prepareStatement(sql))
+        {
             ps.setString(1, category.getName());
             ps.setString(2, category.getDescription());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error during database save", e);
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while saving category to oracle sql");
         }
         return true;
     }
 
-    public Optional<Category> getCategoryById(Long id) {
+    public Optional<Category> getCategoryById(Long id) throws SQLException {
         String sql = "SELECT * FROM CATEGORIES WHERE id = ?";
         Optional<Category> optional = Optional.empty();
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+             PreparedStatement ps = con.prepareStatement(sql))
+        {
             ps.setLong(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -50,38 +53,45 @@ public class CategoriesDao {
                     optional = Optional.of(category);
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error during category database query", e);
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving category from oracle sql");
         }
 
         return optional;
     }
 
-    public Boolean update(Category category) {
+    public Boolean update(Category category) throws SQLException {
         String sql = "update CATEGORIES set CATEGORY_NAME = ?, DESCRIPTION = ? where id = ?";
 
-        try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql))
+        {
             ps.setString(1, category.getName());
             ps.setString(2, category.getDescription());
             ps.setLong(3, category.getId());
             ps.executeUpdate();
 
             return true;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error during category database query", e);
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while updating category from oracle sql");
         }
     }
 
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id) throws SQLException {
         String sql = "delete from CATEGORIES where id = ?";
 
-        try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql))
+        {
             ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error during category database query", e);
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while removing category from oracle sql");
         }
     }
 }
