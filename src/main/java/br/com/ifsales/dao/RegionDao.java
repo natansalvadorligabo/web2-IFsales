@@ -1,7 +1,6 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.Region;
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,206 +15,145 @@ public class RegionDao {
     private final DataSource dataSource;
 
     public RegionDao(DataSource dataSource) {
-        super();
         this.dataSource = dataSource;
     }
 
     public Boolean save(Region region) {
         String sql = "call IFSALES_PKG.INSERT_REGION(?, ?, ?)";
 
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql))
-        {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, region.getName());
             ps.setString(2, region.getCity());
             ps.setString(3, region.getState());
-
             ps.executeUpdate();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException("Error during region database save", e);
         }
         return true;
     }
 
-    public Optional<Region> getRegionById(Long id) throws SQLException {
-        Region region;
+    public Optional<Region> getRegionById(Long id) {
+        String sql = "select * from regions where id = ?";
 
-        String sql = """
-                select *
-                from regions
-                where id=?""";
-
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
-
-            ResultSet rs = ps.executeQuery();
-
-            region = extractRegionFromQuery(rs);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(extractRegionFromQuery(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error during region database query", e);
         }
-        catch (SQLException e)
-        {
-            throw new SQLException("Error during region database query", e);
-        }
-
-        return Optional.of(region);
+        return Optional.empty();
     }
 
-    public Optional<List<Region>> getRegionsByName(String name) throws SQLException {
-        List<Region> regions = new ArrayList<>();
-
-        String sql = """
-                select *
-                from regions
-                where region_name = ?""";
-
-        Region region;
+    public Optional<Region> getRegionByName(String name) {
+        String sql = "select * from regions where region_name = ?";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, name);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next())
-                regions.add(extractRegionFromQuery(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(extractRegionFromQuery(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error during region database query", e);
         }
-        catch (SQLException e)
-        {
-            throw new SQLException("Error during region database query", e);
-        }
-        return Optional.of(regions);
+        return Optional.empty();
     }
 
-    public Optional<List<Region>> getRegionsByCity(String city) throws SQLException {
+    public List<Region> getRegionsByCity(String city) {
         List<Region> regions = new ArrayList<>();
-
-        String sql = """
-                select *
-                from regions
-                where city  = ?""";
+        String sql = "select * from regions where city = ?";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, city);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next())
-                regions.add(extractRegionFromQuery(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    regions.add(extractRegionFromQuery(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error during region database query", e);
         }
-        catch (SQLException e)
-        {
-            throw new SQLException("Error during region database query", e);
-        }
-        return Optional.of(regions);
+        return regions;
     }
 
-    public Optional<List<Region>> getRegionsByState(String state) throws SQLException {
+    public List<Region> getRegionsByState(String state) {
         List<Region> regions = new ArrayList<>();
-
-        String sql = """
-                select *
-                from regions
-                where state = ?""";
+        String sql = "select * from regions where state = ?";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, state);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next())
-                regions.add(extractRegionFromQuery(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    regions.add(extractRegionFromQuery(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error during region database query", e);
         }
-        catch (SQLException e)
-        {
-            throw new SQLException("Error during region database query", e);
-        }
-        return Optional.of(regions);
+        return regions;
     }
 
-    public Optional<List<Region>> getAllRegions() throws SQLException {
+    public List<Region> getAllRegions() {
         List<Region> regions = new ArrayList<>();
-
-        String sql = """
-                select *
-                from regions""";
+        String sql = "select * from regions";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery())
-        {
-            while (rs.next())
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
                 regions.add(extractRegionFromQuery(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error during region database query", e);
         }
-        catch (SQLException e)
-        {
-            throw new SQLException("Error during region database query", e);
-        }
-        return Optional.of(regions);
+        return regions;
     }
 
-    public Boolean update(Region region) throws SQLException {
-        String sql = """
-                update regions set
-                    region_name = ?,
-                    city = ?,
-                    state = ?
-                where id = ?""";
+    public Boolean update(Region region) {
+        String sql = "update regions set region_name = ?, city = ?, state = ? where id = ?";
 
-        try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
-        {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, region.getName());
             ps.setString(2, region.getCity());
             ps.setString(3, region.getState());
             ps.setLong(4, region.getId());
             ps.executeUpdate();
-
             return true;
-        }
-        catch (SQLException sqlException)
-        {
-            throw new SQLException("Error during region update", sqlException);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error during region update", e);
         }
     }
 
-    public Boolean delete(Region region) throws SQLException {
-        String sql = """
-                delete from regions
-                where id = ?""";
+    public Boolean delete(Region region) {
+        String sql = "delete from regions where id = ?";
 
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, region.getId());
             ps.executeUpdate();
-
             return true;
-        }
-        catch (SQLException sqlException) {
-            throw new SQLException("Error during region remove", sqlException);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error during region remove", e);
         }
     }
 
     private Region extractRegionFromQuery(ResultSet rs) throws SQLException {
-        if (rs.next())
-        {
-            Region region = new Region();
-            region.setId(Long.parseLong(rs.getString("id")));
-            region.setName(rs.getString("name"));
-            region.setCity(rs.getString("city"));
-            region.setState(rs.getString("state"));
-
-            return region;
-        }
-
-        throw new SQLException("Error during get region");
+        Region region = new Region();
+        region.setId(rs.getLong("id"));
+        region.setName(rs.getString("region_name"));
+        region.setCity(rs.getString("city"));
+        region.setState(rs.getString("state"));
+        return region;
     }
 }
