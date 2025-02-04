@@ -147,7 +147,6 @@ create table ifsales.action_logs (
     id int primary key,
     table_name varchar2(100) not null,
     action varchar2(50) not null,
-    changed_by varchar2(100) default user,
     action_date timestamp default current_timestamp,
     details varchar2(4000)
 );
@@ -157,14 +156,14 @@ create or replace trigger ifsales.trg_log_categories
     for each row
 begin
     if inserting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'CATEGORIES', 'INSERTED into CATEGORIES', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'CATEGORIES', 'INSERTED into CATEGORIES', current_timestamp, :new.id);
     elsif updating then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'CATEGORIES', 'UPDATED CATEGORIES', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'CATEGORIES', 'UPDATED CATEGORIES', current_timestamp, :new.id);
     elsif deleting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'CATEGORIES', 'DELETED from CATEGORIES', user, current_timestamp, :old.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'CATEGORIES', 'DELETED from CATEGORIES', current_timestamp, :old.id);
     end if;
 end;
 /
@@ -174,13 +173,13 @@ create or replace trigger ifsales.trg_log_customers
     for each row
 begin
     if inserting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'CUSTOMERS', 'INSERTED into CUSTOMERS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'CUSTOMERS', 'INSERTED into CUSTOMERS', current_timestamp, :new.id);
     elsif updating then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'CUSTOMERS', 'UPDATED CUSTOMERS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'CUSTOMERS', 'UPDATED CUSTOMERS', current_timestamp, :new.id);
     elsif deleting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
         values (ifsales.action_logs_seq.nextval, 'CUSTOMERS', 'DELETED from CUSTOMERS', user, current_timestamp, :old.id);
     end if;
 end;
@@ -191,14 +190,14 @@ create or replace trigger ifsales.trg_log_products
     for each row
 begin
     if inserting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'PRODUCTS', 'INSERTED into PRODUCTS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'PRODUCTS', 'INSERTED into PRODUCTS', current_timestamp, :new.id);
     elsif updating then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'PRODUCTS', 'UPDATED PRODUCTS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'PRODUCTS', 'UPDATED PRODUCTS', current_timestamp, :new.id);
     elsif deleting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'PRODUCTS', 'DELETED from PRODUCTS', user, current_timestamp, :old.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'PRODUCTS', 'DELETED from PRODUCTS', current_timestamp, :old.id);
     end if;
 end;
 /
@@ -208,14 +207,14 @@ create or replace trigger ifsales.trg_log_regions
     for each row
 begin
     if inserting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'REGIONS', 'INSERTED into REGIONS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'REGIONS', 'INSERTED into REGIONS', current_timestamp, :new.id);
     elsif updating then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'REGIONS', 'UPDATED REGIONS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'REGIONS', 'UPDATED REGIONS', current_timestamp, :new.id);
     elsif deleting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'REGIONS', 'DELETED from REGIONS', user, current_timestamp, :old.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'REGIONS', 'DELETED from REGIONS', current_timestamp, :old.id);
     end if;
 end;
 /
@@ -225,14 +224,14 @@ create or replace trigger ifsales.trg_log_salespersons
     for each row
 begin
     if inserting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'SALESPERSONS', 'INSERTED into SALESPERSONS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'SALESPERSONS', 'INSERTED into SALESPERSONS', current_timestamp, :new.id);
     elsif updating then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'SALESPERSONS', 'UPDATED SALESPERSONS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'SALESPERSONS', 'UPDATED SALESPERSONS', current_timestamp, :new.id);
     elsif deleting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'SALESPERSONS', 'DELETED from SALESPERSONS', user, current_timestamp, :old.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'SALESPERSONS', 'DELETED from SALESPERSONS', current_timestamp, :old.id);
     end if;
 end;
 /
@@ -242,14 +241,14 @@ create or replace trigger ifsales.trg_log_stores
     for each row
 begin
     if inserting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'STORES', 'INSERTED into STORES', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'STORES', 'INSERTED into STORES', current_timestamp, :new.id);
     elsif updating then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'STORES', 'UPDATED STORES', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'STORES', 'UPDATED STORES', current_timestamp, :new.id);
     elsif deleting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'STORES', 'DELETED from STORES', user, current_timestamp, :old.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'STORES', 'DELETED from STORES', current_timestamp, :old.id);
     end if;
 end;
 /
@@ -259,14 +258,14 @@ create or replace trigger ifsales.trg_log_users
     for each row
 begin
     if inserting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'USERS', 'INSERTED into USERS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'USERS', 'INSERTED into USERS', current_timestamp, :new.id);
     elsif updating then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'USERS', 'UPDATED USERS', user, current_timestamp, :new.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'USERS', 'UPDATED USERS', current_timestamp, :new.id);
     elsif deleting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
-        values (ifsales.action_logs_seq.nextval, 'USERS', 'DELETED from USERS', user, current_timestamp, :old.id);
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
+        values (ifsales.action_logs_seq.nextval, 'USERS', 'DELETED from USERS', current_timestamp, :old.id);
     end if;
 end;
 
@@ -275,17 +274,17 @@ create or replace trigger ifsales.trg_log_funnel
     for each row
 begin
     if inserting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
         values (ifsales.action_logs_seq.nextval, 'FUNNEL', 'INSERTED into FUNNEL'
-                ,user, current_timestamp, :new.id);
+                , current_timestamp, :new.id);
     elsif updating then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
         values (ifsales.action_logs_seq.nextval, 'FUNNEL', 'UPDATED FUNNEL'
-               ,user, current_timestamp, :new.id);
+               ,current_timestamp, :new.id);
     elsif deleting then
-        insert into ifsales.action_logs (id, table_name, action, changed_by, action_date, details)
+        insert into ifsales.action_logs (id, table_name, action, action_date, details)
         values (ifsales.action_logs_seq.nextval, 'FUNNEL', 'DELETED from FUNNEL'
-               ,user, current_timestamp, :old.id);
+               ,current_timestamp, :old.id);
     end if;
 end;
 /
