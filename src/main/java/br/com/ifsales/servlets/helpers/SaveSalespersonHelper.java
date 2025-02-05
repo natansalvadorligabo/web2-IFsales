@@ -1,5 +1,6 @@
 package br.com.ifsales.servlets.helpers;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 import br.com.ifsales.dao.SalespersonDao;
@@ -10,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class SaveSalespersonHelper implements Helper {
     @Override
-    public Object execute(HttpServletRequest req, HttpServletResponse resp) {
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
         long id = Long.parseLong(req.getParameter("id"));
         String name = req.getParameter("name");
         String email = req.getParameter("email");

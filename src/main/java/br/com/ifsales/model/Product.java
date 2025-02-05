@@ -6,7 +6,7 @@ public class Product {
     private String model;
     private int modelYear;
     private Double price;
-    private Long categoryId;
+    private Category category;
     private int totalSales;
 
     public Long getId() {
@@ -49,12 +49,12 @@ public class Product {
         this.price = price;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getTotalSales() {
