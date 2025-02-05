@@ -26,6 +26,6 @@ public class ListStoreHelper implements Helper {
 
         req.setAttribute("stores", stores);
 
-        return "/pages/home/stores/storeTable.jsp";
+        return "/pages/home/store/storeTable.jsp";
     }
 }

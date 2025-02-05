@@ -27,7 +27,7 @@ public class SaveStoreHelper implements Helper {
 
         store.setName(name);
         store.setAddress(address);
-        store.setCnjp(cnpj);
+        store.setCnpj(cnpj);
         store.setPhone(phone);
         store.setRegion(region);
 
@@ -38,7 +38,7 @@ public class SaveStoreHelper implements Helper {
 
             if (registered.isPresent()) {
                 req.setAttribute("result", "already exists");
-                return "/pages/home/storeForm.jsp";
+                return "/pages/home/store/storeForm.jsp";
             } else {
                 if (storeDao.save(registered.get()))
                     req.setAttribute("result", "registered successfully");

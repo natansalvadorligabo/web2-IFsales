@@ -32,7 +32,7 @@ public class StoreDao {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, store.getName());
-            ps.setString(2, store.getCnjp());
+            ps.setString(2, store.getCnpj());
             ps.setLong(3, store.getRegion().getId());
             ps.setString(4, store.getAddress());
             ps.setString(5, store.getPhone());
@@ -123,7 +123,7 @@ public class StoreDao {
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, store.getName());
-            ps.setString(2, store.getCnjp());
+            ps.setString(2, store.getCnpj());
             ps.setLong(3, store.getRegion().getId());
             ps.setString(4, store.getAddress());
             ps.setString(5, store.getPhone());
@@ -154,7 +154,7 @@ public class StoreDao {
         Store store = new Store();
         store.setId(rs.getLong("STORE_ID"));
         store.setName(rs.getString("STORE_NAME"));
-        store.setCnjp(rs.getString("STORE_CNPJ"));
+        store.setCnpj(rs.getString("STORE_CNPJ"));
         store.setAddress(rs.getString("STORE_ADDRESS"));
         store.setPhone(rs.getString("STORE_PHONE"));
 

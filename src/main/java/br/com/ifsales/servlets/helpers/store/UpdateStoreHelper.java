@@ -20,7 +20,7 @@ public class UpdateStoreHelper implements Helper {
 
         if (store.isPresent()) {
             req.setAttribute("store", store.get());
-            return "/pages/home/storeForm.jsp";
+            return "/pages/home/store/storeForm.jsp";
         }
 
         return "redirect?action=listStores";
