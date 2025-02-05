@@ -335,6 +335,24 @@ begin
 end;
 /
 
+-- view para trazer os dados das stores junto da sua região correspondente
+create or replace view ifsales.v_stores
+as
+select
+    sto.id           as store_id
+   ,sto.store_name   as store_name
+   ,sto.store_cnpj   as store_cnpj
+   ,sto.address      as store_address
+   ,sto.phone        as store_phone
+   ,reg.id           as region_id
+   ,reg.region_name  as region_name
+   ,reg.city         as region_city
+   ,reg.state        as region_state
+from ifsales.stores  sto
+   ,ifsales.regions reg
+where sto.region_id = reg.id
+/
+
 -- inserção de dados iniciais
 
 insert into ifsales.salespersons values (ifsales.salespersons_seq.nextval, 'Caua Rufino', 'caua@gmail.com', '(16) 99633-7792', 1);
