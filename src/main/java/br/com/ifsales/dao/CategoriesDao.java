@@ -18,7 +18,7 @@ public class CategoriesDao {
     }
 
     public Boolean save(Category category) throws SQLException {
-        String sql = "call IFSALES_PKG.INSERT_CATEGORY(?,?)";
+        String sql = "CALL IFSALES_PKG.INSERT_CATEGORY(?, ?)";
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql))
@@ -35,8 +35,12 @@ public class CategoriesDao {
     }
 
     public Optional<Category> getCategoryById(Long id) throws SQLException {
-        String sql = "SELECT * FROM CATEGORIES WHERE id = ?";
         Optional<Category> optional = Optional.empty();
+
+        String sql = """
+            SELECT *
+            FROM CATEGORIES
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -62,7 +66,11 @@ public class CategoriesDao {
     }
 
     public Boolean update(Category category) throws SQLException {
-        String sql = "update CATEGORIES set CATEGORY_NAME = ?, DESCRIPTION = ? where id = ?";
+        String sql = """
+            UPDATE CATEGORIES
+            SET CATEGORY_NAME = ?,
+                DESCRIPTION = ?
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -80,7 +88,10 @@ public class CategoriesDao {
     }
 
     public Boolean delete(Long id) throws SQLException {
-        String sql = "delete from CATEGORIES where id = ?";
+        String sql = """
+            DELETE
+            FROM CATEGORIES
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))

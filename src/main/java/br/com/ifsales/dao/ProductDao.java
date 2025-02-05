@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductDao {
-
     private final DataSource dataSource;
 
     public ProductDao(DataSource dataSource) {
@@ -21,7 +20,7 @@ public class ProductDao {
     }
 
     public Boolean save(Product product) throws SQLException {
-        String sql = "call IFSALES_PKG.INSERT_PRODUCT(?, ?, ?, ?, ?)";
+        String sql = "CALL IFSALES_PKG.INSERT_PRODUCT(?, ?, ?, ?, ?)";
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql))
@@ -45,9 +44,9 @@ public class ProductDao {
         Product product;
 
         String sql = """
-                select *
-                from products
-                where id=?""";
+            SELECT *
+            FROM PRODUCTS
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -67,13 +66,12 @@ public class ProductDao {
 
     public Optional<List<Product>> getProductsByBrand(String brand) throws SQLException {
         List<Product> products = new ArrayList<>();
+        Product product;
 
         String sql = """
-                select *
-                from products
-                where brand = ?""";
-
-        Product product;
+            SELECT *
+            FROM PRODUCTS
+            WHERE BRAND = ?""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -96,9 +94,9 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-                select *
-                from products
-                where model = ?""";
+            SELECT *
+            FROM PRODUCTS
+            WHERE MODEL = ?""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -121,9 +119,9 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-                select *
-                from products
-                where MODEL_YEAR = ?""";
+            SELECT *
+            FROM PRODUCTS
+            WHERE MODEL_YEAR = ?""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -146,9 +144,9 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-                select *
-                from products
-                where price = ?""";
+            SELECT *
+            FROM PRODUCTS
+            WHERE PRICE = ?""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -171,9 +169,9 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-                select *
-                from products
-                where category_id = ?""";
+            SELECT *
+            FROM PRODUCTS
+            WHERE CATEGORY_ID = ?""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -196,9 +194,9 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-                select *
-                from products
-                where total_sales = ?""";
+            SELECT *
+            FROM PRODUCTS
+            WHERE TOTAL_SALES = ?""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -221,8 +219,8 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-                select *
-                from products""";
+            SELECT *
+            FROM PRODUCTS""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -240,14 +238,14 @@ public class ProductDao {
 
     public Boolean update(Product product) throws SQLException {
         String sql = """
-                update products set
-                    brand = ?,
-                    model = ?,
-                    model_year = ?,
-                    price = ?,
-                    category_id = ?,
-                    total_sales = ?
-                where id = ?""";
+            UPDATE PRODUCTS
+            SET BRAND = ?,
+                MODEL = ?,
+                MODEL_YEAR = ?,
+                PRICE = ?,
+                CATEGORY_ID = ?,
+                TOTAL_SALES = ?
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
         {
@@ -268,8 +266,9 @@ public class ProductDao {
 
     public Boolean delete(Product product) throws SQLException {
         String sql = """
-                delete from products
-                where id = ?""";
+            DELETE
+            FROM PRODUCTS
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))

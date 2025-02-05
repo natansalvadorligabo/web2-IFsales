@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class SalespersonDao {
-
     private final DataSource dataSource;
 
     public SalespersonDao(DataSource dataSource) {
@@ -41,13 +40,12 @@ public class SalespersonDao {
     }
 
     public Optional<Salesperson> getSalespersonById(Long id) throws SQLException {
-        String sql = """
-                select *
-                from salespersons
-                where id=?""";
-
         Optional<Salesperson> optional = Optional.empty();
 
+        String sql = """
+            SELECT *
+            FROM SALESPERSONS
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -64,12 +62,12 @@ public class SalespersonDao {
     }
 
     public Optional<Salesperson> getSalespersonByEmail(String email) throws SQLException {
-        String sql = """
-                select *
-                from salespersons
-                where email = ?""";
-
         Optional<Salesperson> optional = Optional.empty();
+
+        String sql = """
+            SELECT *
+            FROM SALESPERSONS
+            WHERE EMAIL = ?""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -89,8 +87,8 @@ public class SalespersonDao {
         List<Salesperson> salesperson = new ArrayList<>();
 
         String sql = """
-                select *
-                from salespersons""";
+            SELECT *
+            FROM SALESPERSONS""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -117,12 +115,12 @@ public class SalespersonDao {
 
     public Boolean update(Salesperson salesperson) throws SQLException {
         String sql = """
-                update salespersons set
-                    name = ?,
-                    email = ?,
-                    phone = ?,
-                    active = ?
-                where id = ?""";
+            UPDATE SALESPERSONS
+            SET NAME = ?,
+                EMAIL = ?,
+                PHONE = ?,
+                ACTIVE = ?
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
         {
@@ -142,8 +140,9 @@ public class SalespersonDao {
 
     public Boolean delete(Salesperson salesperson) throws SQLException {
         String sql = """
-                delete from salespersons
-                where id = ?""";
+            DELETE
+            FROM SALESPERSONS
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))

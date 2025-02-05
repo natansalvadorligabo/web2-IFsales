@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class UserDao {
-
     private final DataSource dataSource;
 
     public UserDao(DataSource dataSource) {
@@ -32,11 +31,16 @@ public class UserDao {
         catch (SQLException e) {
             throw new SQLException("An error ocurred while saving user to oracle sql");
         }
+
         return true;
     }
 
     public Optional<User> getUserByEmail(String email) throws SQLException {
-        String sql = "select * from users where email = ?";
+        String sql = """
+            SELECT *
+            FROM USERS
+            WHERE EMAIL = ?""";
+
         Optional<User> optional = Optional.empty();
 
         try (Connection conn = dataSource.getConnection();
@@ -58,6 +62,7 @@ public class UserDao {
         catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving user from oracle sql");
         }
+
         return optional;
     }
 }

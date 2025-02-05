@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class StoreDao {
-
     private final DataSource dataSource;
 
     public StoreDao(DataSource dataSource) {
@@ -46,8 +45,11 @@ public class StoreDao {
     }
 
     public List<Optional<Store>> getAll() throws SQLException {
-        String sql = "SELECT * FROM STORES";
         List<Optional<Store>> stores = new LinkedList<>();
+
+        String sql = """
+            SELECT *
+            FROM STORES""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -65,8 +67,12 @@ public class StoreDao {
     }
 
     public Optional<Store> getStoreById(Long id) throws SQLException {
-        String sql = "SELECT * FROM STORES WHERE id = ?";
         Optional<Store> optional = Optional.empty();
+
+        String sql = """
+            SELECT *
+            FROM STORES
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -87,13 +93,13 @@ public class StoreDao {
 
     public Boolean update(Store store) throws SQLException {
         String sql = """
-        update stores
-        set STORE_NAME = ?,
-            STORE_CNPJ = ?,
-            REGION_ID = ?,
-            ADDRESS = ?,
-            PHONE = ?
-        where id = ?""";
+            UPDATE STORES
+            SET STORE_NAME = ?,
+                STORE_CNPJ = ?,
+                REGION_ID = ?,
+                ADDRESS = ?,
+                PHONE = ?
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
