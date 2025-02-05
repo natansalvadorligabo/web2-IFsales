@@ -2,7 +2,6 @@ package br.com.ifsales.dao;
 
 import br.com.ifsales.model.Region;
 import br.com.ifsales.model.Store;
-import br.com.ifsales.model.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -28,7 +27,7 @@ public class StoreDao {
             return false;
         }
 
-        String sql = "call IFSALES_PKG.INSERT_STORE(?,?,?,?,?,?)";
+        String sql = "call IFSALES_PKG.INSERT_STORE(?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, store.getName());
@@ -45,7 +44,7 @@ public class StoreDao {
     }
 
     public List<Optional<Store>> getAll(){
-        String sql = "SELECT * FROM STORES";
+        String sql = "SELECT * FROM V_STORES";
         List<Optional<Store>> stores = new LinkedList<>();
 
         try (Connection con = dataSource.getConnection();
@@ -63,7 +62,7 @@ public class StoreDao {
     }
 
     public Optional<Store> getStoreById(Long id) {
-        String sql = "SELECT * FROM STORES WHERE id = ?";
+        String sql = "SELECT * FROM V_STORES WHERE STORE_ID = ?";
         Optional<Store> optional = Optional.empty();
 
         try (Connection con = dataSource.getConnection();
@@ -83,7 +82,7 @@ public class StoreDao {
     }
 
     public Boolean update(Store store) {
-        String sql = "update stores set name = ?, cnjp = ?, region = ?, address = ?, phone = ? where id = ?";
+        String sql = "update stores set STORE_NAME = ?, STORE_CNPJ = ?, REGION_ID = ?, ADDRESS = ?, PHONE = ? where ID = ?";
 
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, store.getName());
@@ -115,15 +114,17 @@ public class StoreDao {
 
     private Store createStoreFromResultSet(ResultSet rs) throws SQLException {
         Store store = new Store();
-        store.setId(rs.getLong("id"));
-        store.setName(rs.getString("name"));
-        store.setCnjp(rs.getString("cnjp"));
-        store.setAddress(rs.getString("address"));
-        store.setPhone(rs.getString("phone"));
+        store.setId(rs.getLong("STORE_ID"));
+        store.setName(rs.getString("STORE_NAME"));
+        store.setCnjp(rs.getString("STORE_CNPJ"));
+        store.setAddress(rs.getString("STORE_ADDRESS"));
+        store.setPhone(rs.getString("STORE_PHONE"));
 
-        // Need to create a view to get the region complete
         Region region = new Region();
-        region.setId(rs.getLong("region"));
+        region.setId(rs.getLong("REGION_ID"));
+        region.setName(rs.getString("REGION_NAME"));
+        region.setCity(rs.getString("REGION_CITY"));
+        region.setState(rs.getString("REGION_STATE"));
         store.setRegion(region);
 
         return store;
