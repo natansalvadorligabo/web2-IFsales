@@ -1,5 +1,6 @@
 package br.com.ifsales.dao;
 
+import br.com.ifsales.model.Category;
 import br.com.ifsales.model.Product;
 
 import javax.sql.DataSource;
@@ -29,7 +30,7 @@ public class ProductDao {
             ps.setString(2, product.getModel());
             ps.setInt(3, product.getModelYear());
             ps.setDouble(4, product.getPrice());
-            ps.setLong(5, product.getCategoryId());
+            ps.setLong(5, product.getCategory().getId());
 
             ps.executeUpdate();
         }
@@ -253,7 +254,7 @@ public class ProductDao {
             ps.setString(2, product.getModel());
             ps.setInt(3, product.getModelYear());
             ps.setDouble(4, product.getPrice());
-            ps.setLong(5, product.getCategoryId());
+            ps.setLong(5, product.getCategory().getId());
             ps.setDouble(6, product.getTotalSales());
             ps.executeUpdate();
 
@@ -292,7 +293,11 @@ public class ProductDao {
             product.setModel(rs.getString("model"));
             product.setModelYear(rs.getInt("model_year"));
             product.setPrice(rs.getDouble("price"));
-            product.setCategoryId(rs.getLong("category_id"));
+
+            Category category = new Category();
+            category.setId(rs.getLong("category_id"));
+
+            product.setCategory(category);
             product.setTotalSales(rs.getInt("total_sales"));
 
             return product;
