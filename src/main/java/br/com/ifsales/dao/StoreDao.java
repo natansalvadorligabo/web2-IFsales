@@ -23,11 +23,10 @@ public class StoreDao {
     public Boolean save(Store store) throws SQLException {
         Optional<Store> optional = getStoreById(store.getId());
 
-        if(optional.isPresent())
-            return false;
+        if(optional.isPresent()) return false;
 
         String sql = "call IFSALES_PKG.INSERT_STORE(?,?,?,?,?)";
-
+      
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, store.getName());
@@ -49,7 +48,7 @@ public class StoreDao {
 
         String sql = """
             SELECT *
-            FROM STORES""";
+            FROM V_STORES""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -71,8 +70,8 @@ public class StoreDao {
 
         String sql = """
             SELECT *
-            FROM STORES
-            WHERE ID = ?""";
+            FROM V_STORES
+            WHERE STORE_ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -90,6 +89,7 @@ public class StoreDao {
 
         return optional;
     }
+
 
     public Boolean update(Store store) throws SQLException {
         String sql = """
@@ -137,15 +137,17 @@ public class StoreDao {
 
     private Store createStoreFromResultSet(ResultSet rs) throws SQLException {
         Store store = new Store();
-        store.setId(rs.getLong("id"));
-        store.setName(rs.getString("name"));
-        store.setCnjp(rs.getString("cnjp"));
-        store.setAddress(rs.getString("address"));
-        store.setPhone(rs.getString("phone"));
+        store.setId(rs.getLong("STORE_ID"));
+        store.setName(rs.getString("STORE_NAME"));
+        store.setCnjp(rs.getString("STORE_CNPJ"));
+        store.setAddress(rs.getString("STORE_ADDRESS"));
+        store.setPhone(rs.getString("STORE_PHONE"));
 
-        // Need to create a view to get the region complete
         Region region = new Region();
-        region.setId(rs.getLong("region"));
+        region.setId(rs.getLong("REGION_ID"));
+        region.setName(rs.getString("REGION_NAME"));
+        region.setCity(rs.getString("REGION_CITY"));
+        region.setState(rs.getString("REGION_STATE"));
         store.setRegion(region);
 
         return store;
