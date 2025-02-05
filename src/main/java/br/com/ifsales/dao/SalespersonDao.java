@@ -1,7 +1,6 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.Salesperson;
-import br.com.ifsales.model.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class SalespersonDao {
-
     private final DataSource dataSource;
 
     public SalespersonDao(DataSource dataSource) {
@@ -21,7 +19,7 @@ public class SalespersonDao {
         this.dataSource = dataSource;
     }
 
-    public Boolean save(Salesperson salesperson) {
+    public Boolean save(Salesperson salesperson) throws SQLException {
         String sql = "call IFSALES_PKG.INSERT_SALESPERSON(?, ?, ?, ?)";
 
         try(Connection conn = dataSource.getConnection();
@@ -30,25 +28,24 @@ public class SalespersonDao {
             ps.setString(1, salesperson.getName());
             ps.setString(2, salesperson.getEmail());
             ps.setString(3, salesperson.getPhone());
-            ps.setBoolean(4, salesperson.getActive());
+            ps.setInt(4, salesperson.getActive() ? 1 : 0);
 
             ps.executeUpdate();
         }
-        catch (SQLException e)
-        {
-            throw new RuntimeException("Error during salesperson database save", e);
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while saving salesperson to oracle sql");
         }
+
         return true;
     }
 
-    public Optional<Salesperson> getSalespersonById(Long id) {
-        String sql = """
-                select *
-                from salespersons
-                where id=?""";
-
+    public Optional<Salesperson> getSalespersonById(Long id) throws SQLException {
         Optional<Salesperson> optional = Optional.empty();
 
+        String sql = """
+            SELECT *
+            FROM SALESPERSONS
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -57,20 +54,20 @@ public class SalespersonDao {
 
             optional = extractSalespersonFromQuery(optional, ps);
         }
-        catch (SQLException e)
-        {
-            throw new RuntimeException("Error occurred during database query", e);
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving salespersons from oracle sql");
         }
+
         return optional;
     }
 
-    public Optional<Salesperson> getSalespersonByEmail(String email) {
-        String sql = """
-                select *
-                from salespersons
-                where email = ?""";
-
+    public Optional<Salesperson> getSalespersonByEmail(String email) throws SQLException {
         Optional<Salesperson> optional = Optional.empty();
+
+        String sql = """
+            SELECT *
+            FROM SALESPERSONS
+            WHERE EMAIL = ?""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -79,19 +76,19 @@ public class SalespersonDao {
 
             optional = extractSalespersonFromQuery(optional, ps);
         }
-        catch (SQLException e)
-        {
-            throw new RuntimeException("Error occurred during database query", e);
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving salespersons from oracle sql");
         }
+
         return optional;
     }
 
-    public List<Salesperson> getAllSalespersons() {
+    public List<Salesperson> getAllSalespersons() throws SQLException {
         List<Salesperson> salesperson = new ArrayList<>();
 
         String sql = """
-                select *
-                from salespersons""";
+            SELECT *
+            FROM SALESPERSONS""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -108,22 +105,22 @@ public class SalespersonDao {
 
                 salesperson.add(salespersonFinded);
             }
+
+            return salesperson;
         }
-        catch (SQLException e)
-        {
-            throw new RuntimeException("Error occurred during database query", e);
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving salespersons from oracle sql");
         }
-        return salesperson;
     }
 
-    public Boolean update(Salesperson salesperson) {
+    public Boolean update(Salesperson salesperson) throws SQLException {
         String sql = """
-                update salespersons set
-                    name = ?,
-                    email = ?,
-                    phone = ?,
-                    active = ?
-                where id = ?""";
+            UPDATE SALESPERSONS
+            SET NAME = ?,
+                EMAIL = ?,
+                PHONE = ?,
+                ACTIVE = ?
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
         {
@@ -136,16 +133,16 @@ public class SalespersonDao {
 
             return true;
         }
-        catch (SQLException sqlException)
-        {
-            throw new RuntimeException("Erro ao atualizar dados", sqlException);
+        catch (SQLException sqlException) {
+            throw new SQLException("An error ocurred while updating salespersons in oracle sql");
         }
     }
 
-    public Boolean delete(Salesperson salesperson) {
+    public Boolean delete(Salesperson salesperson) throws SQLException {
         String sql = """
-                delete from salespersons
-                where id = ?""";
+            DELETE
+            FROM SALESPERSONS
+            WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -156,7 +153,7 @@ public class SalespersonDao {
             return true;
         }
         catch (SQLException sqlException) {
-            throw new RuntimeException("Erro ao remover dados", sqlException);
+            throw new SQLException("An error ocurred while removing salespersons from oracle sql");
         }
     }
 
@@ -174,7 +171,11 @@ public class SalespersonDao {
 
                 optional = Optional.of(salesperson);
             }
+
+            return optional;
         }
-        return optional;
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving salespersons from oracle sql");
+        }
     }
 }

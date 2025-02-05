@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Customer {
     private Long id;
     private String cpf;
-    private Long regionId;
+    private Region region;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
@@ -29,12 +29,12 @@ public class Customer {
         this.cpf = cpf;
     }
 
-    public Long getRegionId() {
-        return regionId;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setRegionId(Long regionId) {
-        this.regionId = regionId;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     public String getFirstName() {

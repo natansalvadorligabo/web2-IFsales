@@ -39,4 +39,20 @@
         <param-name>deleteSalesperson</param-name>
         <param-value>br.com.ifsales.servlets.helpers.DeleteSalespersonHelper</param-value>
     </context-param>
+    <context-param>
+        <param-name>listRegions</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.ListRegionsHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>saveRegion</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.SaveRegionHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>updateRegion</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.UpdateRegionHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>deleteRegion</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.DeleteRegionHelper</param-value>
+    </context-param>
 </web-app>
