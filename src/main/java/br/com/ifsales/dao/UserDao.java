@@ -28,12 +28,12 @@ public class UserDao {
 
             ps.executeUpdate();
         }catch (SQLException e) {
-            throw new SQLException("Error during user database save", e);
+            throw new RuntimeException("Error occurred during database query", e);
         }
         return true;
     }
 
-    public Optional<User> getUserByEmail(String email) throws SQLException {
+    public Optional<User> getUserByEmail(String email){
         String sql = "select * from users where email = ?";
         Optional<User> optional = Optional.empty();
 
@@ -53,7 +53,7 @@ public class UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new SQLException("Error during user database query", e);
+            throw new RuntimeException("Error occurred during database query", e);
         }
         return optional;
     }

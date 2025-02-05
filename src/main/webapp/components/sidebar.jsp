@@ -35,6 +35,11 @@ uri="jakarta.tags.functions" %>
               >Vendedor</a
             >
           </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/redirect?action=listRegions"
+            >Região</a
+            >
+          </li>
         </ul>
       </details>
     </li>
