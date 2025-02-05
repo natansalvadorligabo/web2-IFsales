@@ -23,12 +23,12 @@ public class StoreDao {
     }
 
     public Boolean save(Store store) {
-        Optional<Store> optional = getStoreById(store.getId());
+        Optional<Store> optional = getById(store.getId());
         if(optional.isPresent()) {
             return false;
         }
 
-        String sql = "call IFSALES_PKG.INSERT_STORE(?,?,?,?,?,?)";
+        String sql = "call IFSALES_PKG.INSERT_STORE(?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, store.getName());
@@ -44,15 +44,15 @@ public class StoreDao {
         return true;
     }
 
-    public List<Optional<Store>> getAll(){
+    public List<Store> getAll(){
         String sql = "SELECT * FROM STORES";
-        List<Optional<Store>> stores = new LinkedList<>();
+        List<Store> stores = new LinkedList<>();
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    stores.add(Optional.of(createStoreFromResultSet(rs)));
+                    stores.add(createStoreFromResultSet(rs));
                 }
             }
         } catch (SQLException e) {
@@ -62,7 +62,27 @@ public class StoreDao {
         return stores;
     }
 
-    public Optional<Store> getStoreById(Long id) {
+    public Optional<Store> getByCnpj(String cnpj) {
+        String sql = "SELECT * FROM STORES WHERE cnjp = ?";
+        Optional<Store> optional = Optional.empty();
+
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, cnpj);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    optional = Optional.of(createStoreFromResultSet(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred during database query", e);
+        }
+
+        return optional;
+    }
+
+    public Optional<Store> getById(Long id) {
         String sql = "SELECT * FROM STORES WHERE id = ?";
         Optional<Store> optional = Optional.empty();
 

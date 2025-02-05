@@ -1,0 +1,59 @@
+package br.com.ifsales.servlets.helpers.stores;
+
+import br.com.ifsales.dao.RegionDao;
+import br.com.ifsales.dao.StoreDao;
+import br.com.ifsales.model.Region;
+import br.com.ifsales.model.Store;
+import br.com.ifsales.servlets.helpers.Helper;
+import br.com.ifsales.utils.DataSourceSearcher;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.sql.SQLException;
+import java.util.Optional;
+
+public class SaveStoreHelper implements Helper {
+    @Override
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+        Store store = new Store();
+        long id = Long.parseLong(req.getParameter("id"));
+        String name = req.getParameter("name");
+        String address = req.getParameter("address");
+        String cnpj = req.getParameter("cnpj");
+        String phone = req.getParameter("phone");
+        String regionId = req.getParameter("regionId");
+
+        Region region = new Region();
+        region.setId(Long.parseLong(regionId));
+
+        store.setName(name);
+        store.setAddress(address);
+        store.setCnjp(cnpj);
+        store.setPhone(phone);
+        store.setRegion(region);
+
+
+        StoreDao storeDao = new StoreDao(DataSourceSearcher.getInstance().getDataSource());
+
+        if (id == 0) {
+            Optional<Store> registered = storeDao.getByCnpj(cnpj);
+
+            if (registered.isPresent()) {
+                req.setAttribute("result", "already exists");
+                return "/pages/home/regionForm.jsp";
+            } else {
+                if (regionDao.save(region))
+                    req.setAttribute("result", "registered successfully");
+                else
+                    req.setAttribute("result", "not registered");
+            }
+        } else {
+            region.setId(id);
+
+            if (regionDao.update(region))
+                req.setAttribute("result", "saved");
+        }
+
+        return "redirect?action=listRegions";
+    }
+}
