@@ -1,9 +1,5 @@
 package br.com.ifsales.dao;
 
-import br.com.ifsales.model.Region;
-import br.com.ifsales.model.Store;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +7,11 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.sql.DataSource;
+
+import br.com.ifsales.model.Region;
+import br.com.ifsales.model.Store;
 
 public class StoreDao {
     private final DataSource dataSource;
@@ -21,14 +22,15 @@ public class StoreDao {
     }
 
     public Boolean save(Store store) throws SQLException {
-        Optional<Store> optional = getStoreById(store.getId());
+        Optional<Store> optional = getById(store.getId());
 
-        if(optional.isPresent()) return false;
+        if (optional.isPresent())
+            return false;
 
-        String sql = "call IFSALES_PKG.INSERT_STORE(?,?,?,?,?)";
-      
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+        String sql = "CALL IFSALES_PKG.INSERT_STORE(?,?,?,?,?)";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, store.getName());
             ps.setString(2, store.getCnjp());
             ps.setLong(3, store.getRegion().getId());
@@ -36,74 +38,90 @@ public class StoreDao {
             ps.setString(5, store.getPhone());
 
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while saving store to oracle sql");
         }
         return true;
     }
 
-    public List<Optional<Store>> getAll() throws SQLException {
-        List<Optional<Store>> stores = new LinkedList<>();
+    public List<Store> getAll() throws SQLException {
+        List<Store> stores = new LinkedList<>();
 
         String sql = """
-            SELECT *
-            FROM V_STORES""";
+                SELECT *
+                FROM V_STORES""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next())
-                    stores.add(Optional.of(createStoreFromResultSet(rs)));
+                    stores.add(createStoreFromResultSet(rs));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving store from oracle sql");
         }
 
         return stores;
     }
 
-    public Optional<Store> getStoreById(Long id) throws SQLException {
+    public Optional<Store> getByCnpj(String cnpj) throws SQLException {
         Optional<Store> optional = Optional.empty();
 
         String sql = """
-            SELECT *
-            FROM V_STORES
-            WHERE STORE_ID = ?""";
+                SELECT *
+                FROM V_STORES
+                WHERE STORE_CNPJ = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
-            ps.setLong(1, id);
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, cnpj);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next())
                     optional = Optional.of(createStoreFromResultSet(rs));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving store from oracle sql");
         }
 
         return optional;
     }
 
+    public Optional<Store> getById(Long id) throws SQLException {
+        Optional<Store> optional = Optional.empty();
+
+        String sql = """
+                SELECT *
+                FROM V_STORES
+                WHERE STORE_ID = ?""";
+
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setLong(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next())
+                    optional = Optional.of(createStoreFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving store from oracle sql");
+        }
+
+        return optional;
+    }
 
     public Boolean update(Store store) throws SQLException {
         String sql = """
-            UPDATE STORES
-            SET STORE_NAME = ?,
-                STORE_CNPJ = ?,
-                REGION_ID = ?,
-                ADDRESS = ?,
-                PHONE = ?
-            WHERE ID = ?""";
+                UPDATE STORES
+                SET STORE_NAME = ?,
+                    STORE_CNPJ = ?,
+                    REGION_ID = ?,
+                    ADDRESS = ?,
+                    PHONE = ?
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, store.getName());
             ps.setString(2, store.getCnjp());
             ps.setLong(3, store.getRegion().getId());
@@ -113,24 +131,21 @@ public class StoreDao {
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while updating store in oracle sql");
         }
     }
 
     public Boolean delete(Long id) throws SQLException {
-        String sql = "delete from stores where id = ?";
+        String sql = "DELETE FROM STORES WHERE ID = ?";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while removing store from oracle sql");
         }
     }

@@ -1,6 +1,8 @@
-package br.com.ifsales.servlets.helpers.stores;
+package br.com.ifsales.servlets.helpers.store;
 
-import br.com.ifsales.dao.RegionDao;
+import java.sql.SQLException;
+import java.util.Optional;
+
 import br.com.ifsales.dao.StoreDao;
 import br.com.ifsales.model.Region;
 import br.com.ifsales.model.Store;
@@ -8,9 +10,6 @@ import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.sql.SQLException;
-import java.util.Optional;
 
 public class SaveStoreHelper implements Helper {
     @Override
@@ -32,7 +31,6 @@ public class SaveStoreHelper implements Helper {
         store.setPhone(phone);
         store.setRegion(region);
 
-
         StoreDao storeDao = new StoreDao(DataSourceSearcher.getInstance().getDataSource());
 
         if (id == 0) {
@@ -40,9 +38,9 @@ public class SaveStoreHelper implements Helper {
 
             if (registered.isPresent()) {
                 req.setAttribute("result", "already exists");
-                return "/pages/home/regionForm.jsp";
+                return "/pages/home/storeForm.jsp";
             } else {
-                if (regionDao.save(region))
+                if (storeDao.save(registered.get()))
                     req.setAttribute("result", "registered successfully");
                 else
                     req.setAttribute("result", "not registered");
@@ -50,10 +48,10 @@ public class SaveStoreHelper implements Helper {
         } else {
             region.setId(id);
 
-            if (regionDao.update(region))
+            if (storeDao.update(store))
                 req.setAttribute("result", "saved");
         }
 
-        return "redirect?action=listRegions";
+        return "redirect?action=listStores";
     }
 }
