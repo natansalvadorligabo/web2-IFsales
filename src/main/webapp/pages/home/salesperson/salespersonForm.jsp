@@ -110,9 +110,6 @@
       <jsp:include page="/components/sidebar.jsp" />
     </div>
 
-    <jsp:include page="/components/sidebar.jsp" />
-    </div>
-
-    <script defer src="${pageContext.request.contextPath}/scripts/validateSalespersonRegister.js"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/validateForm.js"></script>
   </body>
 </html>

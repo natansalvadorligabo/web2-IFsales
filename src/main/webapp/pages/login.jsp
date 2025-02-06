@@ -73,7 +73,7 @@
     </div>
 
 
-    <script defer src="${pageContext.request.contextPath}/scripts/validateLogin.js"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/validators/validateLogin.js"></script>
     <script defer src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
   </body>
 </html>
