@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class CreateUserHelper implements Helper {
     @Override
-    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
@@ -22,10 +22,14 @@ public class CreateUserHelper implements Helper {
 
         UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
 
-        if (userDao.save(user)) {
-            req.setAttribute("result", "registerSuccess");
-            return "redirect?action=login";
-        } else {
+        try {
+            if (userDao.save(user)) {
+                req.setAttribute("result", "registerSuccess");
+                return "redirect?action=login";
+            } else {
+                req.setAttribute("result", "registerError");
+            }
+        } catch (SQLException e) {
             req.setAttribute("result", "registerError");
         }
 

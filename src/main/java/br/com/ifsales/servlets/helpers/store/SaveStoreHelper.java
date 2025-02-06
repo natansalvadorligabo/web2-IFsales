@@ -41,15 +41,21 @@ public class SaveStoreHelper implements Helper {
                 return "/pages/home/store/storeForm.jsp";
             } else {
                 if (storeDao.save(store))
-                    req.setAttribute("result", "registered successfully");
+                    req.setAttribute("result", "registerSuccess");
                 else
-                    req.setAttribute("result", "not registered");
+                    req.setAttribute("result", "registerError");
             }
         } else {
             store.setId(id);
 
-            if (storeDao.update(store))
-                req.setAttribute("result", "saved");
+            try {
+                if (storeDao.update(store))
+                    req.setAttribute("result", "updateSuccess");
+                else
+                    req.setAttribute("result", "updateError");
+            } catch (SQLException e) {
+                req.setAttribute("result", "updateError");
+            }
         }
 
         return "redirect?action=listStores";
