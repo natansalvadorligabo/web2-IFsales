@@ -4,6 +4,7 @@ import br.com.ifsales.dao.ProductDao;
 import br.com.ifsales.model.Category;
 import br.com.ifsales.model.Product;
 import br.com.ifsales.servlets.helpers.Helper;
+import br.com.ifsales.servlets.helpers.HelperUtils;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,26 +34,7 @@ public class SaveProductHelper implements Helper {
 
         ProductDao productDao = new ProductDao(DataSourceSearcher.getInstance().getDataSource());
 
-        if (id == 0) {
-            Optional<Product> registered = productDao.getProductById(id);
-
-            if (registered.isPresent()) {
-                req.setAttribute("result", "already exists");
-                return "/pages/home/product/productForm.jsp";
-            } else {
-                if (productDao.save(product)) {
-                    req.setAttribute("result", "registered successfully");
-                } else {
-                    req.setAttribute("result", "not registered");
-                }
-            }
-        } else {
-            product.setId(id);
-
-            if (productDao.update(product)) {
-                req.setAttribute("result", "saved");
-            }
-        }
+        HelperUtils.saveOrUpdate(req, product, productDao, id);
 
         return "redirect?action=listProducts";
     }

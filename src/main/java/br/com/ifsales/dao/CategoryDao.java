@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class CategoryDao {
+public class CategoryDao implements Dao<Category>{
     private final DataSource dataSource;
 
     public CategoryDao(DataSource dataSource) {

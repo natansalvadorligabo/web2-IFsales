@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import br.com.ifsales.model.Region;
 import br.com.ifsales.model.Store;
 
-public class StoreDao {
+public class StoreDao implements Dao<Store>{
     private final DataSource dataSource;
 
     public StoreDao(DataSource dataSource) {

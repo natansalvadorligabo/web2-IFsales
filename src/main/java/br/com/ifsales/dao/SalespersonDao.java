@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SalespersonDao {
+public class SalespersonDao implements Dao<Salesperson>{
     private final DataSource dataSource;
 
     public SalespersonDao(DataSource dataSource) {
