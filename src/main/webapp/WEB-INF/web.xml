@@ -95,4 +95,20 @@
         <param-name>deleteProduct</param-name>
         <param-value>br.com.ifsales.servlets.helpers.product.DeleteProductHelper</param-value>
     </context-param>
+    <context-param>
+        <param-name>listCategories</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.category.ListCategoriesHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>saveCategory</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.category.SaveCategoryHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>updateCategory</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.category.UpdateCategoryHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>deleteCategory</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.category.DeleteCategoryHelper</param-value>
+    </context-param>
 </web-app>

@@ -9,18 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class ListProductsHelper implements Helper {
 
     @Override
     public Object execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
         ProductDao productDao = new ProductDao(DataSourceSearcher.getInstance().getDataSource());
-        List<Product> products = productDao.getAllProducts()
-                .stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .toList();
+        List<Product> products = productDao.getAllProducts();
         req.setAttribute("products", products);
 
         return "/pages/home/product/productTable.jsp";

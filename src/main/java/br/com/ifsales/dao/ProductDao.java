@@ -199,8 +199,8 @@ public class ProductDao {
         return Optional.of(products);
     }
 
-    public List<Optional<Product>> getAllProducts() throws SQLException {
-        List<Optional<Product>> products = new ArrayList<>();
+    public List<Product> getAllProducts() throws SQLException {
+        List<Product> products = new ArrayList<>();
 
         String sql = """
                 SELECT *
@@ -210,7 +210,7 @@ public class ProductDao {
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next())
-                products.add(Optional.of(extractProductFromResultSet(rs)));
+                products.add(extractProductFromResultSet(rs));
         } catch (SQLException e) {
             throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
