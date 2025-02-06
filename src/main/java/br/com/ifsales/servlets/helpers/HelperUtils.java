@@ -22,6 +22,7 @@ public class HelperUtils {
             try {
                 if (dao.update(storable)) req.setAttribute("result", "updateSuccess");
             } catch (SQLException e) {
+                System.err.println(e.getStackTrace());
                 req.setAttribute("result", "updateError");
             }
         }

@@ -14,8 +14,8 @@ public class DeleteSalespersonHelper implements Helper {
     @Override
     public Object execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         Long salespersonId = Long.parseLong(req.getParameter("id"));
-
         SalespersonDao salesPersonDao = new SalespersonDao(DataSourceSearcher.getInstance().getDataSource());
+
         Optional<Salesperson> salesperson = salesPersonDao.getSalespersonById(salespersonId);
 
 

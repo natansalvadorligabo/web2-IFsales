@@ -24,7 +24,7 @@
         <div class="container mx-auto p-4">
           <div class="flex items-center justify-between mb-6 mt-8">
             <h1 class="text-2xl font-bold">Lojas</h1>
-            <a class="btn btn-success btn-circle" href="${pageContext.request.contextPath}/pages/home/store/storeForm.jsp">
+            <a class="btn btn-success btn-circle" href="${pageContext.request.contextPath}/redirect?action=loadStoreForm">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
               </svg>
@@ -126,6 +126,22 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
               <span>Loja atualizada com sucesso.</span>
+            </div>
+          </c:when>
+          <c:when test="${result == 'deleteSuccess'}">
+            <div class="alert alert-success">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>Loja deletada com sucesso.</span>
+            </div>
+          </c:when>
+          <c:when test="${result == 'deleteError'}">
+            <div class="alert alert-error">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>Esta loja não pode ser deletada, pois está associada a um ou mais funis.</span>
             </div>
           </c:when>
         </c:choose>
