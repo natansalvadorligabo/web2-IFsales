@@ -54,7 +54,7 @@
                   </c:when>
                 </c:choose>
               </div>
-              <span id="error-name" class="text-error hidden"></span>
+              <span id="error-city" class="text-error hidden"></span>
 
               <div>
                 <label for="state" class="font-semibold">Estado<span class="text-error">*</span></label>
@@ -67,7 +67,7 @@
                   </c:when>
                 </c:choose>
               </div>
-              <span id="error-name" class="text-error hidden"></span>
+              <span id="error-state" class="text-error hidden"></span>
 
               <div class="space-y-2">
                 <button type="submit" name="action" value="saveRegion" class="btn btn-primary btn-block">
@@ -93,8 +93,6 @@
       <jsp:include page="/components/sidebar.jsp" />
     </div>
 
-    <jsp:include page="/components/sidebar.jsp" />
-
-    <script defer src="${pageContext.request.contextPath}/scripts/validateRegionRegister.js"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/validateForm.js"></script>
   </body>
 </html>
