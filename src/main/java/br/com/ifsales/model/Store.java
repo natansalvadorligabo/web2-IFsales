@@ -3,7 +3,7 @@ package br.com.ifsales.model;
 public class Store {
     private Long id;
     private String name;
-    private String cnjp;
+    private String cnpj;
     private Region region;
     private String address;
     private String phone;
@@ -26,12 +26,12 @@ public class Store {
         this.name = name;
     }
 
-    public String getCnjp() {
-        return cnjp;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCnjp(String cnjp) {
-        this.cnjp = cnjp;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public Region getRegion() {

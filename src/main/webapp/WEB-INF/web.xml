@@ -55,7 +55,22 @@
         <param-name>deleteRegion</param-name>
         <param-value>br.com.ifsales.servlets.helpers.DeleteRegionHelper</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>listStores</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.store.ListStoreHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>saveStore</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.store.SaveStoreHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>updateStore</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.store.UpdateStoreHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>deleteStore</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.store.DeleteStoreHelper</param-value>
+    </context-param>
     <context-param>
         <param-name>loadProductForm</param-name>
         <param-value>br.com.ifsales.servlets.helpers.LoadProductFormHelper</param-value>

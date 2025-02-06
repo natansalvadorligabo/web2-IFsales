@@ -87,7 +87,7 @@
                             </c:choose>
                         </button>
 
-                        <a href="${pageContext.request.contextPath}/pages/home/regionTable.jsp" class="btn btn-outline btn-block">
+                        <a href="${pageContext.request.contextPath}/redirect?action=listRegions" class="btn btn-outline btn-block">
                             Voltar
                         </a>
                     </div>

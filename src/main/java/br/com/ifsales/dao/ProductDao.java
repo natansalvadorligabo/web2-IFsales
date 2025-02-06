@@ -1,9 +1,5 @@
 package br.com.ifsales.dao;
 
-import br.com.ifsales.model.Category;
-import br.com.ifsales.model.Product;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.sql.DataSource;
+
+import br.com.ifsales.model.Category;
+import br.com.ifsales.model.Product;
 
 public class ProductDao {
     private final DataSource dataSource;
@@ -23,9 +24,8 @@ public class ProductDao {
     public Boolean save(Product product) throws SQLException {
         String sql = "CALL IFSALES_PKG.INSERT_PRODUCT(?, ?, ?, ?, ?)";
 
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql))
-        {
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, product.getBrand());
             ps.setString(2, product.getModel());
             ps.setInt(3, product.getModelYear());
@@ -33,8 +33,7 @@ public class ProductDao {
             ps.setLong(5, product.getCategory().getId());
 
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while saving product to oracle sql");
         }
 
@@ -43,13 +42,12 @@ public class ProductDao {
 
     public Optional<Product> getProductById(Long id) throws SQLException {
         String sql = """
-            SELECT *
-            FROM PRODUCTS
-            WHERE ID = ?""";
+                SELECT *
+                FROM PRODUCTS
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -67,13 +65,12 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM PRODUCTS
-            WHERE BRAND = ?""";
+                SELECT *
+                FROM PRODUCTS
+                WHERE BRAND = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, brand);
 
             ResultSet rs = ps.executeQuery();
@@ -92,13 +89,12 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM PRODUCTS
-            WHERE MODEL = ?""";
+                SELECT *
+                FROM PRODUCTS
+                WHERE MODEL = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, model);
 
             ResultSet rs = ps.executeQuery();
@@ -117,13 +113,12 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM PRODUCTS
-            WHERE MODEL_YEAR = ?""";
+                SELECT *
+                FROM PRODUCTS
+                WHERE MODEL_YEAR = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, modelYear);
 
             ResultSet rs = ps.executeQuery();
@@ -142,13 +137,12 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM PRODUCTS
-            WHERE PRICE = ?""";
+                SELECT *
+                FROM PRODUCTS
+                WHERE PRICE = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDouble(1, price);
 
             ResultSet rs = ps.executeQuery();
@@ -167,13 +161,12 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM PRODUCTS
-            WHERE CATEGORY_ID = ?""";
+                SELECT *
+                FROM PRODUCTS
+                WHERE CATEGORY_ID = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, categoryId);
 
             ResultSet rs = ps.executeQuery();
@@ -192,13 +185,12 @@ public class ProductDao {
         List<Product> products = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM PRODUCTS
-            WHERE TOTAL_SALES = ?""";
+                SELECT *
+                FROM PRODUCTS
+                WHERE TOTAL_SALES = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, totalSales);
 
             ResultSet rs = ps.executeQuery();
@@ -221,9 +213,8 @@ public class ProductDao {
             FROM V_PRODUCTS""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery())
-        {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
             while (rs.next())
                 products.add(Optional.of(extractProductFromResultSet(rs)));
         }
@@ -256,17 +247,16 @@ public class ProductDao {
 
     public Boolean update(Product product) throws SQLException {
         String sql = """
-            UPDATE PRODUCTS
-            SET BRAND = ?,
-                MODEL = ?,
-                MODEL_YEAR = ?,
-                PRICE = ?,
-                CATEGORY_ID = ?,
-                TOTAL_SALES = ?
-            WHERE ID = ?""";
+                UPDATE PRODUCTS
+                SET BRAND = ?,
+                    MODEL = ?,
+                    MODEL_YEAR = ?,
+                    PRICE = ?,
+                    CATEGORY_ID = ?,
+                    TOTAL_SALES = ?
+                WHERE ID = ?""";
 
-        try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql))
-        {
+        try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, product.getBrand());
             ps.setString(2, product.getModel());
             ps.setInt(3, product.getModelYear());
@@ -285,13 +275,12 @@ public class ProductDao {
 
     public Boolean delete(Product product) throws SQLException {
         String sql = """
-            DELETE
-            FROM PRODUCTS
-            WHERE ID = ?""";
+                DELETE
+                FROM PRODUCTS
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, product.getId());
             ps.executeUpdate();
 
