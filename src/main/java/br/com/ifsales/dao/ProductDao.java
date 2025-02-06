@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import br.com.ifsales.model.Category;
 import br.com.ifsales.model.Product;
 
-public class ProductDao {
+public class ProductDao implements Dao<Product>{
     private final DataSource dataSource;
 
     public ProductDao(DataSource dataSource) {

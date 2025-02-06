@@ -1,8 +1,10 @@
 package br.com.ifsales.model;
 
+import br.com.ifsales.dao.Storable;
+
 import java.time.LocalDate;
 
-public class Funnel {
+public class Funnel implements Storable {
     private Long id;
     private Customer customer;
     private Salesperson salesperson;

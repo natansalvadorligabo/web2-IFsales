@@ -1,6 +1,8 @@
 package br.com.ifsales.model;
 
-public class Region {
+import br.com.ifsales.dao.Storable;
+
+public class Region implements Storable {
     private Long id;
     private String name;
     private String city;

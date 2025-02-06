@@ -3,6 +3,7 @@ package br.com.ifsales.servlets.helpers.region;
 import br.com.ifsales.dao.RegionDao;
 import br.com.ifsales.model.Region;
 import br.com.ifsales.servlets.helpers.Helper;
+import br.com.ifsales.servlets.helpers.HelperUtils;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,24 +26,7 @@ public class SaveRegionHelper implements Helper {
 
         RegionDao regionDao = new RegionDao(DataSourceSearcher.getInstance().getDataSource());
 
-        if (id == 0) {
-            Optional<Region> registered = regionDao.getRegionByName(name);
-
-            if (registered.isPresent()) {
-                req.setAttribute("result", "already exists");
-                return "/pages/home/region/regionForm.jsp";
-            } else {
-                if (regionDao.save(region))
-                    req.setAttribute("result", "registered successfully");
-                else
-                    req.setAttribute("result", "not registered");
-            }
-        } else {
-            region.setId(id);
-
-            if (regionDao.update(region))
-                req.setAttribute("result", "saved");
-        }
+        HelperUtils.saveOrUpdate(req, region, regionDao, id);
 
         return "redirect?action=listRegions";
     }

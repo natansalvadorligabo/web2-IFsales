@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class    CustomerDao {
+public class    CustomerDao implements Dao<Customer>{
     private final DataSource dataSource;
 
     public CustomerDao(DataSource dataSource) {

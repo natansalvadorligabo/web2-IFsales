@@ -3,6 +3,7 @@ package br.com.ifsales.servlets.helpers.user;
 import br.com.ifsales.dao.UserDao;
 import br.com.ifsales.model.User;
 import br.com.ifsales.servlets.helpers.Helper;
+import br.com.ifsales.servlets.helpers.HelperUtils;
 import br.com.ifsales.utils.DataSourceSearcher;
 import br.com.ifsales.utils.PasswordEncoder;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,15 +23,10 @@ public class CreateUserHelper implements Helper {
 
         UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
 
-        try {
-            if (userDao.save(user)) {
-                req.setAttribute("result", "registerSuccess");
-                return "redirect?action=login";
-            } else {
-                req.setAttribute("result", "registerError");
-            }
-        } catch (SQLException e) {
-            req.setAttribute("result", "registerError");
+        HelperUtils.saveOrUpdate(req, user, userDao, 0);
+
+        if (req.getAttribute("result") != "registerError") {
+            return "redirect?action=login";
         }
 
         return "/pages/userRegister.jsp";

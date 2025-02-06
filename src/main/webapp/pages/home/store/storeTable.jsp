@@ -132,6 +132,7 @@
       </div>
 
       <jsp:include page="/components/sidebar.jsp" />
+      <script src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
     </div>
   </body>
 </html>
