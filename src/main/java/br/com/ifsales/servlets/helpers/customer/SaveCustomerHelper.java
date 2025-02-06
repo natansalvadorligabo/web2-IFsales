@@ -5,6 +5,7 @@ import br.com.ifsales.model.Category;
 import br.com.ifsales.model.Customer;
 import br.com.ifsales.model.Region;
 import br.com.ifsales.servlets.helpers.Helper;
+import br.com.ifsales.servlets.helpers.HelperUtils;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,25 +42,10 @@ public class SaveCustomerHelper implements Helper {
 
         CustomerDao customerDao = new CustomerDao(DataSourceSearcher.getInstance().getDataSource());
 
-        if (id == 0) {
-            Optional<Customer> registered = customerDao.getCustomerById(id);
+        HelperUtils.saveOrUpdate(req, customer, customerDao, id);
 
-            if (registered.isPresent()) {
-                req.setAttribute("result", "already exists");
-                return "/pages/home/customer/customerForm.jsp";
-            } else {
-                if (customerDao.save(customer)) {
-                    req.setAttribute("result", "registered successfully");
-                } else {
-                    req.setAttribute("result", "not registered");
-                }
-            }
-        } else {
-            customer.setId(id);
-
-            if (customerDao.update(customer)) {
-                req.setAttribute("result", "saved");
-            }
+        if (req.getAttribute("result") == "registerError") {
+            return "/pages/home/customer/customerForm.jsp";
         }
 
         return "redirect?action=listCustomers";
