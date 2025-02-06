@@ -67,7 +67,6 @@ public class ProductDao {
 
     public Optional<List<Product>> getProductsByBrand(String brand) throws SQLException {
         List<Product> products = new ArrayList<>();
-        Product product;
 
         String sql = """
             SELECT *
@@ -141,7 +140,7 @@ public class ProductDao {
         return Optional.of(products);
     }
 
-    public Optional<List<Product>> getProductsByPrice(Double price) throws SQLException, SQLException {
+    public Optional<List<Product>> getProductsByPrice(Double price) throws SQLException {
         List<Product> products = new ArrayList<>();
 
         String sql = """
@@ -216,25 +215,45 @@ public class ProductDao {
         return Optional.of(products);
     }
 
-    public Optional<List<Product>> getAllProducts() throws SQLException {
-        List<Product> products = new ArrayList<>();
+    public List<Optional<Product>> getAllProducts() throws SQLException {
+        List<Optional<Product>> products = new ArrayList<>();
 
         String sql = """
             SELECT *
-            FROM PRODUCTS""";
+            FROM V_PRODUCTS""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery())
         {
             while (rs.next())
-                products.add(extractProductFromQuery(rs));
+                products.add(Optional.of(extractProductFromResultSet(rs)));
         }
         catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving products in oracle sql");
         }
 
-        return Optional.of(products);
+        return products;
+    }
+
+    public static Product extractProductFromResultSet(ResultSet rs) throws SQLException {
+        Product product = new Product();
+        product.setId(rs.getLong("PRODUCT_ID"));
+        product.setBrand(rs.getString("PRODUCT_BRAND"));
+        product.setModel(rs.getString("PRODUCT_MODEL"));
+        product.setModelYear(rs.getInt("PRODUCT_MODEL_YEAR"));
+        product.setPrice(rs.getDouble("PRODUCT_PRICE"));
+
+        Category category = new Category();
+        category.setId(rs.getLong("CATEGORY_ID"));
+        category.setName(rs.getString("CATEGORY_NAME"));
+        category.setDescription(rs.getString("CATEGORY_DESCRIPTION"));
+
+        product.setPrice(rs.getDouble("PRODUCT_TOTAL_SALES"));
+
+        product.setCategory(category);
+
+        return product;
     }
 
     public Boolean update(Product product) throws SQLException {
@@ -285,24 +304,19 @@ public class ProductDao {
     }
 
     private Product extractProductFromQuery(ResultSet rs) throws SQLException {
-        if (rs.next())
-        {
-            Product product = new Product();
-            product.setId(Long.parseLong(rs.getString("id")));
-            product.setBrand(rs.getString("brand"));
-            product.setModel(rs.getString("model"));
-            product.setModelYear(rs.getInt("model_year"));
-            product.setPrice(rs.getDouble("price"));
+        Product product = new Product();
+        product.setId(rs.getLong("id"));
+        product.setBrand(rs.getString("brand"));
+        product.setModel(rs.getString("model"));
+        product.setModelYear(rs.getInt("model_year"));
+        product.setPrice(rs.getDouble("price"));
 
-            Category category = new Category();
-            category.setId(rs.getLong("category_id"));
+        Category category = new Category();
+        category.setId(rs.getLong("category_id"));
 
-            product.setCategory(category);
-            product.setTotalSales(rs.getInt("total_sales"));
+        product.setCategory(category);
+        product.setTotalSales(rs.getInt("total_sales"));
 
-            return product;
-        }
-
-        throw new SQLException("An error ocurred while retrieving products from oracle sql");
+        return product;
     }
 }

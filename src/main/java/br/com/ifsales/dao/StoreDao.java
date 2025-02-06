@@ -40,10 +40,11 @@ public class StoreDao {
         catch (SQLException e) {
             throw new SQLException("An error ocurred while saving store to oracle sql");
         }
+
         return true;
     }
 
-    public List<Optional<Store>> getAll() throws SQLException {
+    public List<Optional<Store>> getAllStores() throws SQLException {
         List<Optional<Store>> stores = new LinkedList<>();
 
         String sql = """
@@ -120,7 +121,10 @@ public class StoreDao {
     }
 
     public Boolean delete(Long id) throws SQLException {
-        String sql = "delete from stores where id = ?";
+        String sql = """
+        DELETE
+        FROM STORES
+        WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql))
@@ -135,7 +139,7 @@ public class StoreDao {
         }
     }
 
-    private Store createStoreFromResultSet(ResultSet rs) throws SQLException {
+    public static Store createStoreFromResultSet(ResultSet rs) throws SQLException {
         Store store = new Store();
         store.setId(rs.getLong("STORE_ID"));
         store.setName(rs.getString("STORE_NAME"));
