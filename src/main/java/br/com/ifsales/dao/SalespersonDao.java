@@ -84,7 +84,7 @@ public class SalespersonDao {
     }
 
     public List<Salesperson> getAllSalespersons() throws SQLException {
-        List<Salesperson> salesperson = new ArrayList<>();
+        List<Salesperson> salespersons = new ArrayList<>();
 
         String sql = """
             SELECT *
@@ -96,17 +96,17 @@ public class SalespersonDao {
         {
             while (rs.next())
             {
-                Salesperson salespersonFinded = new Salesperson();
-                salespersonFinded.setId(rs.getLong("id"));
-                salespersonFinded.setName(rs.getString("name"));
-                salespersonFinded.setEmail(rs.getString("email"));
-                salespersonFinded.setPhone(rs.getString("phone"));
-                salespersonFinded.setActive(rs.getBoolean("active"));
+                Salesperson salesperson = new Salesperson();
+                salesperson.setId(rs.getLong("id"));
+                salesperson.setName(rs.getString("name"));
+                salesperson.setEmail(rs.getString("email"));
+                salesperson.setPhone(rs.getString("phone"));
+                salesperson.setActive(rs.getBoolean("active"));
 
-                salesperson.add(salespersonFinded);
+                salespersons.add(salesperson);
             }
 
-            return salesperson;
+            return salespersons;
         }
         catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving salespersons from oracle sql");
