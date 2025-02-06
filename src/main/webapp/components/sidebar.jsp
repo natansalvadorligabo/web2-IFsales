@@ -31,8 +31,7 @@
         <summary class="font-semibold">Tabelas</summary>
         <ul>
           <li>
-            <a
-                    href="${pageContext.request.contextPath}/redirect?action=listSalespersons"
+            <a href="${pageContext.request.contextPath}/redirect?action=listSalespersons"
             >Vendedor</a
             >
           </li>
@@ -42,17 +41,16 @@
             >
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/redirect?action=listStores"
-            >Loja</a
+            <a href="${pageContext.request.contextPath}/redirect?action=listProducts"
+            >Produto</a
             >
           </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/redirect?action=listStores"
+            >Loja</a
+           </li>
         </ul>
       </details>
-    </li>
-    <li>
-      <a href="#" class="font-semibold"
-      >Configurações <span class="badge">Em breve</span></a
-      >
     </li>
   </ul>
 </div>

@@ -71,4 +71,24 @@
         <param-name>deleteStore</param-name>
         <param-value>br.com.ifsales.servlets.helpers.store.DeleteStoreHelper</param-value>
     </context-param>
+    <context-param>
+        <param-name>loadProductForm</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.LoadProductFormHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>listProducts</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.ListProductsHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>saveProduct</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.SaveProductHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>updateProduct</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.UpdateProductHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>deleteProduct</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.DeleteProductHelper</param-value>
+    </context-param>
 </web-app>

@@ -41,8 +41,6 @@ public class ProductDao {
     }
 
     public Optional<Product> getProductById(Long id) throws SQLException {
-        Product product;
-
         String sql = """
                 SELECT *
                 FROM PRODUCTS
@@ -51,15 +49,16 @@ public class ProductDao {
         try (Connection con = dataSource.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
-
             ResultSet rs = ps.executeQuery();
 
-            product = extractProductFromQuery(rs);
+            if (rs.next()) {
+                return Optional.of(extractProductFromQuery(rs));
+            } else {
+                return Optional.empty();
+            }
         } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving products in oracle sql");
+            throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
-
-        return Optional.of(product);
     }
 
     public Optional<List<Product>> getProductsByBrand(String brand) throws SQLException {
@@ -78,8 +77,9 @@ public class ProductDao {
 
             while (rs.next())
                 products.add(extractProductFromQuery(rs));
-        } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving products in oracle sql");
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
 
         return Optional.of(products);
@@ -101,8 +101,9 @@ public class ProductDao {
 
             while (rs.next())
                 products.add(extractProductFromQuery(rs));
-        } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving products in oracle sql");
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
 
         return Optional.of(products);
@@ -124,14 +125,15 @@ public class ProductDao {
 
             while (rs.next())
                 products.add(extractProductFromQuery(rs));
-        } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving products in oracle sql");
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
 
         return Optional.of(products);
     }
 
-    public Optional<List<Product>> getProductsByPrice(Double price) throws SQLException, SQLException {
+    public Optional<List<Product>> getProductsByPrice(Double price) throws SQLException {
         List<Product> products = new ArrayList<>();
 
         String sql = """
@@ -147,8 +149,9 @@ public class ProductDao {
 
             while (rs.next())
                 products.add(extractProductFromQuery(rs));
-        } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving products in oracle sql");
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
 
         return Optional.of(products);
@@ -170,8 +173,9 @@ public class ProductDao {
 
             while (rs.next())
                 products.add(extractProductFromQuery(rs));
-        } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving products in oracle sql");
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
 
         return Optional.of(products);
@@ -193,30 +197,52 @@ public class ProductDao {
 
             while (rs.next())
                 products.add(extractProductFromQuery(rs));
-        } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving products in oracle sql");
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
 
         return Optional.of(products);
     }
 
-    public Optional<List<Product>> getAllProducts() throws SQLException {
-        List<Product> products = new ArrayList<>();
+    public List<Optional<Product>> getAllProducts() throws SQLException {
+        List<Optional<Product>> products = new ArrayList<>();
 
         String sql = """
-                SELECT *
-                FROM PRODUCTS""";
+            SELECT *
+            FROM V_PRODUCTS""";
 
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next())
-                products.add(extractProductFromQuery(rs));
-        } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving products in oracle sql");
+                products.add(Optional.of(extractProductFromResultSet(rs)));
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving products in oracle sql", e);
         }
 
-        return Optional.of(products);
+        return products;
+    }
+
+    public static Product extractProductFromResultSet(ResultSet rs) throws SQLException {
+        Product product = new Product();
+        product.setId(rs.getLong("PRODUCT_ID"));
+        product.setBrand(rs.getString("PRODUCT_BRAND"));
+        product.setModel(rs.getString("PRODUCT_MODEL"));
+        product.setModelYear(rs.getInt("PRODUCT_MODEL_YEAR"));
+        product.setPrice(rs.getDouble("PRODUCT_PRICE"));
+
+        Category category = new Category();
+        category.setId(rs.getLong("CATEGORY_ID"));
+        category.setName(rs.getString("CATEGORY_NAME"));
+        category.setDescription(rs.getString("CATEGORY_DESCRIPTION"));
+
+        product.setTotalSales(rs.getInt("PRODUCT_TOTAL_SALES"));
+
+        product.setCategory(category);
+
+        return product;
     }
 
     public Boolean update(Product product) throws SQLException {
@@ -237,11 +263,13 @@ public class ProductDao {
             ps.setDouble(4, product.getPrice());
             ps.setLong(5, product.getCategory().getId());
             ps.setDouble(6, product.getTotalSales());
+            ps.setLong(7, product.getId());
             ps.executeUpdate();
 
             return true;
-        } catch (SQLException sqlException) {
-            throw new SQLException("An error ocurred while updating products in oracle sql");
+        }
+        catch (SQLException e) {
+            throw new SQLException("An error ocurred while updating products in oracle sql", e);
         }
     }
 
@@ -257,29 +285,26 @@ public class ProductDao {
             ps.executeUpdate();
 
             return true;
-        } catch (SQLException sqlException) {
+        }
+        catch (SQLException e) {
             throw new SQLException("An error ocurred while removing products from oracle sql");
         }
     }
 
     private Product extractProductFromQuery(ResultSet rs) throws SQLException {
-        if (rs.next()) {
-            Product product = new Product();
-            product.setId(Long.parseLong(rs.getString("id")));
-            product.setBrand(rs.getString("brand"));
-            product.setModel(rs.getString("model"));
-            product.setModelYear(rs.getInt("model_year"));
-            product.setPrice(rs.getDouble("price"));
+        Product product = new Product();
+        product.setId(rs.getLong("id"));
+        product.setBrand(rs.getString("brand"));
+        product.setModel(rs.getString("model"));
+        product.setModelYear(rs.getInt("model_year"));
+        product.setPrice(rs.getDouble("price"));
 
-            Category category = new Category();
-            category.setId(rs.getLong("category_id"));
+        Category category = new Category();
+        category.setId(rs.getLong("category_id"));
 
-            product.setCategory(category);
-            product.setTotalSales(rs.getInt("total_sales"));
+        product.setCategory(category);
+        product.setTotalSales(rs.getInt("total_sales"));
 
-            return product;
-        }
-
-        throw new SQLException("An error ocurred while retrieving products from oracle sql");
+        return product;
     }
 }

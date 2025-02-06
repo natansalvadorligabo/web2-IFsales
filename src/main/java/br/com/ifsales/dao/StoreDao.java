@@ -36,6 +36,7 @@ public class StoreDao {
         } catch (SQLException e) {
             throw new SQLException("An error ocurred while saving store to oracle sql");
         }
+
         return true;
     }
 
@@ -132,7 +133,11 @@ public class StoreDao {
     }
 
     public Boolean delete(Long id) throws SQLException {
-        String sql = "DELETE FROM STORES WHERE ID = ?";
+        String sql = """
+        DELETE
+        FROM STORES
+        WHERE ID = ?""";
+
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -145,7 +150,7 @@ public class StoreDao {
         }
     }
 
-    private Store createStoreFromResultSet(ResultSet rs) throws SQLException {
+    public static Store createStoreFromResultSet(ResultSet rs) throws SQLException {
         Store store = new Store();
         store.setId(rs.getLong("STORE_ID"));
         store.setName(rs.getString("STORE_NAME"));

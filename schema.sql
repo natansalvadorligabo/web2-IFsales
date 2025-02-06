@@ -351,6 +351,43 @@ select
 from ifsales.stores  sto
    ,ifsales.regions reg
 where sto.region_id = reg.id
+
+-- view para trazer os dados dos products junto de suas categorias correspondentes
+create or replace view ifsales.v_products
+as
+select
+    prd.id            as product_id
+   ,prd.brand         as product_brand
+   ,prd.model         as product_model
+   ,prd.model_year    as product_model_year
+   ,prd.price         as product_price
+   ,prd.total_sales   as product_total_sales
+   ,cat.id            as category_id
+   ,cat.category_name as category_name
+   ,cat.description   as category_description
+from ifsales.products  prd
+    ,ifsales.categories cat
+where prd.category_id = cat.id
+
+-- view para trazer os dados dos customers junto de suas regions correspondentes
+create or replace view ifsales.v_customers
+as
+select
+    cus.id                  as customer_id
+     ,cus.cpf                 as customer_cpf
+     ,cus.first_name          as customer_first_name
+     ,cus.last_name           as customer_last_name
+     ,cus.birth_date          as customer_birth_date
+     ,cus.income              as customer_income
+     ,cus.mobile              as customer_mobile
+     ,cus.professional_status as customer_professional_status
+     ,reg.id                  as region_id
+     ,reg.region_name         as region_name
+     ,reg.city                as region_city
+     ,reg.state               as region_state
+from ifsales.customers cus
+   ,ifsales.regions    reg
+where cus.region_id = reg.id
 /
 
 -- inserção de dados iniciais
