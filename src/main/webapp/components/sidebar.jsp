@@ -28,6 +28,9 @@
           <li>
             <a href="${pageContext.request.contextPath}/redirect?action=listStores">Loja</a>
           </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/redirect?action=listCategories">Categoria</a>
+          </li>
         </ul>
       </details>
     </li>
