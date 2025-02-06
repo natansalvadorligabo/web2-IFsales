@@ -1,6 +1,8 @@
 package br.com.ifsales.model;
 
-public class Category {
+import br.com.ifsales.dao.Storable;
+
+public class Category implements Storable {
     private Long id;
     private String name;
     private String description;

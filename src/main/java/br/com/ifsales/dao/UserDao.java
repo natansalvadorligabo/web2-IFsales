@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class UserDao {
+public class UserDao implements Dao<User> {
     private final DataSource dataSource;
 
     public UserDao(DataSource dataSource) {
@@ -31,6 +31,11 @@ public class UserDao {
         }
 
         return true;
+    }
+
+    @Override
+    public Boolean update(User storable) throws SQLException {
+        return null;
     }
 
     public Optional<User> getUserByEmail(String email) throws SQLException {

@@ -1,8 +1,10 @@
 package br.com.ifsales.model;
 
+import br.com.ifsales.dao.Storable;
+
 import java.util.Objects;
 
-public class User {
+public class User implements Storable {
     private Long id;
     private String email;
     private String password;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RegionDao {
+public class RegionDao implements Dao<Region>{
     private final DataSource dataSource;
 
     public RegionDao(DataSource dataSource) {

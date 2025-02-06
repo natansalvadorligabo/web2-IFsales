@@ -1,6 +1,8 @@
 package br.com.ifsales.model;
 
-public class Product {
+import br.com.ifsales.dao.Storable;
+
+public class Product implements Storable {
     private Long id;
     private String brand;
     private String model;

@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class FunnelDao {
+public class FunnelDao implements Dao<Funnel>{
     private final DataSource dataSource;
 
     public FunnelDao(DataSource dataSource) {

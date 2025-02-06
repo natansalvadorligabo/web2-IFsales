@@ -7,6 +7,7 @@ import br.com.ifsales.dao.StoreDao;
 import br.com.ifsales.model.Region;
 import br.com.ifsales.model.Store;
 import br.com.ifsales.servlets.helpers.Helper;
+import br.com.ifsales.servlets.helpers.HelperUtils;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,24 +34,7 @@ public class SaveStoreHelper implements Helper {
 
         StoreDao storeDao = new StoreDao(DataSourceSearcher.getInstance().getDataSource());
 
-        if (id == 0) {
-            Optional<Store> registered = storeDao.getByCnpj(cnpj);
-
-            if (registered.isPresent()) {
-                req.setAttribute("result", "already exists");
-                return "/pages/home/store/storeForm.jsp";
-            } else {
-                if (storeDao.save(store))
-                    req.setAttribute("result", "registered successfully");
-                else
-                    req.setAttribute("result", "not registered");
-            }
-        } else {
-            store.setId(id);
-
-            if (storeDao.update(store))
-                req.setAttribute("result", "saved");
-        }
+        HelperUtils.saveOrUpdate(req, store, storeDao, id);
 
         return "redirect?action=listStores";
     }

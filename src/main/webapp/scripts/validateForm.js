@@ -38,6 +38,7 @@ function applyValidity(form) {
     for (let i = 0; i < elements.length - 1; i++) {
         let element = elements[i];
         if (element.name === 'id') continue
+        if (element.type === 'checkbox') continue
 
         let span = document.getElementById(`error-${element.name}`);
         let input = document.querySelector(`input[name=${element.name}]`) || document.querySelector(`select[name=${element.name}]`);
