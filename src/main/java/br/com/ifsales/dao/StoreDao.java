@@ -134,10 +134,9 @@ public class StoreDao {
 
     public Boolean delete(Long id) throws SQLException {
         String sql = """
-        DELETE
-        FROM STORES
-        WHERE ID = ?""";
-
+                DELETE
+                FROM STORES
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

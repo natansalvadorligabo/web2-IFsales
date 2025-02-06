@@ -22,15 +22,13 @@ public class CategoriesDao {
     public Boolean save(Category category) throws SQLException {
         String sql = "CALL IFSALES_PKG.INSERT_CATEGORY(?, ?)";
 
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql))
-        {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, category.getName());
             ps.setString(2, category.getDescription());
 
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while saving category to oracle sql");
         }
 
@@ -41,21 +39,19 @@ public class CategoriesDao {
         Optional<Category> optional = Optional.empty();
 
         String sql = """
-            SELECT *
-            FROM CATEGORIES
-            WHERE ID = ?""";
+                SELECT *
+                FROM CATEGORIES
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next())
                     optional = Optional.of(createCategoryFromResultSet(rs));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving category from oracle sql");
         }
 
@@ -66,18 +62,16 @@ public class CategoriesDao {
         List<Optional<Category>> categories = new LinkedList<>();
 
         String sql = """
-            SELECT *
-            FROM CATEGORIES""";
+                SELECT *
+                FROM CATEGORIES""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next())
                     categories.add(Optional.of(createCategoryFromResultSet(rs)));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving store from oracle sql");
         }
 
@@ -86,41 +80,37 @@ public class CategoriesDao {
 
     public Boolean update(Category category) throws SQLException {
         String sql = """
-            UPDATE CATEGORIES
-            SET CATEGORY_NAME = ?,
-                DESCRIPTION = ?
-            WHERE ID = ?""";
+                UPDATE CATEGORIES
+                SET CATEGORY_NAME = ?,
+                    DESCRIPTION = ?
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, category.getName());
             ps.setString(2, category.getDescription());
             ps.setLong(3, category.getId());
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while updating category from oracle sql");
         }
     }
 
     public Boolean delete(Long id) throws SQLException {
         String sql = """
-            DELETE
-            FROM CATEGORIES
-            WHERE ID = ?""";
+                DELETE
+                FROM CATEGORIES
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while removing category from oracle sql");
         }
     }

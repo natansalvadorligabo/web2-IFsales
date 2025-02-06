@@ -1,6 +1,7 @@
 package br.com.ifsales.dao;
 
 import br.com.ifsales.model.Region;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,14 +22,12 @@ public class RegionDao {
         String sql = "call IFSALES_PKG.INSERT_REGION(?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, region.getName());
             ps.setString(2, region.getCity());
             ps.setString(3, region.getState());
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while saving region to oracle sql");
         }
 
@@ -37,21 +36,19 @@ public class RegionDao {
 
     public Optional<Region> getRegionById(Long id) throws SQLException {
         String sql = """
-            SELECT *
-            FROM REGIONS
-            WHERE ID = ?""";
+                SELECT *
+                FROM REGIONS
+                WHERE ID = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next())
                     return Optional.of(extractRegionFromQuery(rs));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving store from oracle sql");
         }
 
@@ -60,21 +57,19 @@ public class RegionDao {
 
     public Optional<Region> getRegionByName(String name) throws SQLException {
         String sql = """
-            SELECT *
-            FROM REGIONS
-            WHERE REGION_NAME = ?""";
+                SELECT *
+                FROM REGIONS
+                WHERE REGION_NAME = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, name);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next())
                     return Optional.of(extractRegionFromQuery(rs));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving region from oracle sql");
         }
 
@@ -85,9 +80,9 @@ public class RegionDao {
         List<Region> regions = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM REGIONS
-            WHERE CITY = ?""";
+                SELECT *
+                FROM REGIONS
+                WHERE CITY = ?""";
 
         return getRegions(city, regions, sql);
     }
@@ -96,9 +91,9 @@ public class RegionDao {
         List<Region> regions = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM REGIONS
-            WHERE STATE = ?""";
+                SELECT *
+                FROM REGIONS
+                WHERE STATE = ?""";
 
         return getRegions(state, regions, sql);
     }
@@ -107,17 +102,15 @@ public class RegionDao {
         List<Region> regions = new ArrayList<>();
 
         String sql = """
-            SELECT *
-            FROM REGIONS""";
+                SELECT *
+                FROM REGIONS""";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery())
-        {
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next())
                 regions.add(extractRegionFromQuery(rs));
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving region from oracle sql");
         }
 
@@ -126,15 +119,14 @@ public class RegionDao {
 
     public Boolean update(Region region) throws SQLException {
         String sql = """
-            UPDATE REGIONS
-            SET REGION_NAME = ?,
-                CITY = ?,
-                STATE = ?
-            WHERE ID = ?""";
+                UPDATE REGIONS
+                SET REGION_NAME = ?,
+                    CITY = ?,
+                    STATE = ?
+                WHERE ID = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, region.getName());
             ps.setString(2, region.getCity());
             ps.setString(3, region.getState());
@@ -142,43 +134,38 @@ public class RegionDao {
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while updating region in oracle sql");
         }
     }
 
     public Boolean delete(Region region) throws SQLException {
         String sql = """
-            DELETE
-            FROM REGIONS
-            WHERE ID = ?""";
+                DELETE
+                FROM REGIONS
+                WHERE ID = ?""";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, region.getId());
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while removing region from oracle sql");
         }
     }
 
     private List<Region> getRegions(String city, List<Region> regions, String sql) throws SQLException {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, city);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next())
                     regions.add(extractRegionFromQuery(rs));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving region from oracle sql");
         }
 

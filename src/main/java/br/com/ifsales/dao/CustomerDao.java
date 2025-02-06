@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomerDao {
+public class    CustomerDao {
     private final DataSource dataSource;
 
     public CustomerDao(DataSource dataSource) {
@@ -20,14 +20,12 @@ public class CustomerDao {
     public Boolean save(Customer customer) throws SQLException {
         String sql = "CALL IFSALES_PKG.INSERT_CUSTOMER(?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql))
-        {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             createQuery(customer, ps);
 
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while saving customer to oracle sql");
         }
 
@@ -38,21 +36,19 @@ public class CustomerDao {
         Optional<Customer> optional = Optional.empty();
 
         String sql = """
-            SELECT *
-            FROM CUSTOMERS
-            WHERE ID = ?""";
+                SELECT *
+                FROM CUSTOMERS
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next())
                     return Optional.of((createCustomerFromResultSet(rs)));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving customer from oracle sql");
         }
 
@@ -63,18 +59,16 @@ public class CustomerDao {
         List<Optional<Customer>> customers = new LinkedList<>();
 
         String sql = """
-            SELECT *
-            FROM CUSTOMERS""";
+                SELECT *
+                FROM CUSTOMERS""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next())
                     customers.add(Optional.of(extractCustomerFromResultSet(rs)));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving store from oracle sql");
         }
 
@@ -83,47 +77,43 @@ public class CustomerDao {
 
     public Boolean update(Customer customer) throws SQLException {
         String sql = """
-            UPDATE CUSTOMERS
-            SET CPF = ?,
-                REGION_ID = ?,
-                FIRST_NAME = ?,
-                LAST_NAME = ?,
-                BIRTH_DATE = ?,
-                INCOME = ?,
-                MOBILE = ?,
-                PROFESSIONAL_STATUS = ?
-            WHERE ID = ?""";
+                UPDATE CUSTOMERS
+                SET CPF = ?,
+                    REGION_ID = ?,
+                    FIRST_NAME = ?,
+                    LAST_NAME = ?,
+                    BIRTH_DATE = ?,
+                    INCOME = ?,
+                    MOBILE = ?,
+                    PROFESSIONAL_STATUS = ?
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             createQuery(customer, ps);
             ps.setLong(9, customer.getId());
 
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while updating customer from oracle sql");
         }
     }
 
     public Boolean delete(Long id) throws SQLException {
         String sql = """
-            DELETE
-            FROM CUSTOMERS
-            WHERE ID = ?""";
+                DELETE
+                FROM CUSTOMERS
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while removing customer from oracle sql");
         }
     }
