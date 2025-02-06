@@ -140,7 +140,7 @@ public class ProductDao {
         return Optional.of(products);
     }
 
-    public Optional<List<Product>> getProductsByPrice(Double price) throws SQLException, SQLException {
+    public Optional<List<Product>> getProductsByPrice(Double price) throws SQLException {
         List<Product> products = new ArrayList<>();
 
         String sql = """

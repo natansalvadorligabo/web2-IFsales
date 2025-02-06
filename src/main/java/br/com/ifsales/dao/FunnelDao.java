@@ -4,7 +4,6 @@ import br.com.ifsales.model.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.text.DateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
