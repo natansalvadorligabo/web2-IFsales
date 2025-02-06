@@ -20,10 +20,6 @@
         <param-value>br.com.ifsales.servlets.helpers.HomeHelper</param-value>
     </context-param>
     <context-param>
-        <param-name>dashboard</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.DashboardHelper</param-value>
-    </context-param>
-    <context-param>
         <param-name>logout</param-name>
         <param-value>br.com.ifsales.servlets.helpers.LogoutUserHelper</param-value>
     </context-param>
