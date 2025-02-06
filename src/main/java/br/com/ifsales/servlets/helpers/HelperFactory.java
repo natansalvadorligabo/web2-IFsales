@@ -11,9 +11,8 @@ public class HelperFactory {
         String className = context.getInitParameter(action);
         try {
             Class<?> clazz = Class.forName(className);
-            return (Helper)clazz.getDeclaredConstructor().newInstance();
-        }
-        catch(Exception erro) {
+            return (Helper) clazz.getDeclaredConstructor().newInstance();
+        } catch (Exception erro) {
             throw new RuntimeException(erro);
         }
     }

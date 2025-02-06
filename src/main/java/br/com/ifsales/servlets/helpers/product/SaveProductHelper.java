@@ -1,8 +1,9 @@
-package br.com.ifsales.servlets.helpers;
+package br.com.ifsales.servlets.helpers.product;
 
 import br.com.ifsales.dao.ProductDao;
 import br.com.ifsales.model.Category;
 import br.com.ifsales.model.Product;
+import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,7 +38,7 @@ public class SaveProductHelper implements Helper {
 
             if (registered.isPresent()) {
                 req.setAttribute("result", "already exists");
-                return "/pages/home/productForm.jsp";
+                return "/pages/home/product/productForm.jsp";
             } else {
                 if (productDao.save(product)) {
                     req.setAttribute("result", "registered successfully");

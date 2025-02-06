@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -12,6 +13,7 @@ import java.util.Arrays;
 public class ValidationFilter implements Filter {
     private static final String[] actions = {"home", "saveSalesperson", "updateSalesperson"
             , "deleteSalesperson", "listSalespersons", "logout", "dashboard"};
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -20,15 +22,15 @@ public class ValidationFilter implements Filter {
         String action = httpRequest.getParameter("action");
 
         if (action != null) {
-            if(Arrays.asList(actions).contains(action)
+            if (Arrays.asList(actions).contains(action)
                     && (session == null || session.getAttribute("user") == null)) {
-                HttpServletResponse httpResponse = (HttpServletResponse)response;
+                HttpServletResponse httpResponse = (HttpServletResponse) response;
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/redirect?action=login");
             } else {
                 chain.doFilter(request, response);
             }
         } else if (session == null || session.getAttribute("user") == null) {
-            HttpServletResponse httpResponse = (HttpServletResponse)response;
+            HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/redirect?action=login");
         } else {
             chain.doFilter(request, response);

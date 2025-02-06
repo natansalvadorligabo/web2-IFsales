@@ -14,9 +14,9 @@ public class DataSourceSearcher {
     private DataSourceSearcher() {
         try {
             Context context = new InitialContext();
-            context = (Context)context.lookup("java:comp/env");
-            dataSource = (DataSource)context.lookup("jdbc/ifsales");
-        }catch (NamingException e) {
+            context = (Context) context.lookup("java:comp/env");
+            dataSource = (DataSource) context.lookup("jdbc/ifsales");
+        } catch (NamingException e) {
             throw new RuntimeException("Error during search", e);
         }
     }

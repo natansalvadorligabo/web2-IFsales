@@ -9,55 +9,55 @@
     </welcome-file-list>
     <context-param>
         <param-name>createUser</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.CreateUserHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.user.CreateUserHelper</param-value>
     </context-param>
     <context-param>
         <param-name>login</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.LoginUserHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.user.LoginUserHelper</param-value>
     </context-param>
     <context-param>
         <param-name>dashboard</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.DashboardHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.dashboard.DashboardHelper</param-value>
     </context-param>
     <context-param>
         <param-name>home</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.HomeHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.home.HomeHelper</param-value>
     </context-param>
     <context-param>
         <param-name>logout</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.LogoutUserHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.user.LogoutUserHelper</param-value>
     </context-param>
     <context-param>
         <param-name>listSalespersons</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.ListSalespersonsHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.salesperson.ListSalespersonsHelper</param-value>
     </context-param>
     <context-param>
         <param-name>saveSalesperson</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.SaveSalespersonHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.salesperson.SaveSalespersonHelper</param-value>
     </context-param>
     <context-param>
         <param-name>updateSalesperson</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.UpdateSalespersonHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.salesperson.UpdateSalespersonHelper</param-value>
     </context-param>
     <context-param>
         <param-name>deleteSalesperson</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.DeleteSalespersonHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.salesperson.DeleteSalespersonHelper</param-value>
     </context-param>
     <context-param>
         <param-name>listRegions</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.ListRegionsHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.region.ListRegionsHelper</param-value>
     </context-param>
     <context-param>
         <param-name>saveRegion</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.SaveRegionHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.region.SaveRegionHelper</param-value>
     </context-param>
     <context-param>
         <param-name>updateRegion</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.UpdateRegionHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.region.UpdateRegionHelper</param-value>
     </context-param>
     <context-param>
         <param-name>deleteRegion</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.DeleteRegionHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.region.DeleteRegionHelper</param-value>
     </context-param>
     <context-param>
         <param-name>listStores</param-name>
@@ -77,22 +77,22 @@
     </context-param>
     <context-param>
         <param-name>loadProductForm</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.LoadProductFormHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.product.LoadProductFormHelper</param-value>
     </context-param>
     <context-param>
         <param-name>listProducts</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.ListProductsHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.product.ListProductsHelper</param-value>
     </context-param>
     <context-param>
         <param-name>saveProduct</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.SaveProductHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.product.SaveProductHelper</param-value>
     </context-param>
     <context-param>
         <param-name>updateProduct</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.UpdateProductHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.product.UpdateProductHelper</param-value>
     </context-param>
     <context-param>
         <param-name>deleteProduct</param-name>
-        <param-value>br.com.ifsales.servlets.helpers.DeleteProductHelper</param-value>
+        <param-value>br.com.ifsales.servlets.helpers.product.DeleteProductHelper</param-value>
     </context-param>
 </web-app>

@@ -1,7 +1,8 @@
-package br.com.ifsales.servlets.helpers;
+package br.com.ifsales.servlets.helpers.salesperson;
 
 import br.com.ifsales.dao.SalespersonDao;
 import br.com.ifsales.model.Salesperson;
+import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,6 @@ public class ListSalespersonsHelper implements Helper {
 
         req.setAttribute("salespersons", salesperson);
 
-        return "/pages/home/salespersonTable.jsp";
+        return "/pages/home/salesperson/salespersonTable.jsp";
     }
 }

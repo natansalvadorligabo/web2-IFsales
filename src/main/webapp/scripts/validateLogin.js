@@ -1,47 +1,47 @@
 initPage()
 
 function initPage() {
-  let form = document.querySelector('form')
+    let form = document.querySelector('form')
 
-  form.noValidate = true
+    form.noValidate = true
 
-  form.addEventListener('submit', function (e) {
-    let valid = processValidity(this)
-    if (!valid) {
-      e.preventDefault()
-    }
-  })
+    form.addEventListener('submit', function (e) {
+        let valid = processValidity(this)
+        if (!valid) {
+            e.preventDefault()
+        }
+    })
 }
 
 function applyValidity(form) {
-  let valid = true;
-  let count = 0;
-  let elements = form.elements;
+    let valid = true;
+    let count = 0;
+    let elements = form.elements;
 
-  for (let i = 0; i < elements.length - 1; i++) {
-    let element = elements[i];
-    let span = document.getElementById(`error-${element.name}`);
-    let input = document.querySelector(`input[name=${element.name}]`);
+    for (let i = 0; i < elements.length - 1; i++) {
+        let element = elements[i];
+        let span = document.getElementById(`error-${element.name}`);
+        let input = document.querySelector(`input[name=${element.name}]`);
 
-    if (!element.validity.valid) {
-      span.innerHTML = element.validationMessage;
-      span.classList.remove('hidden');
-      input.classList.add('input-error');
-      count++;
-    } else {
-      span.innerHTML = '';
-      span.classList.add('hidden');
-      input.classList.remove('input-error');
+        if (!element.validity.valid) {
+            span.innerHTML = element.validationMessage;
+            span.classList.remove('hidden');
+            input.classList.add('input-error');
+            count++;
+        } else {
+            span.innerHTML = '';
+            span.classList.add('hidden');
+            input.classList.remove('input-error');
+        }
     }
-  }
 
-  if (count > 0) {
-    valid = false
-  }
+    if (count > 0) {
+        valid = false
+    }
 
-  return valid
+    return valid
 }
 
 function processValidity(form) {
-  return applyValidity(form)
+    return applyValidity(form)
 }

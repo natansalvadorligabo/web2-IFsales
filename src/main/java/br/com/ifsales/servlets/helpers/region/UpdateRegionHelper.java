@@ -1,7 +1,8 @@
-package br.com.ifsales.servlets.helpers;
+package br.com.ifsales.servlets.helpers.region;
 
 import br.com.ifsales.dao.RegionDao;
 import br.com.ifsales.model.Region;
+import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ public class UpdateRegionHelper implements Helper {
 
         if (region.isPresent()) {
             req.setAttribute("region", region.get());
-            return "/pages/home/regionForm.jsp";
+            return "/pages/home/region/regionForm.jsp";
         }
 
         return "redirect?action=listRegions";
