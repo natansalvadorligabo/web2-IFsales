@@ -65,7 +65,7 @@
       </c:choose>
     </div>
 
-    <script defer src="${pageContext.request.contextPath}/scripts/validators/validateUserRegister.js"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/validateForm.js"></script>
     <script defer src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
   </body>
 </html>

@@ -4,8 +4,10 @@ function initPage() {
     let form = document.querySelector('form');
     form.noValidate = true;
 
+
     // Add event listener to phone input to mask phone number
-    document.getElementsByName('phone')[0].addEventListener('input', maskPhone);
+    let phone = document.getElementsByName('phone')[0];
+    if (phone) phone.addEventListener('input', maskPhone);
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -17,6 +19,7 @@ function initPage() {
 }
 
 function processValidity(form) {
+    validatePassword(form);
     return applyValidity(form);
 }
 
@@ -25,20 +28,22 @@ function applyValidity(form) {
     let count = 0;
     let elements = form.elements;
 
-    for (let i = 1; i < elements.length - 1; i++) {
+    for (let i = 0; i < elements.length - 1; i++) {
         let element = elements[i];
+        if (element.name == 'id') continue
+
         let span = document.getElementById(`error-${element.name}`);
         let input = document.querySelector(`input[name=${element.name}]`) || document.querySelector(`select[name=${element.name}]`);
 
         if (!element.validity.valid) {
             span.innerHTML = element.validationMessage;
             span.classList.remove('hidden');
-            input.classList.add('input-error');
+            input.classList.add('select-error');
             count++;
         } else {
             span.innerHTML = '';
             span.classList.add('hidden');
-            input.classList.remove('input-error');
+            input.classList.remove('select-error');
         }
     }
 
@@ -47,6 +52,20 @@ function applyValidity(form) {
     }
 
     return valid
+}
+
+
+function validatePassword(form) {
+    let password = form.querySelector('input[name=password]')
+    let confirmPassword = form.querySelector('input[name=confirmPassword]')
+
+    if (password && confirmPassword) {
+        if (password.value !== confirmPassword.value) {
+            password.setCustomValidity('As senhas não coincidem.');
+        } else {
+            password.setCustomValidity('');
+        }
+    }
 }
 
 function maskPhone(e) {
