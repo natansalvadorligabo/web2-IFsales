@@ -1,0 +1,67 @@
+package br.com.ifsales.servlets.helpers.customer;
+
+import br.com.ifsales.dao.CustomerDao;
+import br.com.ifsales.model.Category;
+import br.com.ifsales.model.Customer;
+import br.com.ifsales.model.Region;
+import br.com.ifsales.servlets.helpers.Helper;
+import br.com.ifsales.utils.DataSourceSearcher;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Optional;
+
+public class SaveCustomerHelper implements Helper {
+    @Override
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+        long id = Long.parseLong(req.getParameter("id"));
+        String cpf = req.getParameter("cpf");
+        long regionId =  Long.parseLong(req.getParameter("region"));
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        LocalDate birthDate = LocalDate.parse(req.getParameter("birthDate"));
+        Double income = Double.parseDouble(req.getParameter("income"));
+        String mobile = req.getParameter("mobile");
+        String professionalStatus = req.getParameter("professionalStatus");
+
+        Customer customer = new Customer();
+        customer.setCpf(cpf);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setBirthDate(birthDate);
+        customer.setIncome(income);
+        customer.setMobile(mobile);
+        customer.setProfessionalStatus(professionalStatus);
+
+        Region region = new Region();
+        region.setId(regionId);
+        customer.setRegion(region);
+
+        CustomerDao customerDao = new CustomerDao(DataSourceSearcher.getInstance().getDataSource());
+
+        if (id == 0) {
+            Optional<Customer> registered = customerDao.getCustomerById(id);
+
+            if (registered.isPresent()) {
+                req.setAttribute("result", "already exists");
+                return "/pages/home/customer/customerForm.jsp";
+            } else {
+                if (customerDao.save(customer)) {
+                    req.setAttribute("result", "registered successfully");
+                } else {
+                    req.setAttribute("result", "not registered");
+                }
+            }
+        } else {
+            customer.setId(id);
+
+            if (customerDao.update(customer)) {
+                req.setAttribute("result", "saved");
+            }
+        }
+
+        return "redirect?action=listCustomers";
+    }
+}

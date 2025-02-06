@@ -22,7 +22,7 @@ public class UpdateCategoryHelper implements Helper {
 
         if (category.isPresent()) {
             req.setAttribute("category", category.get());
-            return "/pages/home/category/categoryForm.jsp";
+            return "/pages/home/category/customerForm.jsp";
         }
 
         return "redirect?action=listCategories";

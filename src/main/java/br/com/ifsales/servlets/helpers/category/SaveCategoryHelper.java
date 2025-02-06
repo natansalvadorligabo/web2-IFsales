@@ -28,7 +28,7 @@ public class SaveCategoryHelper implements Helper {
 
             if (registered.isPresent()) {
                 req.setAttribute("result", "already exists");
-                return "/pages/home/category/categoryForm.jsp";
+                return "/pages/home/category/customerForm.jsp";
             } else {
                 if (categoryDao.save(category))
                     req.setAttribute("result", "registered successfully");
