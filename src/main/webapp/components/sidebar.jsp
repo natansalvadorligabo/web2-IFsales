@@ -40,13 +40,13 @@ uri="jakarta.tags.functions" %>
             >Região</a
             >
           </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/redirect?action=listProducts"
+            >Produto</a
+            >
+          </li>
         </ul>
       </details>
-    </li>
-    <li>
-      <a href="#" class="font-semibold"
-        >Configurações <span class="badge">Em breve</span></a
-      >
     </li>
   </ul>
 </div>
