@@ -111,4 +111,24 @@
         <param-name>deleteCategory</param-name>
         <param-value>br.com.ifsales.servlets.helpers.category.DeleteCategoryHelper</param-value>
     </context-param>
+    <context-param>
+        <param-name>loadCustomerForm</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.customer.LoadCustomerFormHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>listCustomers</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.customer.ListCustomersHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>saveCustomer</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.customer.SaveCustomerHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>updateCustomer</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.customer.UpdateCustomerHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>deleteCustomer</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.customer.DeleteCustomerHelper</param-value>
+    </context-param>
 </web-app>

@@ -31,6 +31,9 @@
           <li>
             <a href="${pageContext.request.contextPath}/redirect?action=listCategories">Categoria</a>
           </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/redirect?action=listCustomers">Clientes</a>
+          </li>
         </ul>
       </details>
     </li>
