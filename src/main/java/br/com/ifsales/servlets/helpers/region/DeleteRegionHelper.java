@@ -12,8 +12,7 @@ import java.util.Optional;
 public class DeleteRegionHelper implements Helper {
 
     @Override
-    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws Exception
-    {
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         Long regionId = Long.parseLong(req.getParameter("id"));
 
         RegionDao regionDao = new RegionDao(DataSourceSearcher.getInstance().getDataSource());

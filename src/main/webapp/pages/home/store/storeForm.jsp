@@ -52,7 +52,8 @@
                 <label class="font-semibold" for="regionId">
                   Região<span class="text-error">*</span>
                   <select name="regionId" id="regionId" required class="select select-bordered w-full mt-2">
-                    <%RegionDao regionDao = new RegionDao(DataSourceSearcher.getInstance().getDataSource());
+                    <%
+                      RegionDao regionDao = new RegionDao(DataSourceSearcher.getInstance().getDataSource());
                       List<Region> regions;
                       try {
                         regions = regionDao.getAllRegions();
@@ -60,7 +61,8 @@
                         regions = List.of();
                       }
 
-                      request.setAttribute("regions", regions);%>
+                      request.setAttribute("regions", regions);
+                    %>
 
                     <c:choose>
                       <c:when test="${store == null}">

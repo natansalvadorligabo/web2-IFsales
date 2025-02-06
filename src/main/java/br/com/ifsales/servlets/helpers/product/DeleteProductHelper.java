@@ -12,8 +12,7 @@ import java.util.Optional;
 public class DeleteProductHelper implements Helper {
 
     @Override
-    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws Exception
-    {
+    public Object execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         Long productId = Long.parseLong(req.getParameter("id"));
 
         ProductDao productDao = new ProductDao(DataSourceSearcher.getInstance().getDataSource());
