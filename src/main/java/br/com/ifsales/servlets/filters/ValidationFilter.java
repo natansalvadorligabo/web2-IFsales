@@ -11,7 +11,7 @@ import java.util.Arrays;
 @WebFilter(urlPatterns = {"/redirect", "/pages/home/*"})
 public class ValidationFilter implements Filter {
     private static final String[] actions = {"home", "saveSalesperson", "updateSalesperson"
-            , "deleteSalesperson", "listSalespersons", "logout"};
+            , "deleteSalesperson", "listSalespersons", "logout", "dashboard"};
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
