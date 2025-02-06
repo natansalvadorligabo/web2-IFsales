@@ -1,7 +1,8 @@
-package br.com.ifsales.servlets.helpers;
+package br.com.ifsales.servlets.helpers.region;
 
 import br.com.ifsales.dao.RegionDao;
 import br.com.ifsales.model.Region;
+import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +30,7 @@ public class SaveRegionHelper implements Helper {
 
             if (registered.isPresent()) {
                 req.setAttribute("result", "already exists");
-                return "/pages/home/regionForm.jsp";
+                return "/pages/home/region/regionForm.jsp";
             } else {
                 if (regionDao.save(region))
                     req.setAttribute("result", "registered successfully");

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Tabelas de Regiões - IFSales</title>
+    <title>Tabelas de Vendedores - IFSales</title>
 </head>
 <body>
 <div class="drawer lg:drawer-open">
@@ -16,13 +16,13 @@
 
     <div class="drawer-content flex flex-col items-center">
         <jsp:include page="/components/navbar.jsp">
-            <jsp:param name="title" value="Tabela de Regiões"/>
+            <jsp:param name="title" value="Tabelas de Vendedores"/>
         </jsp:include>
 
         <div class="container mx-auto p-4">
             <div class="flex items-center justify-between mb-6 mt-8">
-                <h1 class="text-2xl font-bold">Regiões</h1>
-                <a class="btn btn-success btn-circle" href="${pageContext.request.contextPath}/pages/home/regionForm.jsp">
+                <h1 class="text-2xl font-bold">Vendedores</h1>
+                <a class="btn btn-success btn-circle" href="${pageContext.request.contextPath}/pages/home/salesperson/salespersonForm.jsp">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
                     </svg>
@@ -36,19 +36,30 @@
                         <tr>
                             <th>ID</th>
                             <th>Nome</th>
-                            <th>Cidade</th>
-                            <th>Estado</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Active</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="region" items="${regions}">
+                        <c:forEach var="salesperson" items="${salespersons}">
                             <tr class="hover">
-                                <td>${region.id}</td>
-                                <td>${region.name}</td>
-                                <td>${region.city}</td>
-                                <td>${region.state}</td>
+                                <td>${salesperson.id}</td>
+                                <td>${salesperson.name}</td>
+                                <td>${salesperson.email}</td>
+                                <td>${salesperson.phone}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${salesperson.active}"><input type="checkbox"
+                                                                                    class="checkbox checkbox-success"
+                                                                                    disabled
+                                                                                    checked="checked"/></c:when>
+                                        <c:otherwise><input type="checkbox" class="checkbox" disabled/></c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td class="p-1 flex">
-                                    <button onclick="document.getElementById('edit-${region.id}').showModal()"
+                                    <button onclick="document.getElementById('edit-${salesperson.id}').showModal()"
                                             class="btn btn-outline btn-warning w-1/2">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                              stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -57,7 +68,7 @@
                                         </svg>
                                         Editar
                                     </button>
-                                    <button onclick="document.getElementById('delete-${region.id}').showModal()"
+                                    <button onclick="document.getElementById('delete-${salesperson.id}').showModal()"
                                             class="btn btn-outline btn-error w-1/2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor"
@@ -67,10 +78,10 @@
                                         Deletar
                                     </button>
 
-                                    <dialog id="edit-${region.id}" class="modal">
+                                    <dialog id="edit-${salesperson.id}" class="modal">
                                         <div class="modal-box">
                                             <h3 class="text-lg font-bold">Editar</h3>
-                                            <p class="py-4">Tem certeza que deseja editar "${region.name}"?</p>
+                                            <p class="py-4">Tem certeza que deseja editar "${salesperson.name}"?</p>
 
                                             <div class="modal-body flex justify-between">
                                                 <form method="dialog" class="w-1/2 mr-1">
@@ -78,17 +89,17 @@
                                                 </form>
 
                                                 <a class="btn btn-secondary w-1/2 ml-1"
-                                                   href="${pageContext.request.contextPath}/redirect?action=updateRegion&id=${region.id}">
+                                                   href="${pageContext.request.contextPath}/redirect?action=updateSalesperson&id=${salesperson.id}">
                                                     Editar
                                                 </a>
                                             </div>
                                         </div>
                                     </dialog>
 
-                                    <dialog id="delete-${region.id}" class="modal">
+                                    <dialog id="delete-${salesperson.id}" class="modal">
                                         <div class="modal-box">
                                             <h3 class="text-lg font-bold">Deletar</h3>
-                                            <p class="py-4">Tem certeza que deseja deletar "${region.name}"?</p>
+                                            <p class="py-4">Tem certeza que deseja deletar "${salesperson.name}"?</p>
 
                                             <div class="modal-body flex justify-between">
                                                 <form method="dialog" class="w-1/2 mr-1">
@@ -96,7 +107,7 @@
                                                 </form>
 
                                                 <a class="btn btn-secondary w-1/2 ml-1"
-                                                   href="${pageContext.request.contextPath}/redirect?action=deleteRegion&id=${region.id}">
+                                                   href="${pageContext.request.contextPath}/redirect?action=deleteSalesperson&id=${salesperson.id}">
                                                     Deletar
                                                 </a>
                                             </div>

@@ -1,7 +1,8 @@
-package br.com.ifsales.servlets.helpers;
+package br.com.ifsales.servlets.helpers.product;
 
 import br.com.ifsales.dao.ProductDao;
 import br.com.ifsales.model.Product;
+import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

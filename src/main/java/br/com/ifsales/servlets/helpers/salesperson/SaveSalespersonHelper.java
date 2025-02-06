@@ -1,10 +1,11 @@
-package br.com.ifsales.servlets.helpers;
+package br.com.ifsales.servlets.helpers.salesperson;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 import br.com.ifsales.dao.SalespersonDao;
 import br.com.ifsales.model.Salesperson;
+import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,7 +32,7 @@ public class SaveSalespersonHelper implements Helper {
 
             if (registered.isPresent()) {
                 req.setAttribute("result", "already exists");
-                return "/pages/home/salespersonForm.jsp";
+                return "/pages/home/salesperson/salespersonForm.jsp";
             } else {
                 if (salespersonDao.save(salesperson))
                     req.setAttribute("result", "registered successfully");

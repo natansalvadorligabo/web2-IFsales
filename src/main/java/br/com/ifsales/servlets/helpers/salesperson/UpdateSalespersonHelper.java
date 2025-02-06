@@ -1,9 +1,10 @@
-package br.com.ifsales.servlets.helpers;
+package br.com.ifsales.servlets.helpers.salesperson;
 
 import java.util.Optional;
 
 import br.com.ifsales.dao.SalespersonDao;
 import br.com.ifsales.model.Salesperson;
+import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ public class UpdateSalespersonHelper implements Helper {
 
         if (salesperson.isPresent()) {
             req.setAttribute("salesperson", salesperson.get());
-            return "/pages/home/salespersonForm.jsp";
+            return "/pages/home/salesperson/salespersonForm.jsp";
         }
 
         return "redirect?action=listSalespersons";
