@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="drawer lg:drawer-open">
-    <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
+    <label for="my-drawer-2"><input id="my-drawer-2" type="checkbox" class="drawer-toggle"/></label>
 
     <div class="drawer-content flex flex-col items-center">
         <jsp:include page="/components/navbar.jsp">
@@ -100,7 +100,7 @@
                                                 </form>
 
                                                 <a class="btn btn-secondary w-1/2 ml-1"
-                                                   href="${pageContext.request.contextPath}/redirect?action=deleteRegion&id=${store.id}">
+                                                   href="${pageContext.request.contextPath}/redirect?action=deleteStore&id=${store.id}">
                                                     Deletar
                                                 </a>
                                             </div>

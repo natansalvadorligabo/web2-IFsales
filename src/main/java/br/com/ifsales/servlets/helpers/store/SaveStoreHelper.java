@@ -40,13 +40,13 @@ public class SaveStoreHelper implements Helper {
                 req.setAttribute("result", "already exists");
                 return "/pages/home/store/storeForm.jsp";
             } else {
-                if (storeDao.save(registered.get()))
+                if (storeDao.save(store))
                     req.setAttribute("result", "registered successfully");
                 else
                     req.setAttribute("result", "not registered");
             }
         } else {
-            region.setId(id);
+            store.setId(id);
 
             if (storeDao.update(store))
                 req.setAttribute("result", "saved");

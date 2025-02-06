@@ -1,3 +1,8 @@
+<%@ page import="br.com.ifsales.utils.DataSourceSearcher" %>
+<%@ page import="br.com.ifsales.dao.RegionDao" %>
+<%@ page import="java.util.List" %>
+<%@ page import="br.com.ifsales.model.Region" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -44,7 +49,67 @@
                 <input type="text" id="cnpj" name="cnpj" required
                        class="input input-bordered w-full mt-2" value="${store.cnpj}">
           </div>
-          <span id="error-name" class="text-error hidden"></span>
+          <span id="error-cnpj" class="text-error hidden"></span>
+
+          <div>
+            <label class="font-semibold" for="regionId">
+              Região<span class="text-error">*</span>
+              <select name="regionId" id="regionId" required
+                      class="select select-bordered w-full mt-2">
+                <%
+                  RegionDao regionDao = new RegionDao(DataSourceSearcher.getInstance().getDataSource());
+                  List<Region> regions;
+                  try {
+                    regions = regionDao.getAllRegions();
+                  } catch (SQLException e) {
+                    regions = List.of();
+                  }
+
+                  request.setAttribute("regions", regions);
+                %>
+
+                <c:choose>
+                  <c:when test="${store == null}">
+                    <option value="" selected disabled>Selecione uma região</option>
+                    <c:forEach var="region" items="${regions}">
+                      <option value="${region.id}">${region.name}</option>
+                    </c:forEach>
+                  </c:when>
+                  <c:when test="${store != null}">
+                    <option value="" disabled>Selecione uma região</option>
+                    <c:forEach var="region" items="${regions}">
+                      <c:choose>
+                        <c:when test="${store.region.id == region.id}">
+                          <option value="${region.id}" selected>${region.name}</option>
+                        </c:when>
+                        <c:otherwise>
+                          <option value="${region.id}">${region.name}</option>
+                        </c:otherwise>
+                      </c:choose>
+                    </c:forEach>
+                  </c:when>
+                </c:choose>
+
+
+              </select>
+            </label>
+          </div>
+          <span id="error-regionId" class="text-error hidden"></span>
+
+
+          <div>
+            <label for="address" class="font-semibold">Endereço<span class="text-error">*</span></label>
+            <input type="text" id="address" name="address" required
+                   class="input input-bordered w-full mt-2" value="${store.address}">
+          </div>
+          <span id="error-address" class="text-error hidden"></span>
+
+          <div>
+            <label for="phone" class="font-semibold">Telefone<span class="text-error">*</span></label>
+            <input type="text" id="phone" name="phone" required
+                   class="input input-bordered w-full mt-2" value="${store.phone}">
+          </div>
+          <span id="error-phone" class="text-error hidden"></span>
 
           <div class="space-y-2">
             <button type="submit" name="action" value="saveRegion" class="btn btn-primary btn-block">
@@ -72,6 +137,6 @@
 
 <jsp:include page="/components/sidebar.jsp"/>
 
-<script defer src="${pageContext.request.contextPath}/scripts/validateRegionRegister.js"></script>
+<script defer src="${pageContext.request.contextPath}/scripts/validateStoreRegister.js"></script>
 </body>
 </html>

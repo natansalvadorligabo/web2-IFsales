@@ -22,11 +22,6 @@ public class StoreDao {
     }
 
     public Boolean save(Store store) throws SQLException {
-        Optional<Store> optional = getById(store.getId());
-
-        if (optional.isPresent())
-            return false;
-
         String sql = "CALL IFSALES_PKG.INSERT_STORE(?,?,?,?,?)";
 
         try (Connection conn = dataSource.getConnection();
