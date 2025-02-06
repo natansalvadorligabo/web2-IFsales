@@ -19,9 +19,8 @@ public class FunnelDao {
     public Boolean save(Funnel funnel) throws SQLException {
         String sql = "CALL IFSALES_PKG.INSERT_FUNNEL(?, ?, ?, ?, ?, ?, ?)";
 
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql))
-        {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, funnel.getCustomer().getId());
             ps.setLong(2, funnel.getSalesperson().getId());
             ps.setLong(3, funnel.getStore().getId());
@@ -31,8 +30,7 @@ public class FunnelDao {
             ps.setInt(7, funnel.getProductQuanity());
 
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while saving funnel to oracle sql");
         }
 
@@ -43,21 +41,19 @@ public class FunnelDao {
         Optional<Funnel> optional = Optional.empty();
 
         String sql = """
-            SELECT *
-            FROM FUNNEL
-            WHERE ID = ?""";
+                SELECT *
+                FROM FUNNEL
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next())
                     return Optional.of((createFunnelFromResultSet(rs)));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving funnel from oracle sql");
         }
 
@@ -68,19 +64,17 @@ public class FunnelDao {
         List<Optional<Funnel>> funnels = new LinkedList<>();
 
         String sql = """
-            SELECT *
-            FROM V_FUNNEL""";
+                SELECT *
+                FROM V_FUNNEL""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     funnels.add(Optional.of(createFunnelFromResultSet(rs)));
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while retrieving store from oracle sql");
         }
 
@@ -89,19 +83,18 @@ public class FunnelDao {
 
     public Boolean update(Funnel funnel) throws SQLException {
         String sql = """
-            UPDATE FUNNEL
-            SET CUSTOMER_ID = ?,
-                SALESPERSON_ID = ?,
-                STORE_ID = ?,
-                PRODUCT_ID = ?,
-                PAID_DATE = ?,
-                DISCOUNT = ?,
-                PRODUCT_QUANTITY = ?
-            WHERE ID = ?""";
+                UPDATE FUNNEL
+                SET CUSTOMER_ID = ?,
+                    SALESPERSON_ID = ?,
+                    STORE_ID = ?,
+                    PRODUCT_ID = ?,
+                    PAID_DATE = ?,
+                    DISCOUNT = ?,
+                    PRODUCT_QUANTITY = ?
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, funnel.getCustomer().getId());
             ps.setLong(2, funnel.getSalesperson().getId());
             ps.setLong(3, funnel.getStore().getId());
@@ -113,27 +106,24 @@ public class FunnelDao {
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while updating funnel from oracle sql");
         }
     }
 
     public Boolean delete(Long id) throws SQLException {
         String sql = """
-            DELETE
-            FROM FUNNEL
-            WHERE ID = ?""";
+                DELETE
+                FROM FUNNEL
+                WHERE ID = ?""";
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql))
-        {
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("An error ocurred while removing funnel from oracle sql");
         }
     }
