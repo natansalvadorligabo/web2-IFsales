@@ -19,6 +19,7 @@ public class SaveProductHelper implements Helper {
         String brand = req.getParameter("brand");
         String model = req.getParameter("model");
         int modelYear = Integer.parseInt(req.getParameter("modelYear"));
+        int totalSales = Integer.parseInt(req.getParameter("totalSales"));
         double price = Double.parseDouble(req.getParameter("price"));
         long categoryId = Long.parseLong(req.getParameter("category"));
 
@@ -27,6 +28,7 @@ public class SaveProductHelper implements Helper {
         product.setModel(model);
         product.setModelYear(modelYear);
         product.setPrice(price);
+        product.setTotalSales(totalSales);
 
         Category category = new Category();
         category.setId(categoryId);
