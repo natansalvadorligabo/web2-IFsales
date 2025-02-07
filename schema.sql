@@ -80,7 +80,7 @@ create table ifsales.salespersons (
 );
 
 create table ifsales.regions (
-     id int primary key
+    id int primary key
     ,region_name varchar2(50) not null
     ,city varchar2(50) not null
     ,state varchar2(50) not null
@@ -146,11 +146,11 @@ create table ifsales.funnel (
 );
 
 create table ifsales.action_logs (
-    id int primary key,
-    table_name varchar2(100) not null,
-    action varchar2(50) not null,
-    action_date timestamp default current_timestamp,
-    details varchar2(4000)
+    id int primary key
+   ,table_name varchar2(100) not null
+   ,action varchar2(50) not null
+   ,action_date timestamp default current_timestamp
+   ,details varchar2(4000)
 );
 
 -- triggers de logs nas tabelas
@@ -279,7 +279,7 @@ begin
     if inserting then
         insert into ifsales.action_logs (id, table_name, action, action_date, details)
         values (ifsales.action_logs_seq.nextval, 'FUNNEL', 'INSERTED into FUNNEL'
-                , current_timestamp, :new.id);
+               , current_timestamp, :new.id);
     elsif updating then
         insert into ifsales.action_logs (id, table_name, action, action_date, details)
         values (ifsales.action_logs_seq.nextval, 'FUNNEL', 'UPDATED FUNNEL'
@@ -368,26 +368,81 @@ select
 from ifsales.products  prd
     ,ifsales.categories cat
 where prd.category_id = cat.id
+/
 
 -- view para trazer os dados dos customers junto de suas regions correspondentes
 create or replace view ifsales.v_customers
 as
 select
     cus.id                  as customer_id
-     ,cus.cpf                 as customer_cpf
-     ,cus.first_name          as customer_first_name
-     ,cus.last_name           as customer_last_name
-     ,cus.birth_date          as customer_birth_date
-     ,cus.income              as customer_income
-     ,cus.mobile              as customer_mobile
-     ,cus.professional_status as customer_professional_status
-     ,reg.id                  as region_id
-     ,reg.region_name         as region_name
-     ,reg.city                as region_city
-     ,reg.state               as region_state
+   ,cus.cpf                 as customer_cpf
+   ,cus.first_name          as customer_first_name
+   ,cus.last_name           as customer_last_name
+   ,cus.birth_date          as customer_birth_date
+   ,cus.income              as customer_income
+   ,cus.mobile              as customer_mobile
+   ,cus.professional_status as customer_professional_status
+   ,reg.id                  as region_id
+   ,reg.region_name         as region_name
+   ,reg.city                as region_city
+   ,reg.state               as region_state
 from ifsales.customers cus
-   ,ifsales.regions    reg
+    ,ifsales.regions    reg
 where cus.region_id = reg.id
+/
+
+-- view para trazer os dados de tudo na funnel
+create or replace view ifsales.v_funnel
+as
+select
+    fun.id                           as funnel_id
+    ,fun.discount                     as funnel_discount
+    ,fun.product_quantity             as funnel_product_qt
+    ,fun.paid_date                    as funnel_paid_date
+    ,cus.customer_id                  as customer_id
+    ,cus.customer_cpf                 as customer_cpf
+    ,cus.customer_first_name          as customer_first_name
+    ,cus.customer_last_name           as customer_last_name
+    ,cus.customer_birth_date          as customer_birth_date
+    ,cus.customer_income              as customer_income
+    ,cus.customer_mobile              as customer_mobile
+    ,cus.customer_professional_status as customer_prof_status
+    ,cus.region_id                    as customer_region_id
+    ,cus.region_name                  as customer_region_name
+    ,cus.region_city                  as customer_region_city
+    ,cus.region_state                 as customer_region_state
+    ,sal.id                           as salesperson_id
+    ,sal.name                         as salesperson_name
+    ,sal.email                        as salesperson_email
+    ,sal.phone                        as salesperson_phone
+    ,sal.active                       as salesperson_active
+    ,sto.store_id                     as store_id
+    ,sto.store_name                   as store_name
+    ,sto.store_cnpj                   as store_cnpj
+    ,sto.store_address                as store_address
+    ,sto.store_phone                  as store_phone
+    ,sto.region_id                    as store_region_id
+    ,sto.region_name                  as store_region_name
+    ,sto.region_city                  as store_region_city
+    ,sto.region_state                 as store_region_state
+    ,prd.product_id                   as product_id
+    ,prd.product_brand                as product_brand
+    ,prd.product_model                as product_model
+    ,prd.product_model_year           as product_model_year
+    ,prd.product_price                as product_price
+    ,prd.product_total_sales          as product_total_sales
+    ,prd.category_id                  as category_id
+    ,prd.category_name                as category_name
+    ,prd.category_description         as category_description
+from ifsales.funnel      fun
+    ,ifsales.v_customers  cus
+    ,ifsales.salespersons sal
+    ,ifsales.v_stores     sto
+    ,ifsales.v_products   prd
+where fun.customer_id    = cus.customer_id
+  and fun.salesperson_id = sal.id
+  and fun.store_id       = sto.store_id
+  and fun.product_id     = prd.product_id;
 /
 
 -- inserção de dados iniciais
