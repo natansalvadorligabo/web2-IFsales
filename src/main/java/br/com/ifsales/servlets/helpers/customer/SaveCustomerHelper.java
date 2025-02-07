@@ -1,7 +1,6 @@
 package br.com.ifsales.servlets.helpers.customer;
 
 import br.com.ifsales.dao.CustomerDao;
-import br.com.ifsales.model.Category;
 import br.com.ifsales.model.Customer;
 import br.com.ifsales.model.Region;
 import br.com.ifsales.servlets.helpers.Helper;
@@ -12,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Optional;
 
 public class SaveCustomerHelper implements Helper {
     @Override

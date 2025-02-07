@@ -131,4 +131,24 @@
         <param-name>deleteCustomer</param-name>
         <param-value>br.com.ifsales.servlets.helpers.customer.DeleteCustomerHelper</param-value>
     </context-param>
+    <context-param>
+        <param-name>loadFunnelForm</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.funnel.LoadFunnelFormHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>listFunnels</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.funnel.ListFunnelsHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>saveFunnel</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.funnel.SaveFunnelHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>updateFunnel</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.funnel.UpdateFunnelHelper</param-value>
+    </context-param>
+    <context-param>
+        <param-name>deleteFunnel</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.funnel.DeleteFunnelHelper</param-value>
+    </context-param>
 </web-app>

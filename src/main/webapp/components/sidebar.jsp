@@ -17,22 +17,25 @@
         <summary class="font-semibold">Tabelas</summary>
         <ul>
           <li>
-            <a href="${pageContext.request.contextPath}/redirect?action=listSalespersons">Vendedor</a>
+            <a href="${pageContext.request.contextPath}/redirect?action=listSalespersons">Vendedores</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/redirect?action=listRegions">Região</a>
+            <a href="${pageContext.request.contextPath}/redirect?action=listRegions">Regiões</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/redirect?action=listProducts">Produto</a>
+            <a href="${pageContext.request.contextPath}/redirect?action=listProducts">Produtos</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/redirect?action=listStores">Loja</a>
+            <a href="${pageContext.request.contextPath}/redirect?action=listStores">Lojas</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/redirect?action=listCategories">Categoria</a>
+            <a href="${pageContext.request.contextPath}/redirect?action=listCategories">Categorias</a>
           </li>
           <li>
             <a href="${pageContext.request.contextPath}/redirect?action=listCustomers">Clientes</a>
+          </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/redirect?action=listFunnels">Vendas</a>
           </li>
         </ul>
       </details>

@@ -406,7 +406,7 @@ select
     ,cus.customer_birth_date          as customer_birth_date
     ,cus.customer_income              as customer_income
     ,cus.customer_mobile              as customer_mobile
-    ,cus.customer_professional_status as customer_prof_status
+    ,cus.customer_professional_status as customer_professional_status
     ,cus.region_id                    as customer_region_id
     ,cus.region_name                  as customer_region_name
     ,cus.region_city                  as customer_region_city
@@ -431,9 +431,9 @@ select
     ,prd.product_model_year           as product_model_year
     ,prd.product_price                as product_price
     ,prd.product_total_sales          as product_total_sales
-    ,prd.category_id                  as category_id
-    ,prd.category_name                as category_name
-    ,prd.category_description         as category_description
+    ,prd.category_id                  as product_category_id
+    ,prd.category_name                as product_category_name
+    ,prd.category_description         as product_category_description
 from ifsales.funnel      fun
     ,ifsales.v_customers  cus
     ,ifsales.salespersons sal
