@@ -27,7 +27,7 @@ public class FunnelDao implements Dao<Funnel>{
             ps.setLong(4, funnel.getProduct().getId());
             ps.setDate(5, Date.valueOf((funnel.getPaidDate())));
             ps.setDouble(6, funnel.getDiscount());
-            ps.setInt(7, funnel.getProductQuanity());
+            ps.setInt(7, funnel.getProductQuantity());
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -42,8 +42,8 @@ public class FunnelDao implements Dao<Funnel>{
 
         String sql = """
                 SELECT *
-                FROM FUNNEL
-                WHERE ID = ?""";
+                FROM V_FUNNEL
+                WHERE FUNNEL_ID = ?""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -60,8 +60,8 @@ public class FunnelDao implements Dao<Funnel>{
         return optional;
     }
 
-    public List<Optional<Funnel>> getAllFunnels() throws SQLException {
-        List<Optional<Funnel>> funnels = new LinkedList<>();
+    public List<Funnel> getAllFunnels() throws SQLException {
+        List<Funnel> funnels = new LinkedList<>();
 
         String sql = """
                 SELECT *
@@ -71,11 +71,11 @@ public class FunnelDao implements Dao<Funnel>{
              PreparedStatement ps = con.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    funnels.add(Optional.of(createFunnelFromResultSet(rs)));
+                    funnels.add(createFunnelFromResultSet(rs));
                 }
             }
         } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving store from oracle sql");
+            throw new SQLException("An error ocurred while retrieving funnel from oracle sql");
         }
 
         return funnels;
@@ -101,7 +101,7 @@ public class FunnelDao implements Dao<Funnel>{
             ps.setLong(4, funnel.getProduct().getId());
             ps.setDate(5, Date.valueOf(funnel.getPaidDate()));
             ps.setDouble(6, funnel.getDiscount());
-            ps.setInt(7, funnel.getProductQuanity());
+            ps.setInt(7, funnel.getProductQuantity());
             ps.setLong(8, funnel.getId());
             ps.executeUpdate();
 
@@ -130,18 +130,40 @@ public class FunnelDao implements Dao<Funnel>{
 
     private Funnel createFunnelFromResultSet(ResultSet rs) throws SQLException {
         Funnel funnel = new Funnel();
-        funnel.setId(rs.getLong("ID"));
+        funnel.setId(rs.getLong("FUNNEL_ID"));
 
-        funnel.setCustomer(CustomerDao.extractCustomerFromResultSet(rs));
+        funnel.setCustomer(getCustomerFromResultSet(rs));
         funnel.setSalesperson(getSalesPersonFromResultSet(rs));
-        funnel.setStore(StoreDao.createStoreFromResultSet(rs));
-        funnel.setProduct(ProductDao.extractProductFromResultSet(rs));
+        funnel.setStore(getStoreFromResultSet(rs));
+        funnel.setProduct(getProductFromResultSet(rs));
 
         funnel.setPaidDate(rs.getDate("FUNNEL_PAID_DATE").toLocalDate());
         funnel.setDiscount(rs.getDouble("FUNNEL_DISCOUNT"));
-        funnel.setProductQuanity(rs.getInt("FUNNEL_PRODUCT_QT"));
+        funnel.setProductQuantity(rs.getInt("FUNNEL_PRODUCT_QT"));
 
         return funnel;
+    }
+
+    private Customer getCustomerFromResultSet(ResultSet rs) throws SQLException {
+        Customer customer = new Customer();
+        customer.setId(rs.getLong("CUSTOMER_ID"));
+        customer.setCpf(rs.getString("CUSTOMER_CPF"));
+        customer.setFirstName(rs.getString("CUSTOMER_FIRST_NAME"));
+        customer.setLastName(rs.getString("CUSTOMER_LAST_NAME"));
+        customer.setBirthDate(rs.getDate("CUSTOMER_BIRTH_DATE").toLocalDate());
+        customer.setIncome(rs.getDouble("CUSTOMER_INCOME"));
+        customer.setMobile(rs.getString("CUSTOMER_MOBILE"));
+        customer.setProfessionalStatus(rs.getString("CUSTOMER_PROFESSIONAL_STATUS"));
+
+        Region region = new Region();
+        region.setId(rs.getLong("CUSTOMER_REGION_ID"));
+        region.setName(rs.getString("CUSTOMER_REGION_NAME"));
+        region.setCity(rs.getString("CUSTOMER_REGION_CITY"));
+        region.setState(rs.getString("CUSTOMER_REGION_STATE"));
+
+        customer.setRegion(region);
+
+        return customer;
     }
 
     private Salesperson getSalesPersonFromResultSet(ResultSet rs) throws SQLException {
@@ -153,5 +175,43 @@ public class FunnelDao implements Dao<Funnel>{
         salesperson.setActive(rs.getBoolean("SALESPERSON_ACTIVE"));
 
         return salesperson;
+    }
+
+    private Store getStoreFromResultSet(ResultSet rs) throws SQLException {
+        Store store = new Store();
+        store.setId(rs.getLong("STORE_ID"));
+        store.setName(rs.getString("STORE_NAME"));
+        store.setCnpj(rs.getString("STORE_CNPJ"));
+        store.setAddress(rs.getString("STORE_ADDRESS"));
+        store.setPhone(rs.getString("STORE_PHONE"));
+
+        Region region = new Region();
+        region.setId(rs.getLong("STORE_REGION_ID"));
+        region.setName(rs.getString("STORE_REGION_NAME"));
+        region.setCity(rs.getString("STORE_REGION_CITY"));
+        region.setState(rs.getString("STORE_REGION_STATE"));
+        store.setRegion(region);
+
+        return store;
+    }
+
+    private Product getProductFromResultSet(ResultSet rs) throws SQLException {
+        Product product = new Product();
+        product.setId(rs.getLong("PRODUCT_ID"));
+        product.setBrand(rs.getString("PRODUCT_BRAND"));
+        product.setModel(rs.getString("PRODUCT_MODEL"));
+        product.setModelYear(rs.getInt("PRODUCT_MODEL_YEAR"));
+        product.setPrice(rs.getDouble("PRODUCT_PRICE"));
+
+        Category category = new Category();
+        category.setId(rs.getLong("PRODUCT_CATEGORY_ID"));
+        category.setName(rs.getString("PRODUCT_CATEGORY_NAME"));
+        category.setDescription(rs.getString("PRODUCT_CATEGORY_DESCRIPTION"));
+
+        product.setTotalSales(rs.getInt("PRODUCT_TOTAL_SALES"));
+
+        product.setCategory(category);
+
+        return product;
     }
 }
