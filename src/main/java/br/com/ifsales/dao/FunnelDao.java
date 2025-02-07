@@ -4,9 +4,8 @@ import br.com.ifsales.model.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Date;
+import java.util.*;
 
 public class FunnelDao implements Dao<Funnel>{
     private final DataSource dataSource;
@@ -60,6 +59,152 @@ public class FunnelDao implements Dao<Funnel>{
         return optional;
     }
 
+    public Optional<Integer> getTotalProductsSold() throws SQLException {
+        Optional<Integer> optional = Optional.empty();
+
+        String sql = """
+                SELECT IFSALES_PKG.REC_TOTAL_PRODUCTS_SOLD() as total_products_sold
+                FROM DUAL
+        """;
+
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next())
+                    return Optional.of(rs.getInt("total_products_sold"));
+            }
+        } catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving funnel from oracle sql");
+        }
+
+        return optional;
+    }
+
+    public Optional<Double> getAverageTicket() throws SQLException {
+        Optional<Double> optional = Optional.empty();
+
+        String sql = """
+                SELECT IFSALES_PKG.REC_AVERAGE_TICKET() as average_ticket
+                FROM DUAL
+        """;
+
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next())
+                    return Optional.of(rs.getDouble("average_ticket"));
+            }
+        } catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving funnel from oracle sql");
+        }
+
+        return optional;
+    }
+
+    public Optional<Double> getTotalSales() throws SQLException {
+        Optional<Double> optional = Optional.empty();
+
+        String sql = """
+                SELECT IFSALES_PKG.REC_TOTAL_SALES() as total_sales
+                FROM DUAL
+        """;
+
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next())
+                    return Optional.of(rs.getDouble("total_sales"));
+            }
+        } catch (SQLException e) {
+            throw new SQLException("An error ocurred while retrieving funnel from oracle sql");
+        }
+
+        return optional;
+    }
+
+    public List<Map<String, Object>> getSalesByRegion() throws SQLException {
+        List<Map<String, Object>> results = new LinkedList<>();
+
+        String sql = """
+        SELECT CUSTOMER_REGION_ID   AS region_id
+             , CUSTOMER_REGION_NAME AS region_name
+             , IFSALES_PKG.REC_TOTAL_SALES(null, null, CUSTOMER_REGION_ID) AS total_sales
+        FROM v_funnel
+        GROUP BY CUSTOMER_REGION_ID, CUSTOMER_REGION_NAME, IFSALES_PKG.REC_TOTAL_SALES(null, null, CUSTOMER_REGION_ID)
+        ORDER BY region_id
+    """;
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("region_name", rs.getString("region_name"));
+                row.put("total_sales", rs.getInt("total_sales"));
+                results.add(row);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving sales data by month", e);
+        }
+
+        return results;
+    }
+
+    public List<Map<String, Object>> getSalesByMonth() throws SQLException {
+        List<Map<String, Object>> results = new LinkedList<>();
+
+        String sql = """
+        SELECT to_char(FUNNEL_PAID_DATE, 'MM') AS month
+             , IFSALES_PKG.REC_TOTAL_SALES(null, extract(month from(FUNNEL_PAID_DATE)), null) as total_sales
+        FROM v_funnel
+        GROUP BY to_char(FUNNEL_PAID_DATE, 'MM'), IFSALES_PKG.REC_TOTAL_SALES(null, extract(month from(FUNNEL_PAID_DATE)), null)
+        ORDER BY month
+    """;
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("month", rs.getString("month"));
+                row.put("total_sales", rs.getInt("total_sales"));
+                results.add(row);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving sales data by month", e);
+        }
+
+        return results;
+    }
+
+    public List<Map<String, Object>> getSalesByCategory() throws SQLException {
+        List<Map<String, Object>> results = new LinkedList<>();
+
+        String sql = """
+            SELECT PRODUCT_CATEGORY_ID, PRODUCT_CATEGORY_NAME as category_name, IFSALES_PKG.REC_TOTAL_SALES(PRODUCT_CATEGORY_ID, null, null) AS total_sales
+            FROM V_FUNNEL
+            GROUP BY PRODUCT_CATEGORY_ID,PRODUCT_CATEGORY_NAME
+            ORDER BY total_sales DESC""";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("category_name", rs.getString("category_name"));
+                row.put("total_sales", rs.getDouble("total_sales"));
+                results.add(row);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("An error occurred while retrieving data from Oracle SQL", e);
+        }
+
+        return results;
+    }
+  
     public List<Funnel> getAllFunnels() throws SQLException {
         List<Funnel> funnels = new LinkedList<>();
 

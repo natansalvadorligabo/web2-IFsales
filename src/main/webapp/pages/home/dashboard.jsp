@@ -26,46 +26,33 @@
           <div class="stats stats-vertical sm:stats-horizontal bg-base-200 shadow-md w-full">
             <div class="stat">
               <div class="stat-title">Receita Total</div>
-              <div class="stat-value text-primary">R$ 29.000,00</div>
+              <div class="stat-value text-primary">${totalSales}</div>
               <div class="stat-desc">Total acumulado até o momento</div>
             </div>
 
             <div class="stat">
               <div class="stat-title">Ticket Médio</div>
-              <div class="stat-value text-secondary">R$ 500,00</div>
+              <div class="stat-value text-secondary">${averageTicket}</div>
               <div class="stat-desc">Valor médio por pedido</div>
             </div>
 
             <div class="stat">
-              <div class="stat-value">392</div>
+              <div class="stat-value">${totalProductsSold}</div>
               <div class="stat-title">Vendas realizadas</div>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 mt-8">
             <div class="w-full">
-              <!-- Gráfico Gênero (Pizza) -->
-              <canvas id="genderChart"></canvas>
+              <canvas id="salesByCategory"></canvas>
             </div>
-
             <div class="w-full">
-              <!-- Gráfico Faixa Etária (Coluna) -->
-              <canvas id="ageGroupChart"></canvas>
+              <canvas id="salesByRegion"></canvas>
             </div>
-
-            <div class="w-full">
-              <!-- Gráfico Top 5 Vendedores (Coluna) -->
-              <canvas id="topSellersChart"></canvas>
-            </div>
-
-            <div class="w-full">
-              <!-- Gráfico Top 5 Lojas (Coluna) -->
-              <canvas id="topStoresChart"></canvas>
+            <div class="w-full col-span-2">
+              <canvas id="salesByMonth"></canvas>
             </div>
           </div>
-
-          <!-- pegar os dados do banco dinamicamente -->
-
         </main>
       </div>
 
@@ -73,87 +60,146 @@
     </div>
 
     <script>
-        const genderData = {
-            labels: ['Masculino', 'Feminino'],
-            datasets: [{
-                data: [60, 40],
-                backgroundColor: ['#4caf50', '#f44336'],
-            }]
-        };
+      const categoryLabel = [];
+      const categoryData = [];
+      const formatteCategorydData = [];
 
-        const ageGroupData = {
-            labels: ['18-25', '26-35', '36-45', '46-60', '60+'],
-            datasets: [{
-                label: 'Faixa Etária',
-                data: [100, 150, 80, 40, 22],
-                backgroundColor: '#4caf50',
-                borderColor: '#4caf50',
-                borderWidth: 1
-            }]
-        };
+      <c:forEach var="item" items="${salesByCategory}">
+        categoryLabel.push('${item.category_name}');
+        categoryData.push('${item.total_sales}');
+        formatteCategorydData.push('${item.formatted_total_sales_category}');
+      </c:forEach>
 
-        const topSellersData = {
-            labels: ['Vendedor 1', 'Vendedor 2', 'Vendedor 3', 'Vendedor 4', 'Vendedor 5'],
-            datasets: [{
-                label: 'Vendas',
-                data: [150, 120, 100, 80, 50],
-                backgroundColor: '#f44336',
-                borderColor: '#f44336',
-                borderWidth: 1
-            }]
-        };
+      const salesByCategoryData = {
+        labels: categoryLabel,
+        datasets: [{
+          label: 'Receita por Categoria',
+          data: categoryData,
+          backgroundColor: [
+            '#3357FF', // Azul intenso
+            '#FF5733', // Laranja vibrante
+            '#33FF57', // Verde neon
+            '#F033FF', // Roxo brilhante
+            '#FFD700', // Amarelo ouro
+            '#00FFFF', // Ciano
+            '#FF1493'  // Rosa choque
+          ],
+          borderColor: '#FFFFFF',
+          borderWidth: 1
+        }]
+      };
 
-        const topStoresData = {
-            labels: ['Loja A', 'Loja B', 'Loja C', 'Loja D', 'Loja E'],
-            datasets: [{
-                label: 'Vendas',
-                data: [200, 180, 160, 140, 120],
-                backgroundColor: '#4caf50',
-                borderColor: '#4caf50',
-                borderWidth: 1
-            }]
-        };
+      new Chart(document.getElementById('salesByCategory'), {
+        type: 'bar',
+        data: salesByCategoryData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
 
-        new Chart(document.getElementById('genderChart'), {
-            type: 'pie',
-            data: genderData,
-        });
-
-        new Chart(document.getElementById('ageGroupChart'), {
-            type: 'bar',
-            data: ageGroupData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+          scales: {
+            y: { beginAtZero: true }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(tooltipItem) {
+                  return formatteCategorydData[tooltipItem.dataIndex];
                 }
+              }
             }
-        });
+          }
+        }
+      });
 
-        new Chart(document.getElementById('topSellersChart'), {
-            type: 'bar',
-            data: topSellersData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+      const monthLabel = [];
+      const monthData = [];
+      const monthFormattedData = [];
 
-        new Chart(document.getElementById('topStoresChart'), {
-            type: 'bar',
-            data: topStoresData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+      <c:forEach var="item" items="${salesByMonth}">
+        monthLabel.push('${item.sales_month}');
+        monthData.push('${item.total_sales}');
+        monthFormattedData.push('${item.formatted_total_sales_month}');
+      </c:forEach>
+
+      const salesByMonthData = {
+        labels: monthLabel,
+        datasets: [{
+          label: 'Receita por Mês',
+          data: monthData,
+          borderColor: '#FF4500',
+          backgroundColor: 'rgba(255, 69, 0, 0.2)',
+          borderWidth: 2,
+          tension: 0.4
+        }]
+      };
+
+      new Chart(document.getElementById('salesByMonth'), {
+        type: 'line',
+        data: salesByMonthData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+
+          scales: {
+            y: { beginAtZero: true }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(tooltipItem) {
+                  return monthFormattedData[tooltipItem.dataIndex];
                 }
+              }
             }
-        });
+          }
+        }
+      });
+
+      const regionLabel = [];
+      const regionData = [];
+      const formatteRegionData = [];
+
+      <c:forEach var="item" items="${salesByRegion}">
+      regionLabel.push('${item.region_name}');
+      regionData.push('${item.total_sales}');
+      formatteRegionData.push('${item.formatted_total_sales_region}');
+      </c:forEach>
+
+      const salesByRegionData = {
+        labels: regionLabel,
+        datasets: [{
+          label: 'Receita por Região',
+          data: regionData.map(value => parseFloat(value)), // Convertendo valores para número
+          backgroundColor: [
+            '#3357FF', '#FF5733', '#33FF57',
+            '#F033FF', '#FFD700', '#00FFFF', '#FF1493'
+          ],
+          borderColor: '#FFFFFF',
+          borderWidth: 1
+        }]
+      };
+
+      new Chart(document.getElementById('salesByRegion'), {
+        type: 'pie',
+        data: salesByRegionData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false, // Permite ajustar o tamanho manualmente
+          layout: {
+            padding: 10
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(tooltipItem) {
+                  return formatteRegionData[tooltipItem.dataIndex];
+                }
+              }
+            }
+          }
+        }
+      });
+
     </script>
   </body>
 </html>
