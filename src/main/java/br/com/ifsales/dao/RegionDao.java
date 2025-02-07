@@ -3,10 +3,7 @@ package br.com.ifsales.dao;
 import br.com.ifsales.model.Region;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -131,7 +128,9 @@ public class RegionDao implements Dao<Region>{
             ps.setString(2, region.getCity());
             ps.setString(3, region.getState());
             ps.setLong(4, region.getId());
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Region not found");
+            }
 
             return true;
         } catch (SQLException e) {
@@ -148,7 +147,9 @@ public class RegionDao implements Dao<Region>{
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Region not found");
+            }
 
             return true;
         } catch (SQLException e) {

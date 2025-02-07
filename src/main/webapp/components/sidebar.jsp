@@ -46,3 +46,4 @@
 <div id="contextPath" data-contextPath="${pageContext.request.contextPath}"></div>
 
 <script defer src="${pageContext.request.contextPath}/scripts/themeController.js"></script>
+<script defer src="${pageContext.request.contextPath}/scripts/sidebar.js"></script>

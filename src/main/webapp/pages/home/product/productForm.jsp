@@ -31,6 +31,15 @@
                 </c:when>
               </c:choose>
 
+              <c:choose>
+                <c:when test="${product == null}">
+                  <input type="hidden" name="totalSales" value="0">
+                </c:when>
+                <c:when test="${product != null}">
+                  <input type="hidden" name="totalSales" value="${product.totalSales}">
+                </c:when>
+              </c:choose>
+
               <div>
                 <label for="brand" class="font-semibold">Marca<span class="text-error">*</span></label>
                 <input type="text" id="brand" name="brand" required class="input input-bordered w-full mt-2" value="${product.brand}">

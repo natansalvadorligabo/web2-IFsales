@@ -40,11 +40,9 @@ public class SaveCustomerHelper implements Helper {
 
         CustomerDao customerDao = new CustomerDao(DataSourceSearcher.getInstance().getDataSource());
 
-        HelperUtils.saveOrUpdate(req, customer, customerDao, id);
 
-        if (req.getAttribute("result") == "registerError") {
-            return "/pages/home/customer/customerForm.jsp";
-        }
+        String result = HelperUtils.saveOrUpdate(req, customer, customerDao, id);
+        if (result.equals("registerError")) return "redirect?action=loadCustomerForm";
 
         return "redirect?action=listCustomers";
     }

@@ -28,11 +28,9 @@ public class SaveSalespersonHelper implements Helper {
 
         SalespersonDao salespersonDao = new SalespersonDao(DataSourceSearcher.getInstance().getDataSource());
 
-        HelperUtils.saveOrUpdate(req, salesperson, salespersonDao, id);
 
-        if (req.getAttribute("result") == "registerError") {
-            return "/pages/home/salesperson/salespersonForm.jsp";
-        }
+        String result = HelperUtils.saveOrUpdate(req, salesperson, salespersonDao, id);
+        if (result.equals("registerError")) return "/pages/home/salesperson/salespersonForm.jsp";
 
         return "redirect?action=listSalespersons";
     }

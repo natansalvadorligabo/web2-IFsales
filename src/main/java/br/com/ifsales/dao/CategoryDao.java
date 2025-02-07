@@ -3,10 +3,7 @@ package br.com.ifsales.dao;
 import br.com.ifsales.model.Category;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -113,7 +110,10 @@ public class CategoryDao implements Dao<Category>{
             ps.setString(1, category.getName());
             ps.setString(2, category.getDescription());
             ps.setLong(3, category.getId());
-            ps.executeUpdate();
+
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Category not found");
+            }
 
             return true;
         } catch (SQLException e) {
@@ -130,7 +130,9 @@ public class CategoryDao implements Dao<Category>{
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Category not found");
+            }
 
             return true;
         } catch (SQLException e) {

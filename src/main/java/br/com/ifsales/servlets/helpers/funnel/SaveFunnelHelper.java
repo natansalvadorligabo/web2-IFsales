@@ -47,11 +47,9 @@ public class SaveFunnelHelper implements Helper {
 
         FunnelDao funnelDao = new FunnelDao(DataSourceSearcher.getInstance().getDataSource());
 
-        HelperUtils.saveOrUpdate(req, funnel, funnelDao, id);
 
-        if (req.getAttribute("result") == "registerError") {
-            return "/pages/home/funnel/funnelForm.jsp";
-        }
+        String result = HelperUtils.saveOrUpdate(req, funnel, funnelDao, id);
+        if (result.equals("registerError")) return "redirect?action=loadFunnelForm";
 
         return "redirect?action=listFunnels";
     }

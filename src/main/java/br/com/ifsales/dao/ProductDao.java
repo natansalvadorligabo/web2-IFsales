@@ -1,9 +1,6 @@
 package br.com.ifsales.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -257,7 +254,9 @@ public class ProductDao implements Dao<Product>{
             ps.setLong(5, product.getCategory().getId());
             ps.setDouble(6, product.getTotalSales());
             ps.setLong(7, product.getId());
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Product not found");
+            }
 
             return true;
         } catch (SQLException e) {
@@ -274,7 +273,9 @@ public class ProductDao implements Dao<Product>{
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Product not found");
+            }
 
             return true;
         } catch (SQLException e) {

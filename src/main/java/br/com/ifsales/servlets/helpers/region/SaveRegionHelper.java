@@ -26,11 +26,9 @@ public class SaveRegionHelper implements Helper {
 
         RegionDao regionDao = new RegionDao(DataSourceSearcher.getInstance().getDataSource());
 
-        HelperUtils.saveOrUpdate(req, region, regionDao, id);
 
-        if (req.getAttribute("result") == "registerError") {
-            return "/pages/home/region/regionForm.jsp";
-        }
+        String result = HelperUtils.saveOrUpdate(req, region, regionDao, id);
+        if (result.equals("registerError")) return "/pages/home/region/regionForm.jsp";
 
         return "redirect?action=listRegions";
     }

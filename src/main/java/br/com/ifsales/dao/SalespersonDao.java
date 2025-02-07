@@ -3,10 +3,7 @@ package br.com.ifsales.dao;
 import br.com.ifsales.model.Salesperson;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -119,7 +116,9 @@ public class SalespersonDao implements Dao<Salesperson>{
             ps.setString(3, salesperson.getPhone());
             ps.setBoolean(4, salesperson.getActive());
             ps.setLong(5, salesperson.getId());
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Salesperson not found");
+            }
 
             return true;
         } catch (SQLException sqlException) {
@@ -136,7 +135,9 @@ public class SalespersonDao implements Dao<Salesperson>{
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Salesperson not found");
+            }
 
             return true;
         } catch (SQLException sqlException) {

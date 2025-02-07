@@ -93,7 +93,9 @@ public class    CustomerDao implements Dao<Customer>{
             createQuery(customer, ps);
             ps.setLong(9, customer.getId());
 
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Customer not found");
+            }
 
             return true;
         } catch (SQLException e) {
@@ -110,7 +112,9 @@ public class    CustomerDao implements Dao<Customer>{
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Customer not found");
+            }
 
             return true;
         } catch (SQLException e) {

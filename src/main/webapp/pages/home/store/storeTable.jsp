@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/tableMask.js"></script>
     <title>Tabelas de Lojas - IFSales</title>
   </head>
   <body>
@@ -49,10 +50,10 @@
                     <tr class="hover">
                       <td>${store.id}</td>
                       <td>${store.name}</td>
-                      <td>${store.cnpj}</td>
+                      <td class="cnpj">${store.cnpj}</td>
                       <td>${store.region.name}</td>
                       <td>${store.address}</td>
-                      <td>${store.phone}</td>
+                      <td class="phone">${store.phone}</td>
                       <td class="p-1 flex">
                         <button onclick="document.getElementById('edit-${store.id}').showModal()" class="btn btn-outline btn-warning w-1/2">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -112,6 +113,7 @@
 
       <jsp:include page="/components/defaultErrors.jsp">
         <jsp:param name="registerSuccess" value="Loja cadastrada com sucesso."/>
+        <jsp:param name="updateError" value="Erro ao atualizar a loja."/>
         <jsp:param name="updateSuccess" value="Loja atualizada com sucesso."/>
         <jsp:param name="deleteSuccess" value="Loja deletada com sucesso."/>
         <jsp:param name="deleteError" value="Esta loja não pode ser deletada, pois está associada a um ou mais funis."/>

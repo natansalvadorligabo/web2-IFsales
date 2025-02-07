@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
+<!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
   <head>
     <meta charset="UTF-8">
@@ -105,6 +107,7 @@
       <jsp:include page="/components/defaultErrors.jsp">
         <jsp:param name="registerSuccess" value="Categoria cadastrada com sucesso."/>
         <jsp:param name="updateSuccess" value="Categoria atualizada com sucesso."/>
+        <jsp:param name="updateError" value="Ocorreu um erro ao atualizar a categoria, operação cancelada."/>
         <jsp:param name="deleteSuccess" value="Categoria deletada com sucesso."/>
         <jsp:param name="deleteError" value="Esta categoria não pode ser deletada, pois está associada a um ou mais produtos."/>
       </jsp:include>

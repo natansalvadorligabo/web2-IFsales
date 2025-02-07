@@ -24,11 +24,9 @@ public class SaveCategoryHelper implements Helper {
 
         CategoryDao categoryDao = new CategoryDao(DataSourceSearcher.getInstance().getDataSource());
 
-        HelperUtils.saveOrUpdate(req, category, categoryDao, id);
 
-        if (req.getAttribute("result") == "registerError") {
-            return "/pages/home/category/categoryForm.jsp";
-        }
+        String result = HelperUtils.saveOrUpdate(req, category, categoryDao, id);
+        if (result.equals("registerError")) return "/pages/home/category/categoryForm.jsp";
 
         return "redirect?action=listCategories";
     }
