@@ -33,11 +33,6 @@ public class UserDao implements Dao<User> {
         return true;
     }
 
-    @Override
-    public Boolean update(User storable) throws SQLException {
-        return null;
-    }
-
     public Optional<User> getUserByEmail(String email) throws SQLException {
         String sql = """
                 SELECT *
@@ -65,5 +60,15 @@ public class UserDao implements Dao<User> {
         }
 
         return optional;
+    }
+
+    @Override
+    public Boolean update(User storable) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Boolean delete(Long id) throws SQLException {
+        return null;
     }
 }

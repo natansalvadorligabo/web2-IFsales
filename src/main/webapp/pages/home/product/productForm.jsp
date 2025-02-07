@@ -106,7 +106,7 @@
                   </c:choose>
                 </button>
 
-                <a href="${pageContext.request.contextPath}/pages/home/product/productTable.jsp" class="btn btn-outline btn-block">
+                <a href="${pageContext.request.contextPath}/redirect?action=listProducts" class="btn btn-outline btn-block">
                   Voltar
                 </a>
               </div>

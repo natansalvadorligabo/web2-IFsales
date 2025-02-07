@@ -127,7 +127,7 @@ public class SalespersonDao implements Dao<Salesperson>{
         }
     }
 
-    public Boolean delete(Salesperson salesperson) throws SQLException {
+    public Boolean delete(Long id) throws SQLException {
         String sql = """
                 DELETE
                 FROM SALESPERSONS
@@ -135,7 +135,7 @@ public class SalespersonDao implements Dao<Salesperson>{
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setLong(1, salesperson.getId());
+            ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;

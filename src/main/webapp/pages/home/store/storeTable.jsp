@@ -110,45 +110,14 @@
         </div>
       </div>
 
-      <div class="fixed bottom-2 left-2 z-40">
-        <c:choose>
-          <c:when test="${result == 'registerSuccess'}">
-            <div class="alert alert-success">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <span>Loja cadastrada com sucesso.</span>
-            </div>
-          </c:when>
-          <c:when test="${result == 'updateSuccess'}">
-            <div class="alert alert-success">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <span>Loja atualizada com sucesso.</span>
-            </div>
-          </c:when>
-          <c:when test="${result == 'deleteSuccess'}">
-            <div class="alert alert-success">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <span>Loja deletada com sucesso.</span>
-            </div>
-          </c:when>
-          <c:when test="${result == 'deleteError'}">
-            <div class="alert alert-error">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <span>Esta loja não pode ser deletada, pois está associada a um ou mais funis.</span>
-            </div>
-          </c:when>
-        </c:choose>
-      </div>
+      <jsp:include page="/components/defaultErrors.jsp">
+        <jsp:param name="registerSuccess" value="Loja cadastrada com sucesso."/>
+        <jsp:param name="updateSuccess" value="Loja atualizada com sucesso."/>
+        <jsp:param name="deleteSuccess" value="Loja deletada com sucesso."/>
+        <jsp:param name="deleteError" value="Esta loja não pode ser deletada, pois está associada a um ou mais funis."/>
+      </jsp:include>
 
       <jsp:include page="/components/sidebar.jsp" />
-      <script src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
     </div>
   </body>
 </html>
