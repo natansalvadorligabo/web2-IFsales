@@ -34,8 +34,8 @@
             </div>
 
             <div class="stat">
-              <div class="stat-value">${totalProductsSold}</div>
               <div class="stat-title">Vendas realizadas</div>
+              <div class="stat-value">${totalProductsSold}</div>
             </div>
           </div>
 
