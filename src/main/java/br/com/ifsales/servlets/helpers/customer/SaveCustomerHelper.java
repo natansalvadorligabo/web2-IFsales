@@ -43,7 +43,7 @@ public class SaveCustomerHelper implements Helper {
         HelperUtils.saveOrUpdate(req, customer, customerDao, id);
 
         if (req.getAttribute("result") == "registerError") {
-            return "/pages/home/customer/customerForm.jsp";
+            return "redirect?action=loadCustomerForm";
         }
 
         return "redirect?action=listCustomers";
