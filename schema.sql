@@ -458,3 +458,5 @@ commit;
 
 select * from ifsales.users;
 select * from ifsales.salespersons;
+
+select * from ifsales.action_logs;

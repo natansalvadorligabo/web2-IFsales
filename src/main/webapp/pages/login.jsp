@@ -2,18 +2,16 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login - IFSales</title>
-  </head>
+  <jsp:include page="/components/head.jsp">
+    <jsp:param name="title" value="Login - IFSales" />
+  </jsp:include>
+
   <body class="min-h-screen bg-base-200">
+
+    <img src="${pageContext.request.contextPath}/images/ifsales-nobg-shadow.png" alt="IFSales logo" class="mx-auto w-64" />
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 class="mt-16 mb-4 text-2xl font-bold text-center text-secondary">
+        <h2 class="mb-4 text-2xl font-bold text-center text-secondary">
           Entrar
         </h2>
       </div>

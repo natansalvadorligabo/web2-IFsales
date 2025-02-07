@@ -5,7 +5,10 @@
   <label for="my-drawer-2" id="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
   <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 text-base-content">
     <li class="mb-4 font-semibold text-xl">
-      <a class="font-semibold" href="${pageContext.request.contextPath}/redirect?action=home">IFSales</a>
+      <a class="font-semibold flex flex-col self-start" href="${pageContext.request.contextPath}/redirect?action=home">
+        <img class="w-20" src="${pageContext.request.contextPath}/images/ifsales-logo.png" alt="ifsales logo">
+        IFSales
+      </a>
     </li>
 
     <li>
