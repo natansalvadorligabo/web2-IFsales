@@ -52,29 +52,12 @@
                 <label class="font-semibold" for="regionId">
                   Região<span class="text-error">*</span>
                   <select name="regionId" id="regionId" required class="select select-bordered w-full mt-2">
-                    <c:choose>
-                      <c:when test="${store == null}">
-                        <option value="" selected disabled>Selecione uma região</option>
-                        <c:forEach var="region" items="${regions}">
-                          <option value="${region.id}">${region.name}</option>
-                        </c:forEach>
-                      </c:when>
-                      <c:when test="${store != null}">
-                        <option value="" disabled>Selecione uma região</option>
-                        <c:forEach var="region" items="${regions}">
-                          <c:choose>
-                            <c:when test="${store.region.id == region.id}">
-                              <option value="${region.id}" selected>${region.name}</option>
-                            </c:when>
-                            <c:otherwise>
-                              <option value="${region.id}">${region.name}</option>
-                            </c:otherwise>
-                          </c:choose>
-                        </c:forEach>
-                      </c:when>
-                    </c:choose>
-
-
+                    <option value="" disabled <c:if test="${store == null}">selected</c:if>>Selecione uma região
+                    </option>
+                    <c:forEach var="region" items="${regions}">
+                      <option value="${region.id}"
+                              <c:if test="${store != null && store.region.id == region.id}">selected</c:if>>${region.name}</option>
+                    </c:forEach>
                   </select>
                 </label>
               </div>
@@ -94,8 +77,8 @@
               <span id="error-phone" class="text-error hidden"></span>
 
               <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
-                <jsp:param name="obj" value="${store == null}"/>
-                <jsp:param name="action" value="listStores"/>
+                <jsp:param name="obj" value="${store == null}" />
+                <jsp:param name="action" value="listStores" />
               </jsp:include>
             </form>
           </div>

@@ -58,19 +58,23 @@
               <span id="error-price" class="text-error hidden"></span>
 
               <div>
-                <label for="category" class="font-semibold">Categoria<span class="text-error">*</span></label>
-                <select id="category" name="category" class="select select-bordered w-full mt-2">
-                  <c:forEach var="category" items="${categories}">
-                    <option value="${category.id}"
-                            <c:if test="${product != null and product.category.id == category.id}">selected</c:if>> ${category.name} </option>
-                  </c:forEach>
-                </select>
+                <label class="font-semibold" for="category">
+                  Categoria<span class="text-error">*</span>
+                  <select name="category" id="category" required class="select select-bordered w-full mt-2">
+                    <option value="" disabled <c:if test="${product == null}">selected</c:if>>Selecione uma categoria
+                    </option>
+                    <c:forEach var="category" items="${categories}">
+                      <option value="${category.id}"
+                              <c:if test="${product != null && product.category.id == category.id}">selected</c:if>>${category.name}</option>
+                    </c:forEach>
+                  </select>
+                </label>
               </div>
               <span id="error-category" class="text-error hidden"></span>
 
               <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
-                <jsp:param name="obj" value="${product == null}"/>
-                <jsp:param name="action" value="listProducts"/>
+                <jsp:param name="obj" value="${product == null}" />
+                <jsp:param name="action" value="listProducts" />
               </jsp:include>
             </form>
           </div>
