@@ -38,7 +38,6 @@ public class DashboardHelper implements Helper {
         req.setAttribute("salesByRegion", salesByRegion);
         req.setAttribute("totalSales", funnelDao.getTotalSales().map(currencyFormat::format).orElse("-"));
         req.setAttribute("averageTicket", funnelDao.getAverageTicket().map(currencyFormat::format).orElse("-"));
-        req.setAttribute("totalProductsSold", funnelDao.getTotalProductsSold().orElse(0));
         req.setAttribute("totalProductsSold", funnelDao.getTotalProductsSold().map(numberFormat::format).orElse("-"));
 
         return "/pages/home/dashboard.jsp";
