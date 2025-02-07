@@ -110,11 +110,11 @@
     </div>
 
     <jsp:include page="/components/defaultErrors.jsp">
-        <jsp:param name="registerSuccess" value="Funil cadastrado com sucesso."/>
-        <jsp:param name="updateSuccess" value="Funil atualizado com sucesso."/>
-        <jsp:param name="deleteSuccess" value="Funil deletado com sucesso."/>
-        <jsp:param name="updateError" value="Erro ao atualizar o funil."/>
-        <jsp:param name="deleteError" value="Este funil não pode ser deletado, tente novamente mais tarde." />
+        <jsp:param name="registerSuccess" value="Venda cadastrada com sucesso."/>
+        <jsp:param name="updateSuccess" value="Venda atualizada com sucesso."/>
+        <jsp:param name="deleteSuccess" value="Venda deletada com sucesso."/>
+        <jsp:param name="updateError" value="Erro ao atualizar a venda."/>
+        <jsp:param name="deleteError" value="Esta venda não pode ser deletada, tente novamente mais tarde." />
     </jsp:include>
 
     <jsp:include page="/components/sidebar.jsp"/>
