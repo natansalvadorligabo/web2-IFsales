@@ -33,53 +33,27 @@
 
               <div>
                 <label for="brand" class="font-semibold">Marca<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${product == null}">
-                    <input type="text" id="brand" name="brand" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${product != null}">
-                    <input type="text" id="brand" name="brand" required class="input input-bordered w-full mt-2" value="${product.brand}">
-                  </c:when>
-                </c:choose>
+                <input type="text" id="brand" name="brand" required class="input input-bordered w-full mt-2" value="${product.brand}">
+
               </div>
               <span id="error-brand" class="text-error hidden"></span>
 
               <div>
                 <label for="model" class="font-semibold">Modelo<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${product == null}">
-                    <input type="text" id="model" name="model" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${product != null}">
-                    <input type="text" id="model" name="model" required class="input input-bordered w-full mt-2" value="${product.model}">
-                  </c:when>
-                </c:choose>
+                <input type="text" id="model" name="model" required class="input input-bordered w-full mt-2" value="${product.model}">
+
               </div>
               <span id="error-model" class="text-error hidden"></span>
 
               <div>
                 <label for="modelYear" class="font-semibold">Ano do Modelo<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${product == null}">
-                    <input type="number" min="1920" max="${Calendar.getInstance().get(Calendar.YEAR)}" id="modelYear" name="modelYear" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${product != null}">
-                    <input type="number" id="modelYear" name="modelYear" required class="input input-bordered w-full mt-2" value="${product.modelYear}">
-                  </c:when>
-                </c:choose>
+                <input type="number" id="modelYear" name="modelYear" required class="input input-bordered w-full mt-2" value="${product.modelYear}">
               </div>
               <span id="error-modelYear" class="text-error hidden"></span>
 
               <div>
                 <label for="price" class="font-semibold">Preço<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${product == null}">
-                    <input type="number" min="1" step="0.1" id="price" name="price" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${product != null}">
-                    <input type="number" id="price" name="price" required class="input input-bordered w-full mt-2" value="${product.price}">
-                  </c:when>
-                </c:choose>
+                <input type="number" id="price" name="price" required class="input input-bordered w-full mt-2" value="${product.price}">
               </div>
               <span id="error-price" class="text-error hidden"></span>
 

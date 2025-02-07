@@ -33,56 +33,25 @@
 
               <div>
                 <label for="name" class="font-semibold">Nome<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${salesperson == null}">
-                    <input type="text" id="name" name="name" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${salesperson != null}">
-                    <input type="text" id="name" name="name" required class="input input-bordered w-full mt-2" value="${salesperson.name}">
-                  </c:when>
-                </c:choose>
+                <input type="text" id="name" name="name" required class="input input-bordered w-full mt-2" value="${salesperson.name}">
               </div>
               <span id="error-name" class="text-error hidden"></span>
 
               <div>
                 <label for="email" class="font-semibold">E-mail<span class="text-error">*</span></label>
-
-                <c:choose>
-                  <c:when test="${salesperson == null}">
-                    <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${salesperson != null}">
-                    <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2" value="${salesperson.email}">
-                  </c:when>
-                </c:choose>
+                <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2" value="${salesperson.email}">
               </div>
               <span id="error-email" class="text-error hidden"></span>
 
               <div>
                 <label for="phone" class="font-semibold">Telefone<span class="text-error">*</span></label>
-
-                <c:choose>
-                  <c:when test="${salesperson == null}">
-                    <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2" placeholder="(12) 34567-8910">
-                  </c:when>
-                  <c:when test="${salesperson != null}">
-                    <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2" placeholder="(12) 34567-8910" value="${salesperson.phone}">
-                  </c:when>
-                </c:choose>
+                <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2" placeholder="(12) 34567-8910" value="${salesperson.phone}">
               </div>
               <span id="error-phone" class="text-error hidden"></span>
 
               <div class="flex items-center">
-                <c:choose>
-                  <c:when test="${salesperson == null}">
-                    <input type="checkbox" id="active" name="active" class="checkbox checkbox-bordered">
-                  </c:when>
-                  <c:when test="${salesperson != null}">
-                    <input type="checkbox" id="active" name="active" class="checkbox checkbox-bordered"
-                            <c:if test="${salesperson.active}">checked</c:if>>
-                  </c:when>
-                </c:choose>
-
+                <input type="checkbox" id="active" name="active" class="checkbox checkbox-bordered"
+                        <c:if test="${salesperson.active}">checked</c:if>>
                 <label for="active" class="ml-2 font-semibold">Ativo</label>
               </div>
 
