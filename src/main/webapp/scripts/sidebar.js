@@ -16,3 +16,15 @@ if (details) {
         details.open = storedSidebar === 'open'
     }
 }
+
+function closeSidebar() {
+    details.open = false
+    localStorage.setItem('sidebar', 'closed')
+}
+
+let logoutButton = document.querySelector('#logout-button')
+if (logoutButton) {
+    logoutButton.addEventListener('click', function () {
+        closeSidebar()
+    })
+}
