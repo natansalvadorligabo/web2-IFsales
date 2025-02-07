@@ -1,10 +1,12 @@
 package br.com.ifsales.model;
 
-public class Store {
+import br.com.ifsales.dao.Storable;
+
+public class Store implements Storable {
     private Long id;
     private String name;
-    private String cnjp;
-    private String region;
+    private String cnpj;
+    private Region region;
     private String address;
     private String phone;
 
@@ -26,19 +28,19 @@ public class Store {
         this.name = name;
     }
 
-    public String getCnjp() {
-        return cnjp;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCnjp(String cnjp) {
-        this.cnjp = cnjp;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Region region) {
         this.region = region;
     }
 

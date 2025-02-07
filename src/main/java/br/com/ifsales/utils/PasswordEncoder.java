@@ -11,11 +11,11 @@ public class PasswordEncoder {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             byte[] bytes = md5.digest(password.getBytes());
             StringBuilder builder = new StringBuilder();
-            for(byte b: bytes) {
+            for (byte b : bytes) {
                 builder.append(String.format("%02X", b));
             }
             passwordEncrypted = builder.toString();
-        }catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Erro ao buscar algoritmo", e);
         }
         return passwordEncrypted;
