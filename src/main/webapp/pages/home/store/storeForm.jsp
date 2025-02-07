@@ -93,22 +93,10 @@
               </div>
               <span id="error-phone" class="text-error hidden"></span>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${store == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${store != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
-
-                <a href="${pageContext.request.contextPath}/redirect?action=listStores" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${store == null}"/>
+                <jsp:param name="action" value="listStores"/>
+              </jsp:include>
             </form>
           </div>
         </main>

@@ -103,22 +103,10 @@
               </div>
               <span id="error-professionalStatus" class="text-error hidden"></span>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${customer == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${customer != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
-
-                <a href="${pageContext.request.contextPath}/redirect?action=listCategories" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${customer == null}"/>
+                <jsp:param name="action" value="listCustomers"/>
+              </jsp:include>
             </form>
           </div>
         </main>

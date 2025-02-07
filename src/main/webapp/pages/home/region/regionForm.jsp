@@ -48,22 +48,11 @@
               </div>
               <span id="error-state" class="text-error hidden"></span>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${region == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${region != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${region == null}"/>
+                <jsp:param name="action" value="listRegions"/>
+              </jsp:include>
 
-                <a href="${pageContext.request.contextPath}/redirect?action=listRegions" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
             </form>
           </div>
         </main>

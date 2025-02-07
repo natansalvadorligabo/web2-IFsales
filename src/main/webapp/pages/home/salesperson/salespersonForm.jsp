@@ -55,22 +55,11 @@
                 <label for="active" class="ml-2 font-semibold">Ativo</label>
               </div>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${salesperson == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${salesperson != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${salesperson == null}"/>
+                <jsp:param name="action" value="listSalespersons"/>
+              </jsp:include>
 
-                <a href="${pageContext.request.contextPath}/redirect?action=listSalespersons" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
             </form>
           </div>
         </main>

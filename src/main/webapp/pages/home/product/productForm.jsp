@@ -68,22 +68,10 @@
               </div>
               <span id="error-category" class="text-error hidden"></span>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${product == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${product != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
-
-                <a href="${pageContext.request.contextPath}/redirect?action=listProducts" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${product == null}"/>
+                <jsp:param name="action" value="listProducts"/>
+              </jsp:include>
             </form>
           </div>
         </main>
