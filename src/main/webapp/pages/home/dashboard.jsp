@@ -135,7 +135,7 @@
         data: salesByMonthData,
         options: {
           responsive: true,
-          maintainAspectRatio: true,
+          maintainAspectRatio: false,
 
           scales: {
             y: { beginAtZero: true }

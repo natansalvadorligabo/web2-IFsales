@@ -155,11 +155,11 @@ public class FunnelDao implements Dao<Funnel>{
         List<Map<String, Object>> results = new LinkedList<>();
 
         String sql = """
-        SELECT to_char(FUNNEL_PAID_DATE, 'MM') AS month
+        SELECT to_char(FUNNEL_PAID_DATE, 'MM') AS sales_month
              , IFSALES_PKG.REC_TOTAL_SALES(null, extract(month from(FUNNEL_PAID_DATE)), null) as total_sales
         FROM v_funnel
         GROUP BY to_char(FUNNEL_PAID_DATE, 'MM'), IFSALES_PKG.REC_TOTAL_SALES(null, extract(month from(FUNNEL_PAID_DATE)), null)
-        ORDER BY month
+        ORDER BY sales_month
     """;
 
         try (Connection conn = dataSource.getConnection();
@@ -168,7 +168,7 @@ public class FunnelDao implements Dao<Funnel>{
 
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
-                row.put("month", rs.getString("month"));
+                row.put("sales_month", rs.getString("sales_month"));
                 row.put("total_sales", rs.getInt("total_sales"));
                 results.add(row);
             }
