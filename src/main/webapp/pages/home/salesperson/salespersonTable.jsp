@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
+<!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
   <head>
     <meta charset="UTF-8">
@@ -8,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/tableMask.js"></script>
     <title>Tabelas de Vendedores - IFSales</title>
   </head>
   <body>
@@ -48,7 +51,7 @@
                       <td>${salesperson.id}</td>
                       <td>${salesperson.name}</td>
                       <td>${salesperson.email}</td>
-                      <td>${salesperson.phone}</td>
+                      <td class="phone">${salesperson.phone}</td>
                       <td>
                         <c:choose>
                           <c:when test="${salesperson.active}"><input type="checkbox" class="checkbox checkbox-success" disabled checked="checked" /></c:when>

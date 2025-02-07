@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
+<!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/tableMask.js"></script>
     <title>Tabelas de Vendas - IFSales</title>
 </head>
 <body>
@@ -52,8 +55,8 @@
                                 <td>${funnel.salesperson.name}</td>
                                 <td>${funnel.store.name}</td>
                                 <td>${funnel.product.model}</td>
-                                <td>${funnel.paidDate}</td>
-                                <td>${funnel.discount}</td>
+                                <td class="date">${funnel.paidDate}</td>
+                                <td class="percent" >${funnel.discount}</td>
                                 <td>${funnel.productQuantity}</td>
                                 <td class="p-1 flex">
                                     <button onclick="document.getElementById('edit-${funnel.id}').showModal()" class="btn btn-outline btn-warning w-1/2">

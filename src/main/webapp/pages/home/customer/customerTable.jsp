@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
+<!DOCTYPE html>
 <html lang="pt-br" data-theme="lofi">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="${pageContext.request.contextPath}/scripts/tableMask.js"></script>
     <title>Tabelas de Clientes - IFSales</title>
 </head>
 <body>
@@ -49,13 +52,13 @@
                         <c:forEach var="customer" items="${customers}">
                             <tr class="hover">
                                 <td>${customer.id}</td>
-                                <td>${customer.cpf}</td>
+                                <td class="cpf">${customer.cpf}</td>
                                 <td>${customer.region.name}</td>
                                 <td>${customer.firstName}</td>
                                 <td>${customer.lastName}</td>
-                                <td>${customer.birthDate}</td>
+                                <td class="date">${customer.birthDate}</td>
                                 <td>${customer.income}</td>
-                                <td>${customer.mobile}</td>
+                                <td class="phone">${customer.mobile}</td>
                                 <td>${customer.professionalStatus}</td>
                                 <td class="p-1 flex">
                                     <button onclick="document.getElementById('edit-${customer.id}').showModal()" class="btn btn-outline btn-warning w-1/2">
