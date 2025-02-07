@@ -1,9 +1,6 @@
 package br.com.ifsales.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -124,7 +121,9 @@ public class StoreDao implements Dao<Store>{
             ps.setString(4, store.getAddress());
             ps.setString(5, store.getPhone());
             ps.setLong(6, store.getId());
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Store not found");
+            }
 
             return true;
         } catch (SQLException e) {
@@ -141,7 +140,9 @@ public class StoreDao implements Dao<Store>{
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Store not found");
+            }
 
             return true;
         } catch (SQLException e) {

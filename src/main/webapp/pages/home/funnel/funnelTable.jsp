@@ -112,6 +112,14 @@
         </div>
     </div>
 
+    <jsp:include page="/components/defaultErrors.jsp">
+        <jsp:param name="registerSuccess" value="Funil cadastrado com sucesso."/>
+        <jsp:param name="updateSuccess" value="Funil atualizado com sucesso."/>
+        <jsp:param name="deleteSuccess" value="Funil deletado com sucesso."/>
+        <jsp:param name="updateError" value="Erro ao atualizar o funil."/>
+        <jsp:param name="deleteError" value="Este funil não pode ser deletado, tente novamente mais tarde." />
+    </jsp:include>
+
     <jsp:include page="/components/sidebar.jsp"/>
 </body>
 </html>

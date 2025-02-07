@@ -248,7 +248,9 @@ public class FunnelDao implements Dao<Funnel>{
             ps.setDouble(6, funnel.getDiscount());
             ps.setInt(7, funnel.getProductQuantity());
             ps.setLong(8, funnel.getId());
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Funnel not found");
+            }
 
             return true;
         } catch (SQLException e) {
@@ -265,7 +267,9 @@ public class FunnelDao implements Dao<Funnel>{
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLDataException("Funnel not found");
+            }
 
             return true;
         } catch (SQLException e) {

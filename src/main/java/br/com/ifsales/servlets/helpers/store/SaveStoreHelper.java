@@ -34,11 +34,9 @@ public class SaveStoreHelper implements Helper {
 
         StoreDao storeDao = new StoreDao(DataSourceSearcher.getInstance().getDataSource());
 
-        HelperUtils.saveOrUpdate(req, store, storeDao, id);
 
-        if (req.getAttribute("result") == "registerError") {
-            return "redirect?action=loadStoreForm";
-        }
+        String result = HelperUtils.saveOrUpdate(req, store, storeDao, id);
+        if (result.equals("registerError")) return "redirect?action=loadStoreForm";
 
         return "redirect?action=listStores";
     }

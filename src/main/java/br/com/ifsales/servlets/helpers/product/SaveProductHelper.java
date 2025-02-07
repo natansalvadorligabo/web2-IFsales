@@ -34,11 +34,9 @@ public class SaveProductHelper implements Helper {
 
         ProductDao productDao = new ProductDao(DataSourceSearcher.getInstance().getDataSource());
 
-        HelperUtils.saveOrUpdate(req, product, productDao, id);
 
-        if (req.getAttribute("result") == "registerError") {
-            return "/pages/home/product/productForm.jsp";
-        }
+        String result = HelperUtils.saveOrUpdate(req, product, productDao, id);
+        if (result.equals("registerError")) return "/pages/home/product/productForm.jsp";
 
         return "redirect?action=listProducts";
     }

@@ -108,6 +108,7 @@
         <jsp:param name="registerSuccess" value="Região cadastrada com sucesso."/>
         <jsp:param name="updateSuccess" value="Região atualizada com sucesso."/>
         <jsp:param name="deleteSuccess" value="Região deletada com sucesso."/>
+        <jsp:param name="updateError" value="Erro ao atualizar a região."/>
         <jsp:param name="deleteError" value="Esta região não pode ser deletada, pois está associada a um ou mais clientes ou lojas." />
       </jsp:include>
 

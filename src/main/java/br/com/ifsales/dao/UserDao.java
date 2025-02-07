@@ -3,10 +3,7 @@ package br.com.ifsales.dao;
 import br.com.ifsales.model.User;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class UserDao implements Dao<User> {
@@ -26,6 +23,7 @@ public class UserDao implements Dao<User> {
             ps.setString(2, user.getPassword());
 
             ps.executeUpdate();
+
         } catch (SQLException e) {
             throw new SQLException("An error ocurred while saving user to oracle sql");
         }

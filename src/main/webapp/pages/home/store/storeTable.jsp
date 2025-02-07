@@ -112,6 +112,7 @@
 
       <jsp:include page="/components/defaultErrors.jsp">
         <jsp:param name="registerSuccess" value="Loja cadastrada com sucesso."/>
+        <jsp:param name="updateError" value="Erro ao atualizar a loja."/>
         <jsp:param name="updateSuccess" value="Loja atualizada com sucesso."/>
         <jsp:param name="deleteSuccess" value="Loja deletada com sucesso."/>
         <jsp:param name="deleteError" value="Esta loja não pode ser deletada, pois está associada a um ou mais funis."/>

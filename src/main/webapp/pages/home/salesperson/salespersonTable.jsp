@@ -115,6 +115,7 @@
       <jsp:include page="/components/defaultErrors.jsp">
         <jsp:param name="registerSuccess" value="Vendedor cadastrado com sucesso."/>
         <jsp:param name="updateSuccess" value="Vendedor atualizado com sucesso."/>
+        <jsp:param name="updateError" value="Erro ao atualizar vendedor."/>
         <jsp:param name="deleteSuccess" value="Vendedor deletado com sucesso."/>
         <jsp:param name="deleteError" value="Este vendedor não pode ser deletado, pois está associado a um ou mais funis."/>
       </jsp:include>

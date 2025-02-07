@@ -118,6 +118,7 @@
         <jsp:param name="registerSuccess" value="Cliente cadastrado com sucesso."/>
         <jsp:param name="updateSuccess" value="Cliente atualizado com sucesso."/>
         <jsp:param name="deleteSuccess" value="Cliente deletado com sucesso."/>
+        <jsp:param name="updateError" value="Erro ao atualizar o cliente."/>
         <jsp:param name="deleteError" value="Este cliente não pode ser deletado, pois está associado a um ou mais funis" />
     </jsp:include>
 

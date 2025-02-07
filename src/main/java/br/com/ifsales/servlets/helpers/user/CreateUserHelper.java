@@ -23,11 +23,9 @@ public class CreateUserHelper implements Helper {
 
         UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
 
-        HelperUtils.saveOrUpdate(req, user, userDao, 0);
 
-        if (req.getAttribute("result") != "registerError") {
-            return "redirect?action=login";
-        }
+        String result = HelperUtils.saveOrUpdate(req, user, userDao, 0);
+        if (!result.equals("registerError")) return "redirect?action=login";
 
         return "/pages/userRegister.jsp";
     }

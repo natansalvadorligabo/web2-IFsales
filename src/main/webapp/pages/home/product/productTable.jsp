@@ -104,6 +104,7 @@
         <jsp:param name="registerSuccess" value="Produto cadastrado com sucesso."/>
         <jsp:param name="updateSuccess" value="Produto atualizado com sucesso."/>
         <jsp:param name="deleteSuccess" value="Produto deletado com sucesso."/>
+        <jsp:param name="updateError" value="Erro ao atualizar o produto."/>
         <jsp:param name="deleteError" value="Este produto não pode ser deletado, pois está associado a um ou mais funis" />
       </jsp:include>
 

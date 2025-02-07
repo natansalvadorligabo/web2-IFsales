@@ -10,24 +10,30 @@ import java.util.Optional;
 
 public class HelperUtils {
 
-    public static <T extends Storable> void saveOrUpdate(HttpServletRequest req, T storable, Dao<T> dao, long id) {
+    public static <T extends Storable> String saveOrUpdate(HttpServletRequest req, T storable, Dao<T> dao, long id) {
+
+        String result = "";
+
         if (id == 0) {
             try {
-                if (dao.save(storable)) req.setAttribute("result", "registerSuccess");
+                if (dao.save(storable)) result = "registerSuccess";
             } catch (SQLException e) {
-                System.err.println(e.getStackTrace());
-                req.setAttribute("result", "registerError");
+                System.err.println(Arrays.toString(e.getStackTrace()));
+                result = "registerError";
             }
         } else {
             storable.setId(id);
 
             try {
-                if (dao.update(storable)) req.setAttribute("result", "updateSuccess");
+                if (dao.update(storable)) result = "updateSuccess";
             } catch (SQLException e) {
-                System.err.println(e.getStackTrace());
-                req.setAttribute("result", "updateError");
+                System.err.println(Arrays.toString(e.getStackTrace()));
+                result = "updateError";
             }
         }
+
+        req.setAttribute("result", result);
+        return result;
     }
 
     public static <T extends Storable> String safeDelete(HttpServletRequest req, Optional<T> storable, Dao<T> dao, String path) {
