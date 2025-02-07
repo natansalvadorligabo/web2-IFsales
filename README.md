@@ -22,7 +22,16 @@ O **IFsales** é um Dashboard de Vendas que permite visualizar dados de forma f�
 - [x] Login e Register
 
 ## 🎦 DEMONSTRAÇÃO DA APLICAÇÃO
-![Imagem 1](https://i.imgur.com/)
+
+![login.png](images/login.png)
+
+![dashboard.png](images/dashboard.png)
+
+![funnel.png](images/funnel.png)
+
+![img.png](images/funnel-form.png)
+
+![bd.png](images/db.png)
 
 ## ⚙️ CONFIGURAÇÃO DO AMBIENTE
 
