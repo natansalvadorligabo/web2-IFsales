@@ -57,7 +57,7 @@
                                 <td>${customer.firstName}</td>
                                 <td>${customer.lastName}</td>
                                 <td class="date">${customer.birthDate}</td>
-                                <td>${customer.income}</td>
+                                <td class="price">${customer.income}</td>
                                 <td class="phone">${customer.mobile}</td>
                                 <td>${customer.professionalStatus}</td>
                                 <td class="p-1 flex">

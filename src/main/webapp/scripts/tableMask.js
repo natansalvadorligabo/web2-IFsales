@@ -20,7 +20,7 @@ elementsWithMask.forEach(elements => {
             elements[i].innerText = parseFloat(elements[i].innerText).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         } else if (elements[i].classList.contains('percent')) {
             // Just need to add '%' to the end of the number
-            elements[i].innerText = elements[i].innerText + '%'
+            elements[i].innerText = parseFloat(elements[i].innerText).toLocaleString('pt-BR') + '%'
         }
     }
 })

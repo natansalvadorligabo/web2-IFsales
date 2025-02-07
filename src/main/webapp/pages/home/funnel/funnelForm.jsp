@@ -158,7 +158,7 @@
               <span id="error-paidDate" class="text-error hidden"></span>
 
               <div>
-                <label for="discount" class="font-semibold">Desconto<span class="text-error">*</span></label>
+                <label for="discount" class="font-semibold">Desconto(%)<span class="text-error">*</span></label>
                 <input type="number" step="0.1" id="discount" name="discount" required class="input input-bordered w-full mt-2" value="${funnel.discount}">
               </div>
               <span id="error-discount" class="text-error hidden"></span>
