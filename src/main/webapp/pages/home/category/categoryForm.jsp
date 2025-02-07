@@ -43,22 +43,10 @@
               </div>
               <span id="error-description" class="text-error hidden"></span>
 
-              <div class="space-y-2">
-                <button type="submit" name="action" value="saveCategory" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${category == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${category != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
-
-                <a href="${pageContext.request.contextPath}/redirect?action=listCategories" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${category == null}"/>
+                <jsp:param name="action" value="listCategories"/>
+              </jsp:include>
             </form>
           </div>
         </main>

@@ -5,6 +5,8 @@ import br.com.ifsales.dao.Storable;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Optional;
 
 public class HelperUtils {
 
@@ -22,9 +24,24 @@ public class HelperUtils {
             try {
                 if (dao.update(storable)) req.setAttribute("result", "updateSuccess");
             } catch (SQLException e) {
+                System.err.println(e.getStackTrace());
                 req.setAttribute("result", "updateError");
             }
         }
+    }
+
+    public static <T extends Storable> String safeDelete(HttpServletRequest req, Optional<T> storable, Dao<T> dao, String path) {
+        try {
+            if (storable.isPresent() && dao.delete(storable.get().getId())) {
+                req.setAttribute("result", "deleteSuccess");
+                return "redirect?action=" + path;
+            }
+        } catch (SQLException e) {
+            System.err.println(Arrays.toString(e.getStackTrace()));
+        }
+
+        req.setAttribute("result", "deleteError");
+        return "redirect?action=" + path;
     }
 
 

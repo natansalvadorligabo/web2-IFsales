@@ -33,83 +33,49 @@
 
               <div>
                 <label for="brand" class="font-semibold">Marca<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${product == null}">
-                    <input type="text" id="brand" name="brand" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${product != null}">
-                    <input type="text" id="brand" name="brand" required class="input input-bordered w-full mt-2" value="${product.brand}">
-                  </c:when>
-                </c:choose>
+                <input type="text" id="brand" name="brand" required class="input input-bordered w-full mt-2" value="${product.brand}">
+
               </div>
               <span id="error-brand" class="text-error hidden"></span>
 
               <div>
                 <label for="model" class="font-semibold">Modelo<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${product == null}">
-                    <input type="text" id="model" name="model" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${product != null}">
-                    <input type="text" id="model" name="model" required class="input input-bordered w-full mt-2" value="${product.model}">
-                  </c:when>
-                </c:choose>
+                <input type="text" id="model" name="model" required class="input input-bordered w-full mt-2" value="${product.model}">
+
               </div>
               <span id="error-model" class="text-error hidden"></span>
 
               <div>
                 <label for="modelYear" class="font-semibold">Ano do Modelo<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${product == null}">
-                    <input type="number" min="1920" max="${Calendar.getInstance().get(Calendar.YEAR)}" id="modelYear" name="modelYear" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${product != null}">
-                    <input type="number" id="modelYear" name="modelYear" required class="input input-bordered w-full mt-2" value="${product.modelYear}">
-                  </c:when>
-                </c:choose>
+                <input type="number" id="modelYear" name="modelYear" required class="input input-bordered w-full mt-2" value="${product.modelYear}">
               </div>
               <span id="error-modelYear" class="text-error hidden"></span>
 
               <div>
                 <label for="price" class="font-semibold">Preço<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${product == null}">
-                    <input type="number" min="1" step="0.1" id="price" name="price" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${product != null}">
-                    <input type="number" id="price" name="price" required class="input input-bordered w-full mt-2" value="${product.price}">
-                  </c:when>
-                </c:choose>
+                <input type="number" id="price" name="price" required class="input input-bordered w-full mt-2" value="${product.price}">
               </div>
               <span id="error-price" class="text-error hidden"></span>
 
               <div>
-                <label for="category" class="font-semibold">Categoria<span class="text-error">*</span></label>
-                <select id="category" name="category" class="select select-bordered w-full mt-2">
-                  <c:forEach var="category" items="${categories}">
-                    <option value="${category.id}"
-                            <c:if test="${product != null and product.category.id == category.id}">selected</c:if>> ${category.name} </option>
-                  </c:forEach>
-                </select>
+                <label class="font-semibold" for="category">
+                  Categoria<span class="text-error">*</span>
+                  <select name="category" id="category" required class="select select-bordered w-full mt-2">
+                    <option value="" disabled <c:if test="${product == null}">selected</c:if>>Selecione uma categoria
+                    </option>
+                    <c:forEach var="category" items="${categories}">
+                      <option value="${category.id}"
+                              <c:if test="${product != null && product.category.id == category.id}">selected</c:if>>${category.name}</option>
+                    </c:forEach>
+                  </select>
+                </label>
               </div>
               <span id="error-category" class="text-error hidden"></span>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${product == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${product != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
-
-                <a href="${pageContext.request.contextPath}/pages/home/product/productTable.jsp" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${product == null}" />
+                <jsp:param name="action" value="listProducts" />
+              </jsp:include>
             </form>
           </div>
         </main>

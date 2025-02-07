@@ -37,7 +37,7 @@ public class SaveStoreHelper implements Helper {
         HelperUtils.saveOrUpdate(req, store, storeDao, id);
 
         if (req.getAttribute("result") == "registerError") {
-            return "/pages/home/store/storeForm.jsp";
+            return "redirect?action=loadStoreForm";
         }
 
         return "redirect?action=listStores";
