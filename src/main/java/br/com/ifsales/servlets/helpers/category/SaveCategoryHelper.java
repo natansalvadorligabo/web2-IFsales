@@ -3,6 +3,7 @@ package br.com.ifsales.servlets.helpers.category;
 import br.com.ifsales.dao.CategoryDao;
 import br.com.ifsales.model.Category;
 import br.com.ifsales.servlets.helpers.Helper;
+import br.com.ifsales.servlets.helpers.HelperUtils;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,23 +24,10 @@ public class SaveCategoryHelper implements Helper {
 
         CategoryDao categoryDao = new CategoryDao(DataSourceSearcher.getInstance().getDataSource());
 
-        if (id == 0) {
-            Optional<Category> registered = categoryDao.getCategoryByName(name);
+        HelperUtils.saveOrUpdate(req, category, categoryDao, id);
 
-            if (registered.isPresent()) {
-                req.setAttribute("result", "already exists");
-                return "/pages/home/category/categoryForm.jsp";
-            } else {
-                if (categoryDao.save(category))
-                    req.setAttribute("result", "registered successfully");
-                else
-                    req.setAttribute("result", "not registered");
-            }
-        } else {
-            category.setId(id);
-
-            if (categoryDao.update(category))
-                req.setAttribute("result", "saved");
+        if (req.getAttribute("result") == "registerError") {
+            return "/pages/home/category/categoryForm.jsp";
         }
 
         return "redirect?action=listCategories";

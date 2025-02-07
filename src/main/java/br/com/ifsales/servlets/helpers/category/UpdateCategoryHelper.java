@@ -1,9 +1,7 @@
 package br.com.ifsales.servlets.helpers.category;
 
 import br.com.ifsales.dao.CategoryDao;
-import br.com.ifsales.dao.RegionDao;
 import br.com.ifsales.model.Category;
-import br.com.ifsales.model.Region;
 import br.com.ifsales.servlets.helpers.Helper;
 import br.com.ifsales.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;

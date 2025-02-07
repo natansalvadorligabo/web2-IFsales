@@ -36,6 +36,10 @@ public class SaveProductHelper implements Helper {
 
         HelperUtils.saveOrUpdate(req, product, productDao, id);
 
+        if (req.getAttribute("result") == "registerError") {
+            return "/pages/home/product/productForm.jsp";
+        }
+
         return "redirect?action=listProducts";
     }
 }

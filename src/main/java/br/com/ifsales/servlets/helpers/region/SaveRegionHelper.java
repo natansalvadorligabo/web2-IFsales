@@ -28,6 +28,10 @@ public class SaveRegionHelper implements Helper {
 
         HelperUtils.saveOrUpdate(req, region, regionDao, id);
 
+        if (req.getAttribute("result") == "registerError") {
+            return "/pages/home/region/regionForm.jsp";
+        }
+
         return "redirect?action=listRegions";
     }
 }

@@ -139,7 +139,7 @@ public class RegionDao implements Dao<Region>{
         }
     }
 
-    public Boolean delete(Region region) throws SQLException {
+    public Boolean delete(Long id) throws SQLException {
         String sql = """
                 DELETE
                 FROM REGIONS
@@ -147,7 +147,7 @@ public class RegionDao implements Dao<Region>{
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, region.getId());
+            ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;
