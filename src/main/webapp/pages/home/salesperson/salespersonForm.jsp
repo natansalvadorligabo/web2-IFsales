@@ -33,75 +33,33 @@
 
               <div>
                 <label for="name" class="font-semibold">Nome<span class="text-error">*</span></label>
-                <c:choose>
-                  <c:when test="${salesperson == null}">
-                    <input type="text" id="name" name="name" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${salesperson != null}">
-                    <input type="text" id="name" name="name" required class="input input-bordered w-full mt-2" value="${salesperson.name}">
-                  </c:when>
-                </c:choose>
+                <input type="text" id="name" name="name" required class="input input-bordered w-full mt-2" value="${salesperson.name}">
               </div>
               <span id="error-name" class="text-error hidden"></span>
 
               <div>
                 <label for="email" class="font-semibold">E-mail<span class="text-error">*</span></label>
-
-                <c:choose>
-                  <c:when test="${salesperson == null}">
-                    <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2">
-                  </c:when>
-                  <c:when test="${salesperson != null}">
-                    <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2" value="${salesperson.email}">
-                  </c:when>
-                </c:choose>
+                <input type="email" id="email" name="email" required class="input input-bordered w-full mt-2" value="${salesperson.email}">
               </div>
               <span id="error-email" class="text-error hidden"></span>
 
               <div>
                 <label for="phone" class="font-semibold">Telefone<span class="text-error">*</span></label>
-
-                <c:choose>
-                  <c:when test="${salesperson == null}">
-                    <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2" placeholder="(12) 34567-8910">
-                  </c:when>
-                  <c:when test="${salesperson != null}">
-                    <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2" placeholder="(12) 34567-8910" value="${salesperson.phone}">
-                  </c:when>
-                </c:choose>
+                <input type="tel" id="phone" name="phone" required class="input input-bordered w-full mt-2" placeholder="(12) 34567-8910" value="${salesperson.phone}">
               </div>
               <span id="error-phone" class="text-error hidden"></span>
 
               <div class="flex items-center">
-                <c:choose>
-                  <c:when test="${salesperson == null}">
-                    <input type="checkbox" id="active" name="active" class="checkbox checkbox-bordered">
-                  </c:when>
-                  <c:when test="${salesperson != null}">
-                    <input type="checkbox" id="active" name="active" class="checkbox checkbox-bordered"
-                            <c:if test="${salesperson.active}">checked</c:if>>
-                  </c:when>
-                </c:choose>
-
+                <input type="checkbox" id="active" name="active" class="checkbox checkbox-bordered"
+                        <c:if test="${salesperson.active}">checked</c:if>>
                 <label for="active" class="ml-2 font-semibold">Ativo</label>
               </div>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${salesperson == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${salesperson != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${salesperson == null}"/>
+                <jsp:param name="action" value="listSalespersons"/>
+              </jsp:include>
 
-                <a href="${pageContext.request.contextPath}/redirect?action=listSalespersons" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
             </form>
           </div>
         </main>
@@ -110,18 +68,7 @@
       <jsp:include page="/components/sidebar.jsp" />
     </div>
 
-    <div class="fixed bottom-2 left-2 z-40">
-      <c:if test="${result == 'registerError' || result == 'updateError'}">
-        <div class="alert alert-error">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>Ocorreu um erro, tente novamente.</span>
-        </div>
-      </c:if>
-    </div>
-
-    <script src="${pageContext.request.contextPath}/scripts/validateForm.js"></script>
-    <script src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
+    <jsp:include page="/components/errorOrUpdate.jsp" />
+    <script defer src="${pageContext.request.contextPath}/scripts/validateForm.js"></script>
   </body>
 </html>

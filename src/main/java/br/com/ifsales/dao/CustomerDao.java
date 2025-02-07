@@ -55,21 +55,21 @@ public class    CustomerDao implements Dao<Customer>{
         return optional;
     }
 
-    public List<Optional<Customer>> getAllCustomers() throws SQLException {
-        List<Optional<Customer>> customers = new LinkedList<>();
+    public List<Customer> getAllCustomers() throws SQLException {
+        List<Customer> customers = new LinkedList<>();
 
         String sql = """
                 SELECT *
-                FROM CUSTOMERS""";
+                FROM V_CUSTOMERS""";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next())
-                    customers.add(Optional.of(extractCustomerFromResultSet(rs)));
+                    customers.add(extractCustomerFromResultSet(rs));
             }
         } catch (SQLException e) {
-            throw new SQLException("An error ocurred while retrieving store from oracle sql");
+            throw new SQLException("An error ocurred while retrieving customer from oracle sql");
         }
 
         return customers;

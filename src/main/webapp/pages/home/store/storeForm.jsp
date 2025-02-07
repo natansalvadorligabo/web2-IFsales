@@ -52,39 +52,12 @@
                 <label class="font-semibold" for="regionId">
                   Região<span class="text-error">*</span>
                   <select name="regionId" id="regionId" required class="select select-bordered w-full mt-2">
-                    <%RegionDao regionDao = new RegionDao(DataSourceSearcher.getInstance().getDataSource());
-                      List<Region> regions;
-                      try {
-                        regions = regionDao.getAllRegions();
-                      } catch (SQLException e) {
-                        regions = List.of();
-                      }
-
-                      request.setAttribute("regions", regions);%>
-
-                    <c:choose>
-                      <c:when test="${store == null}">
-                        <option value="" selected disabled>Selecione uma região</option>
-                        <c:forEach var="region" items="${regions}">
-                          <option value="${region.id}">${region.name}</option>
-                        </c:forEach>
-                      </c:when>
-                      <c:when test="${store != null}">
-                        <option value="" disabled>Selecione uma região</option>
-                        <c:forEach var="region" items="${regions}">
-                          <c:choose>
-                            <c:when test="${store.region.id == region.id}">
-                              <option value="${region.id}" selected>${region.name}</option>
-                            </c:when>
-                            <c:otherwise>
-                              <option value="${region.id}">${region.name}</option>
-                            </c:otherwise>
-                          </c:choose>
-                        </c:forEach>
-                      </c:when>
-                    </c:choose>
-
-
+                    <option value="" disabled <c:if test="${store == null}">selected</c:if>>Selecione uma região
+                    </option>
+                    <c:forEach var="region" items="${regions}">
+                      <option value="${region.id}"
+                              <c:if test="${store != null && store.region.id == region.id}">selected</c:if>>${region.name}</option>
+                    </c:forEach>
                   </select>
                 </label>
               </div>
@@ -103,22 +76,10 @@
               </div>
               <span id="error-phone" class="text-error hidden"></span>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${store == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${store != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
-
-                <a href="${pageContext.request.contextPath}/redirect?action=listStores" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${store == null}" />
+                <jsp:param name="action" value="listStores" />
+              </jsp:include>
             </form>
           </div>
         </main>
@@ -127,18 +88,7 @@
       <jsp:include page="/components/sidebar.jsp" />
     </div>
 
-    <div class="fixed bottom-2 left-2 z-40">
-        <c:if test="${result == 'registerError' || result == 'updateError'}">
-          <div class="alert alert-error">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span>Ocorreu um erro, tente novamente.</span>
-          </div>
-        </c:if>
-    </div>
-
+    <jsp:include page="/components/errorOrUpdate.jsp" />
     <script defer src="${pageContext.request.contextPath}/scripts/validateForm.js"></script>
-    <script src="${pageContext.request.contextPath}/scripts/autoRemoveAlerts.js"></script>
   </body>
 </html>

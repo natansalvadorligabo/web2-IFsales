@@ -12,7 +12,7 @@ public class Funnel implements Storable {
     private Product product;
     private LocalDate paidDate;
     private Double discount;
-    private int productQuanity;
+    private int productQuantity;
 
     public Long getId() {
         return id;
@@ -70,11 +70,11 @@ public class Funnel implements Storable {
         this.discount = discount;
     }
 
-    public int getProductQuanity() {
-        return productQuanity;
+    public int getProductQuantity() {
+        return productQuantity;
     }
 
-    public void setProductQuanity(int productQuanity) {
-        this.productQuanity = productQuanity;
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
     }
 }

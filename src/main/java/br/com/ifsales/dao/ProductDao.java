@@ -265,7 +265,7 @@ public class ProductDao implements Dao<Product>{
         }
     }
 
-    public Boolean delete(Product product) throws SQLException {
+    public Boolean delete(Long id) throws SQLException {
         String sql = """
                 DELETE
                 FROM PRODUCTS
@@ -273,7 +273,7 @@ public class ProductDao implements Dao<Product>{
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setLong(1, product.getId());
+            ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;
