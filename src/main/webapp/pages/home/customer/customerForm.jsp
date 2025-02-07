@@ -41,27 +41,12 @@
                 <label class="font-semibold" for="region">
                   Região<span class="text-error">*</span>
                   <select name="region" id="region" required class="select select-bordered w-full mt-2">
-                    <c:choose>
-                      <c:when test="${customer == null}">
-                        <option value="" selected disabled>Selecione uma região</option>
-                        <c:forEach var="region" items="${regions}">
-                          <option value="${region.id}">${region.name}</option>
-                        </c:forEach>
-                      </c:when>
-                      <c:when test="${customer != null}">
-                        <option value="" disabled>Selecione uma região</option>
-                        <c:forEach var="region" items="${regions}">
-                          <c:choose>
-                            <c:when test="${customer.region.id == region.id}">
-                              <option value="${region.id}" selected>${region.name}</option>
-                            </c:when>
-                            <c:otherwise>
-                              <option value="${region.id}">${region.name}</option>
-                            </c:otherwise>
-                          </c:choose>
-                        </c:forEach>
-                      </c:when>
-                    </c:choose>
+                    <option value="" disabled <c:if test="${customer == null}">selected</c:if>>Selecione uma região
+                    </option>
+                    <c:forEach var="region" items="${regions}">
+                      <option value="${region.id}"
+                              <c:if test="${customer != null && customer.region.id == region.id}">selected</c:if>>${region.name}</option>
+                    </c:forEach>
                   </select>
                 </label>
               </div>
@@ -103,22 +88,10 @@
               </div>
               <span id="error-professionalStatus" class="text-error hidden"></span>
 
-              <div class="space-y-2">
-                <button type="submit" class="btn btn-primary btn-block">
-                  <c:choose>
-                    <c:when test="${customer == null}">
-                      Cadastrar
-                    </c:when>
-                    <c:when test="${customer != null}">
-                      Atualizar
-                    </c:when>
-                  </c:choose>
-                </button>
-
-                <a href="${pageContext.request.contextPath}/redirect?action=listCategories" class="btn btn-outline btn-block">
-                  Voltar
-                </a>
-              </div>
+              <jsp:include page="/components/buttonRegisterAndUpdate.jsp">
+                <jsp:param name="obj" value="${customer == null}"/>
+                <jsp:param name="action" value="listCustomers"/>
+              </jsp:include>
             </form>
           </div>
         </main>

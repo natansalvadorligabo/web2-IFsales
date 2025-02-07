@@ -150,5 +150,9 @@
     <context-param>
         <param-name>deleteFunnel</param-name>
         <param-value>br.com.ifsales.servlets.helpers.funnel.DeleteFunnelHelper</param-value>
+      </context-param>
+      <context-param>
+        <param-name>loadStoreForm</param-name>
+        <param-value>br.com.ifsales.servlets.helpers.store.LoadStoreFormHelper</param-value>
     </context-param>
 </web-app>
