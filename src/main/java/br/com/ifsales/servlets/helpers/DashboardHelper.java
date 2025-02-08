@@ -16,6 +16,7 @@ public class DashboardHelper implements Helper {
     public Object execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
         FunnelDao funnelDao = new FunnelDao(DataSourceSearcher.getInstance().getDataSource());
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.of("pt", "BR"));
 
         List<Map<String, Object>> salesByCategory = funnelDao.getSalesByCategory();
         salesByCategory.forEach(item ->
@@ -38,6 +39,7 @@ public class DashboardHelper implements Helper {
         req.setAttribute("totalSales", funnelDao.getTotalSales().map(currencyFormat::format).orElse("-"));
         req.setAttribute("averageTicket", funnelDao.getAverageTicket().map(currencyFormat::format).orElse("-"));
         req.setAttribute("totalProductsSold", funnelDao.getTotalProductsSold().orElse(0));
+        req.setAttribute("totalProductsSold", funnelDao.getTotalProductsSold().map(numberFormat::format).orElse("-"));
 
         return "/pages/home/dashboard.jsp";
     }
